@@ -541,11 +541,6 @@ void AnchoredProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut)
 #endif
 		}
 
-#if	DEBUG
-// Sanity check
-	AssertMSAEqIgnoreCaseAndGaps(msaIn, msaOut);
-#endif
-
 	delete[] Ranges;
 	}
 
