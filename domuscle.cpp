@@ -56,28 +56,11 @@ void DoMuscle()
 	SetAlpha(Alpha);
 	v.FixAlpha();
 
-	PTR_SCOREMATRIX UserMatrix = 0;
-	if (0 != g_pstrMatrixFileName)
-		{
-		const char *FileName = g_pstrMatrixFileName;
-		const char *Path = getenv("MUSCLE_MXPATH");
-		if (Path != 0)
-			{
-			size_t n = strlen(Path) + 1 + strlen(FileName) + 1;
-			char *NewFileName = new char[n];
-			sprintf(NewFileName, "%s/%s", Path, FileName);
-			FileName = NewFileName;
-			}
-		TextFile File(FileName);
-		UserMatrix = ReadMx(File);
-		g_Alpha = ALPHA_Amino;
-		g_PPScore = PPSCORE_SP;
-		}
-
+//
+// AED 21/12/06: Moved matrix loading code inside the PP param function so it gets called for all alignment types
+//
 	SetPPScore();
 
-	if (0 != UserMatrix)
-		g_ptrScoreMatrix = UserMatrix;
 
 	unsigned uMaxL = 0;
 	unsigned uTotL = 0;

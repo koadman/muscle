@@ -1,4 +1,5 @@
 #include "muscle.h"
+#include "textfile.h"
 #include "objscore.h"
 #include "profile.h"
 #include "enumopts.h"
@@ -40,8 +41,8 @@ const char *g_pstrMatrixFileName = 0;
 const char *g_pstrUseTreeFileName = 0;
 bool g_bUseTreeNoWarn = false;
 
-const char *g_pstrComputeWeightsFileName;
-const char *g_pstrScoreFileName;
+const char *g_pstrComputeWeightsFileName = 0;
+const char *g_pstrScoreFileName = 0;	// AED: init these to null to avoid crashes on optimized code
 
 const char *g_pstrProf1FileName = 0;
 const char *g_pstrProf2FileName = 0;
@@ -449,6 +450,39 @@ void SetPPScore(bool bRespectFlagOpts)
 
 	SetPPDefaultParams();
 	SetPPCommandLineParams();
+
+	PTR_SCOREMATRIX UserMatrix = 0;
+	if (0 != g_pstrMatrixFileName)
+		{
+		const char *FileName = g_pstrMatrixFileName;
+		const char *Path = getenv("MUSCLE_MXPATH");
+		if (Path != 0)
+			{
+			size_t n = strlen(Path) + 1 + strlen(FileName) + 1;
+			char *NewFileName = new char[n];
+			sprintf(NewFileName, "%s/%s", Path, FileName);
+			FileName = NewFileName;
+			}
+		TextFile File(FileName);
+		UserMatrix = ReadMx(File);
+// AED 21/12/2006: allow a custom nucleotide substitution matrix (don't force AA alignment)
+//		g_Alpha = ALPHA_Amino;
+//		g_PPScore = PPSCORE_SP;
+		}
+	if (0 != UserMatrix)
+		g_ptrScoreMatrix = UserMatrix;
+
+// AED 21/12/2006: if a nucleotide matrix was loaded, add the gap extend penalty directly
+// to the matrix
+	if( 0 != UserMatrix && g_PPScore == PPSCORE_SPN )
+	{
+		// default gap extend is 30, so add 60
+		// command-line gap extend will be negative, so multiply by -2
+		float add_score = g_scoreGapExtend == 0 ? 60 : -2 * g_scoreGapExtend;
+		for( int i = 0; i < 4; ++i )
+			for( int j = 0; j < 4; ++j )
+				(*g_ptrScoreMatrix)[i][j] += add_score;
+	}
 
 	if (g_bVerbose)
 		ListParams();

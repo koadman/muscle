@@ -66,8 +66,9 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 	if (HeadingCount > 0 && Heading[HeadingCount-1] == '*')
 		--HeadingCount;
 
-	if (HeadingCount < 20)
-		Quit("Error in matrix file: < 20 headers, line='%s'", Line);
+// AED 22/12/2006: don't force a 20 char matrix since nt matrices will have only 4
+//	if (HeadingCount < 20)
+//		Quit("Error in matrix file: < 20 headers, line='%s'", Line);
 
 #if TRACE
 	{
