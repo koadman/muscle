@@ -7,7 +7,7 @@ const int MAX_LINE = 4096;
 const int MAX_HEADINGS = 32;
 static TLS<char[MAX_HEADINGS]> Heading;
 static TLS<unsigned> HeadingCount(0);
-static TLS<float[32][32]> Mx;
+static TLS<SCOREMATRIX> Mx;
 
 static void LogMx()
 	{
@@ -153,5 +153,6 @@ ExitLoop:;
 	if (g_bVerbose)
 		LogMx();
 
-	return &Mx.get();
+	SCOREMATRIX& sm = Mx.get();
+	return &sm;
 	}
