@@ -2,6 +2,7 @@
 #include "distfunc.h"
 #include "seqvect.h"
 #include <math.h>
+#include "threadstorage.h"
 
 #define TRACE 0
 
@@ -53,7 +54,7 @@ unsigned uResidueGroupCount = sizeof(ResidueGroup)/sizeof(ResidueGroup[0]);
 
 static char *TupleToStr(int t)
 	{
-	static char s[7];
+	static TLS<char[7]> s;
 	int t1, t2, t3, t4, t5, t6;
 
 	t1 = t%6;
@@ -63,13 +64,13 @@ static char *TupleToStr(int t)
 	t5 = (t/(6*6*6*6))%6;
 	t6 = (t/(6*6*6*6*6))%6;
 
-	s[5] = '0' + t1;
-	s[4] = '0' + t2;
-	s[3] = '0' + t3;
-	s[2] = '0' + t4;
-	s[1] = '0' + t5;
-	s[0] = '0' + t6;
-	return s;
+	s.get()[5] = '0' + t1;
+	s.get()[4] = '0' + t2;
+	s.get()[3] = '0' + t3;
+	s.get()[2] = '0' + t4;
+	s.get()[1] = '0' + t5;
+	s.get()[0] = '0' + t6;
+	return s.get();
 	}
 
 static unsigned GetTuple(const unsigned uLetters[], unsigned n)

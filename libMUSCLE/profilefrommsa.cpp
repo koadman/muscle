@@ -1,6 +1,7 @@
 #include "muscle.h"
 #include "msa.h"
 #include "profile.h"
+#include "threadstorage.h"
 
 #define TRACE	0
 
@@ -14,11 +15,11 @@ static void LogF(FCOUNT f)
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	static TLS<char[16]> str;
 	if (s < -1e10 || s > 1e10)
 		return "    *";
-	sprintf(str, "%5.1f", s);
-	return str;
+	sprintf(str.get(), "%5.1f", s);
+	return str.get();
 	}
 
 #if	DOUBLE_AFFINE
@@ -155,7 +156,7 @@ void ListProfile(const ProfPos *Prof, unsigned uLength, const MSA *ptrMSA)
 
 void SortCounts(const FCOUNT fcCounts[], unsigned SortOrder[])
 	{
-	static unsigned InitialSortOrder[MAX_ALPHA] =
+	static const unsigned InitialSortOrder[MAX_ALPHA] =
 		{
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 		};

@@ -3,6 +3,7 @@
 #include "textfile.h"
 #include "seq.h"
 #include <math.h>
+#include "threadstorage.h"
 
 const unsigned DEFAULT_SEQ_LENGTH = 500;
 
@@ -391,14 +392,14 @@ static void FmtChar(char c, unsigned uWidth)
 
 static void FmtInt(unsigned u, unsigned uWidth)
 	{
-	static char szStr[1024];
-	assert(uWidth < sizeof(szStr));
+	static TLS<char[1024]> szStr;
+	assert(uWidth < sizeof(szStr.get()));
 	if (u > 0)
-		sprintf(szStr, "%u", u);
+		sprintf(szStr.get(), "%u", u);
 	else
-		strcpy(szStr, ".");
-	Log(szStr);
-	unsigned n = (unsigned) strlen(szStr);
+		strcpy(szStr.get(), ".");
+	Log(szStr.get());
+	unsigned n = (unsigned) strlen(szStr.get());
 	if (n < uWidth)
 		for (unsigned i = 0; i < uWidth - n; ++i)
 			Log(" ");
@@ -406,11 +407,11 @@ static void FmtInt(unsigned u, unsigned uWidth)
 
 static void FmtInt0(unsigned u, unsigned uWidth)
 	{
-	static char szStr[1024];
-	assert(uWidth < sizeof(szStr));
-	sprintf(szStr, "%u", u);
-	Log(szStr);
-	unsigned n = (unsigned) strlen(szStr);
+	static TLS<char[1024]> szStr;
+	assert(uWidth < sizeof(szStr.get()));
+	sprintf(szStr.get(), "%u", u);
+	Log(szStr.get());
+	unsigned n = (unsigned) strlen(szStr.get());
 	if (n < uWidth)
 		for (unsigned i = 0; i < uWidth - n; ++i)
 			Log(" ");

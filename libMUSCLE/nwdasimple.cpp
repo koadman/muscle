@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include "profile.h"
 #include <stdio.h>
+#include "threadstorage.h"
+
 
 #define	TRACE	0
 
@@ -31,11 +33,11 @@ static char XlatEdgeType(char c)
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	static TLS<char[16]> str;
 	if (s < -100000)
 		return "     *";
-	sprintf(str, "%6.1f", s);
-	return str;
+	sprintf(str.get(), "%6.1f", s);
+	return str.get();
 	}
 
 static void ListTB(const char *TBM_, const ProfPos *PA, const ProfPos *PB,

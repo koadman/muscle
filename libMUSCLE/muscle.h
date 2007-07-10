@@ -1,3 +1,5 @@
+#include "threadstorage.h"
+
 #if	DEBUG && !_DEBUG
 #define _DEBUG	1
 #endif
@@ -59,8 +61,8 @@ extern char **g_argv;
 
 const double VERY_LARGE_DOUBLE = 1e20;
 
-extern unsigned g_uTreeSplitNode1;
-extern unsigned g_uTreeSplitNode2;
+extern TLS<unsigned> g_uTreeSplitNode1;
+extern TLS<unsigned> g_uTreeSplitNode2;
 
 // Number of elements in array a[]
 #define countof(a)	(sizeof(a)/sizeof(a[0]))

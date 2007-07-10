@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "msa.h"
 #include "textfile.h"
+#include "threadstorage.h"
 
 const int MAX_NAME = 63;
 
@@ -13,12 +14,12 @@ const unsigned uCharsPerBlock = 10;
 // first, then pad with blanks up to PadLength.
 static const char *GetPaddedName(const char *Name, int PadLength)
 	{
-	static char PaddedName[MAX_NAME+1];
-	memset(PaddedName, ' ', MAX_NAME);
+	static TLS<char[MAX_NAME+1]> PaddedName;
+	memset(PaddedName.get(), ' ', MAX_NAME);
 	size_t n = strcspn(Name, " \t");
-	memcpy(PaddedName, Name, n);
-	PaddedName[PadLength] = 0;
-	return PaddedName;
+	memcpy(PaddedName.get(), Name, n);
+	PaddedName.get()[PadLength] = 0;
+	return PaddedName.get();
 	}
 
 static const char *strfind(const char *s, const char *t)

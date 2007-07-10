@@ -8,15 +8,24 @@ static void *EmergencyReserve = 0;
 
 void OnOutOfMemory()
 	{
+#pragma omp critical 
+{
 	free(EmergencyReserve);
 	fprintf(stderr, "\n*** OUT OF MEMORY ***\n");
 	fprintf(stderr, "Memory allocated so far %g MB\n", GetMemUseMB());
 	SaveCurrentAlignment();
 	exit(EXIT_FatalError);
+}
 	}
 
 void SetNewHandler()
 	{
-	EmergencyReserve = malloc(RESERVE_BYTES);
-	std::set_new_handler(OnOutOfMemory);
+#pragma omp critical 
+{
+	if(EmergencyReserve == 0)
+	{
+		EmergencyReserve = malloc(RESERVE_BYTES);
+		std::set_new_handler(OnOutOfMemory);
+	}
+}
 	}

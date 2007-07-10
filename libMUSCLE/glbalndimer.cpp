@@ -4,6 +4,7 @@
 #include "pwpath.h"
 #include "profile.h"
 #include "gapscoredimer.h"
+#include "threadstorage.h"
 
 #define	TRACE	0
 
@@ -13,11 +14,11 @@ static SCORE TraceBackDimer(  const SCORE *DPM_, const SCORE *DPD_, const SCORE 
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	static TLS<char[16]> str;
 	if (MINUS_INFINITY == s)
 		return "     *";
-	sprintf(str, "%6.3g", s);
-	return str;
+	sprintf(str.get(), "%6.3g", s);
+	return str.get();
 	}
 
 #if	TRACE
@@ -74,18 +75,18 @@ static void ListTB(const char *TBM_, const ProfPos *PA, const ProfPos *PB,
 	}
 #endif // TRACE
 
-static ProfPos PPTerm;
-static bool InitializePPTerm()
-	{
-	PPTerm.m_bAllGaps = false;
-	PPTerm.m_LL = 1;
-	PPTerm.m_LG = 0;
-	PPTerm.m_GL = 0;
-	PPTerm.m_GG = 0;
-	PPTerm.m_fOcc = 1;
-	return true;
-	}
-static bool PPTermInitialized = InitializePPTerm();
+static ProfPos getInitedPPTerm()
+{
+	ProfPos pp;
+	pp.m_bAllGaps = false;
+	pp.m_LL = 1;
+	pp.m_LG = 0;
+	pp.m_GL = 0;
+	pp.m_GG = 0;
+	pp.m_fOcc = 1;
+	return pp;
+}
+static TLS<ProfPos> PPTerm(getInitedPPTerm());
 
 static SCORE ScoreProfPosDimerLE(const ProfPos &PPA, const ProfPos &PPB)
 	{
@@ -163,7 +164,7 @@ SCORE GlobalAlignDimer(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	TBI(0, 0) = '?';
 
 	DPM(1, 0) = MINUS_INFINITY;
-	DPD(1, 0) = GapScoreMD(PA[0], PPTerm);
+	DPD(1, 0) = GapScoreMD(PA[0], PPTerm.get());
 	DPI(1, 0) = MINUS_INFINITY;
 
 	TBM(1, 0) = '?';
@@ -172,7 +173,7 @@ SCORE GlobalAlignDimer(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	DPM(0, 1) = MINUS_INFINITY;
 	DPD(0, 1) = MINUS_INFINITY;
-	DPI(0, 1) = GapScoreMI(PPTerm, PB[0]);
+	DPI(0, 1) = GapScoreMI(PPTerm.get(), PB[0]);
 
 	TBM(0, 1) = '?';
 	TBD(0, 1) = '?';
@@ -187,7 +188,7 @@ SCORE GlobalAlignDimer(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	// D=LetterA+GapB
 		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) +
-		  GapScoreDD(PA[uPrefixLengthA - 1], PPTerm);
+		  GapScoreDD(PA[uPrefixLengthA - 1], PPTerm.get());
 		TBD(uPrefixLengthA, 0) = 'D';
 
 	// I=GapA+LetterB, impossible with empty prefix
@@ -208,7 +209,7 @@ SCORE GlobalAlignDimer(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	// I=GapA+LetterB
 		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) +
-		  GapScoreII(PPTerm, PB[uPrefixLengthB - 1]);
+		  GapScoreII(PPTerm.get(), PB[uPrefixLengthB - 1]);
 		TBI(0, uPrefixLengthB) = 'I';
 		}
 

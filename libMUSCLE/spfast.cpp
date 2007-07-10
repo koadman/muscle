@@ -24,36 +24,36 @@ static char *GapTypeToStr(int GapType)
 	return "?";
 	}
 
-static SCORE GapScoreMatrix[4][4];
+static TLS<SCORE[4][4]> GapScoreMatrix;
 
 static void InitGapScoreMatrix()
 	{
 	const SCORE t = (SCORE) 0.2;
 
-	GapScoreMatrix[LL][LL] = 0;
-	GapScoreMatrix[LL][LG] = g_scoreGapOpen;
-	GapScoreMatrix[LL][GL] = 0;
-	GapScoreMatrix[LL][GG] = 0;
+	GapScoreMatrix.get()[LL][LL] = 0;
+	GapScoreMatrix.get()[LL][LG] = g_scoreGapOpen;
+	GapScoreMatrix.get()[LL][GL] = 0;
+	GapScoreMatrix.get()[LL][GG] = 0;
 
-	GapScoreMatrix[LG][LL] = g_scoreGapOpen;
-	GapScoreMatrix[LG][LG] = 0;
-	GapScoreMatrix[LG][GL] = g_scoreGapOpen;
-	GapScoreMatrix[LG][GG] = t*g_scoreGapOpen;	// approximation!
+	GapScoreMatrix.get()[LG][LL] = g_scoreGapOpen;
+	GapScoreMatrix.get()[LG][LG] = 0;
+	GapScoreMatrix.get()[LG][GL] = g_scoreGapOpen;
+	GapScoreMatrix.get()[LG][GG] = t*g_scoreGapOpen;	// approximation!
 
-	GapScoreMatrix[GL][LL] = 0;
-	GapScoreMatrix[GL][LG] = g_scoreGapOpen;
-	GapScoreMatrix[GL][GL] = 0;
-	GapScoreMatrix[GL][GG] = 0;
+	GapScoreMatrix.get()[GL][LL] = 0;
+	GapScoreMatrix.get()[GL][LG] = g_scoreGapOpen;
+	GapScoreMatrix.get()[GL][GL] = 0;
+	GapScoreMatrix.get()[GL][GG] = 0;
 
-	GapScoreMatrix[GG][LL] = 0;
-	GapScoreMatrix[GG][LG] = t*g_scoreGapOpen;	// approximation!
-	GapScoreMatrix[GG][GL] = 0;
-	GapScoreMatrix[GG][GG] = 0;
+	GapScoreMatrix.get()[GG][LL] = 0;
+	GapScoreMatrix.get()[GG][LG] = t*g_scoreGapOpen;	// approximation!
+	GapScoreMatrix.get()[GG][GL] = 0;
+	GapScoreMatrix.get()[GG][GG] = 0;
 
 	for (int i = 0; i < 4; ++i)
 		for (int j = 0; j < i; ++j)
-			if (GapScoreMatrix[i][j] != GapScoreMatrix[j][i])
-				Quit("GapScoreMatrix not symmetrical");
+			if (GapScoreMatrix.get()[i][j] != GapScoreMatrix.get()[j][i])
+				Quit("GapScoreMatrix.get() not symmetrical");
 	}
 
 static SCORE SPColBrute(const MSA &msa, unsigned uColIndex)
@@ -105,7 +105,7 @@ static SCORE SPGapFreqs(const FCOUNT Freqs[])
 		const FCOUNT fi = Freqs[i];
 		if (0 == fi)
 			continue;
-		const float *Row = GapScoreMatrix[i];
+		const float *Row = GapScoreMatrix.get()[i];
 		SCORE diagt = fi*fi*Row[i];
 		TotalDiag += diagt;
 #if	TRACE
@@ -214,7 +214,7 @@ static SCORE ObjScoreSPCol(const MSA &msa, unsigned uColIndex)
 		int GapType = bGapThisCol + 2*bGapPrevCol;
 		assert(GapType >= 0 && GapType < 4);
 		GapFreqs[GapType] += w;
-		SCORE gapt = w*w*GapScoreMatrix[GapType][GapType];
+		SCORE gapt = w*w*GapScoreMatrix.get()[GapType][GapType];
 		GapSelfOverCount += gapt;
 
 		if (bGapThisCol)
@@ -244,8 +244,8 @@ static SCORE ObjScoreSPCol(const MSA &msa, unsigned uColIndex)
 
 SCORE ObjScoreSPDimer(const MSA &msa)
 	{
-	static bool bGapScoreMatrixInit = false;
-	if (!bGapScoreMatrixInit)
+	static TLS<bool> bGapScoreMatrixInit(false);
+	if (!bGapScoreMatrixInit.get())
 		InitGapScoreMatrix();
 
 	SCORE Total = 0;

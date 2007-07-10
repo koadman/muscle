@@ -1,5 +1,6 @@
 #include "muscle.h"
 #include <math.h>
+#include "threadstorage.h"
 
 PROB ScoreToProb(SCORE Score)
 	{
@@ -109,19 +110,19 @@ SCORE lp2Fast(SCORE x)
 	const int iTableSize = 1000;
 	const double dRange = 20.0;
 	const double dScale = dRange/iTableSize;
-	static SCORE dValue[iTableSize];
-	static bool bInit = false;
-	if (!bInit)
+	static TLS<SCORE[iTableSize]> dValue;
+	static TLS<bool> bInit(false);
+	if (!bInit.get())
 		{
 		for (int i = 0; i < iTableSize; ++i)
-			dValue[i] = (SCORE) lp2(i*dScale);
-		bInit = true;
+			dValue.get()[i] = (SCORE) lp2(i*dScale);
+		bInit.get() = true;
 		}
 	if (x >= dRange)
 		return 0.0;
 	int i = (int) (x/dScale);
 	assert(i >= 0 && i < iTableSize);
-	SCORE dResult = dValue[i];
+	SCORE dResult = dValue.get()[i];
 	assert(BTEq(dResult, lp2(x)));
 	return dResult;
 	}

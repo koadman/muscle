@@ -1,4 +1,5 @@
 #include "muscle.h"
+#include "threadstorage.h"
 
 #if	WIN32
 #include <windows.h>
@@ -20,7 +21,7 @@ void DebugPrintf(const char *szFormat, ...)
 
 double GetNAN()
 	{
-	static unsigned long nan[2]={0xffffffff, 0x7fffffff};
+	static const unsigned long nan[2]={0xffffffff, 0x7fffffff};
 	double dNAN = *( double* )nan;
 	assert(_isnan(dNAN));
 	return dNAN;
@@ -45,7 +46,7 @@ const char *GetCmdLine()
 	return GetCommandLine();
 	}
 
-static unsigned uPeakMemUseBytes;
+static TLS<unsigned> uPeakMemUseBytes;
 
 double GetRAMSizeMB()
 	{
@@ -71,14 +72,14 @@ double GetMemUseMB()
 	//printf("%12u  QuotaNonPagedPoolUsage\n", (unsigned) PMC.QuotaNonPagedPoolUsage);
 	//printf("%12u  QuotaPeakNonPagedPoolUsage\n", (unsigned) PMC.QuotaPeakNonPagedPoolUsage);
 	unsigned uBytes = (unsigned) PMC.WorkingSetSize;
-	if (uBytes > uPeakMemUseBytes)
-		uPeakMemUseBytes = uBytes;
+	if (uBytes > uPeakMemUseBytes.get())
+		uPeakMemUseBytes.get() = uBytes;
 	return (uBytes + 500000.0)/1000000.0;
 	}
 
 double GetPeakMemUseMB()
 	{
-	return (uPeakMemUseBytes + 500000.0)/1000000.0;
+	return (uPeakMemUseBytes.get() + 500000.0)/1000000.0;
 	}
 
 void CheckMemUse()

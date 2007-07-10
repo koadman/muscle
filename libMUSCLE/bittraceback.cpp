@@ -1,5 +1,6 @@
 #include "muscle.h"
 #include "pwpath.h"
+#include "threadstorage.h"
 
 #define TRACE 0
 
@@ -14,42 +15,42 @@ static char XlatEdgeType(char c)
 
 static const char *BitsToStr(char Bits)
 	{
-	static char Str[] = "xM xD xI";
+	static TLSstr<char[9]> Str("xM xD xI");
 
 	switch (Bits & BIT_xM)
 		{
 	case BIT_MM:
-		Str[0] = 'M';
+		Str.get()[0] = 'M';
 		break;
 	case BIT_DM:
-		Str[0] = 'D';
+		Str.get()[0] = 'D';
 		break;
 	case BIT_IM:
-		Str[0] = 'I';
+		Str.get()[0] = 'I';
 		break;
 		}
 
 	switch (Bits & BIT_xD)
 		{
 	case BIT_MD:
-		Str[3] = 'M';
+		Str.get()[3] = 'M';
 		break;
 	case BIT_DD:
-		Str[3] = 'D';
+		Str.get()[3] = 'D';
 		break;
 		}
 
 	switch (Bits & BIT_xI)
 		{
 	case BIT_MI:
-		Str[6] = 'M';
+		Str.get()[6] = 'M';
 		break;
 	case BIT_II:
-		Str[6] = 'I';
+		Str.get()[6] = 'I';
 		break;
 		}
 
-	return Str;
+	return Str.get();
 	}
 
 static inline char XChar(char Bits, char cType)

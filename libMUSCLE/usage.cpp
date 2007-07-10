@@ -3,15 +3,18 @@
 
 void Credits()
 	{
+#pragma omp critical
+{
 	static bool Displayed = false;
-	if (Displayed)
-		return;
-
-	fprintf(stderr, "\n" MUSCLE_LONG_VERSION "\n\n");
-	fprintf(stderr, "http://www.drive5.com/muscle\n");
-	fprintf(stderr, "This software is donated to the public domain.\n");
-	fprintf(stderr, "Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.\n\n");
+	if (!Displayed)
+	{
+		fprintf(stderr, "\n" MUSCLE_LONG_VERSION "\n\n");
+		fprintf(stderr, "http://www.drive5.com/muscle\n");
+		fprintf(stderr, "This software is donated to the public domain.\n");
+		fprintf(stderr, "Please cite: Edgar, R.C. Nucleic Acids Res 32(5), 1792-97.\n\n");
+	}
 	Displayed = true;
+}
 	}
 
 void Usage()

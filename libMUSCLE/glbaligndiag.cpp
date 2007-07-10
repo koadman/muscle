@@ -4,13 +4,14 @@
 #include "pwpath.h"
 #include "profile.h"
 #include "timing.h"
+#include "threadstorage.h"
 
 #define TRACE		0
 #define TRACE_PATH	0
 #define LIST_DIAGS	0
 
-static double g_dDPAreaWithoutDiags = 0.0;
-static double g_dDPAreaWithDiags = 0.0;
+static TLS<double> g_dDPAreaWithoutDiags(0.0);
+static TLS<double> g_dDPAreaWithDiags(0.0);
 
 static void OffsetPath(PWPath &Path, unsigned uOffsetA, unsigned uOffsetB)
 	{
@@ -103,7 +104,7 @@ SCORE GlobalAlignDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	}
 #endif
 
-	g_dDPAreaWithoutDiags += uLengthA*uLengthB;
+	g_dDPAreaWithoutDiags.get() += uLengthA*uLengthB;
 
 	double dDPAreaWithDiags = 0.0;
 	const unsigned uRegionCount = RL.GetCount();
@@ -158,7 +159,7 @@ SCORE GlobalAlignDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	  dDPAreaWithDiags, dDPAreaWithoutDiags, (1.0 - dDPAreaWithDiags/dDPAreaWithoutDiags)*100.0);
 	}
 #endif
-	g_dDPAreaWithDiags += dDPAreaWithDiags;
+	g_dDPAreaWithDiags.get() += dDPAreaWithDiags;
 	return 0;
 	}
 
@@ -166,7 +167,7 @@ void ListDiagSavings()
 	{
 	if (!g_bVerbose || !g_bDiags)
 		return;
-	double dAreaSaved = g_dDPAreaWithoutDiags - g_dDPAreaWithDiags;
-	double dPct = dAreaSaved*100.0/g_dDPAreaWithoutDiags;
+	double dAreaSaved = g_dDPAreaWithoutDiags.get() - g_dDPAreaWithDiags.get();
+	double dPct = dAreaSaved*100.0/g_dDPAreaWithoutDiags.get();
 	Log("DP area saved by diagonals %-4.1f%%\n", dPct);
 	}

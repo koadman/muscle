@@ -2,6 +2,7 @@
 #include "distfunc.h"
 #include "seqvect.h"
 #include <math.h>
+#include "threadstorage.h"
 
 const unsigned TRIPLE_COUNT = 20*20*20;
 
@@ -10,7 +11,7 @@ struct TripleCount
 	unsigned m_uSeqCount;			// How many sequences have this triple?
 	unsigned short *m_Counts;		// m_Counts[s] = nr of times triple found in seq s
 	};
-static TripleCount *TripleCounts;
+static TLS<TripleCount *> TripleCounts;
 
 // WARNING: Sequences MUST be stripped of gaps and upper case!
 void DistKmer20_3(const SeqVect &v, DistFunc &DF)
@@ -28,14 +29,14 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 		}
 
 	const unsigned uTripleArrayBytes = TRIPLE_COUNT*sizeof(TripleCount);
-	TripleCounts = (TripleCount *) malloc(uTripleArrayBytes);
-	if (0 == TripleCounts)
+	TripleCounts.get() = (TripleCount *) malloc(uTripleArrayBytes);
+	if (0 == TripleCounts.get())
 		Quit("Not enough memory (TripleCounts)");
-	memset(TripleCounts, 0, uTripleArrayBytes);
+	memset(TripleCounts.get(), 0, uTripleArrayBytes);
 
 	for (unsigned uWord = 0; uWord < TRIPLE_COUNT; ++uWord)
 		{
-		TripleCount &tc = *(TripleCounts + uWord);
+		TripleCount &tc = *(TripleCounts.get() + uWord);
 		const unsigned uBytes = uSeqCount*sizeof(short);
 		tc.m_Counts = (unsigned short *) malloc(uBytes);
 		memset(tc.m_Counts, 0, uBytes);
@@ -60,7 +61,7 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 			const unsigned uWord = uLetter1 + uLetter2*20 + uLetter3*20*20;
 			assert(uWord < TRIPLE_COUNT);
 
-			TripleCount &tc = *(TripleCounts + uWord);
+			TripleCount &tc = *(TripleCounts.get() + uWord);
 			const unsigned uOldCount = tc.m_Counts[uSeqIndex];
 			if (0 == uOldCount)
 				++(tc.m_uSeqCount);
@@ -75,7 +76,7 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 	unsigned uGrandTotal = 0;
 	for (unsigned uWord = 0; uWord < TRIPLE_COUNT; ++uWord)
 		{
-		const TripleCount &tc = *(TripleCounts + uWord);
+		const TripleCount &tc = *(TripleCounts.get() + uWord);
 		if (0 == tc.m_uSeqCount)
 			continue;
 
@@ -122,7 +123,7 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 
 	for (unsigned uWord = 0; uWord < TRIPLE_COUNT; ++uWord)
 		{
-		const TripleCount &tc = *(TripleCounts + uWord);
+		const TripleCount &tc = *(TripleCounts.get() + uWord);
 		if (0 == tc.m_uSeqCount)
 			continue;
 
@@ -156,7 +157,7 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 			}
 		}
 	delete[] SeqList;
-	free(TripleCounts);
+	free(TripleCounts.get());
 
 	unsigned uDone = 0;
 	const unsigned uTotal = (uSeqCount*(uSeqCount - 1))/2;

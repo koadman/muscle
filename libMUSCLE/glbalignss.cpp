@@ -2,6 +2,7 @@
 #include "profile.h"
 #include "pwpath.h"
 #include "seq.h"
+#include "threadstorage.h"
 
 extern SCOREMATRIX VTML_SP;
 
@@ -33,13 +34,13 @@ struct DP_MEMORY
 	int **TraceBack;
 	};
 
-static struct DP_MEMORY DPM;
+static TLS<struct DP_MEMORY> DPM;
 
 static void AllocDPMem(unsigned uLengthA, unsigned uLengthB)
 	{
 // Max prefix length
 	unsigned uLength = (uLengthA > uLengthB ? uLengthA : uLengthB) + 1;
-	if (uLength < DPM.uLength)
+	if (uLength < DPM.get().uLength)
 		return;
 
 // Add 256 to allow for future expansion and
@@ -47,41 +48,41 @@ static void AllocDPMem(unsigned uLengthA, unsigned uLengthB)
 	uLength += 256;
 	uLength += 32 - uLength%32;
 
-	const unsigned uOldLength = DPM.uLength;
+	const unsigned uOldLength = DPM.get().uLength;
 	if (uOldLength > 0)
 		{
 		for (unsigned i = 0; i < uOldLength; ++i)
-			delete[] DPM.TraceBack[i];
+			delete[] DPM.get().TraceBack[i];
 
-		delete[] DPM.MPrev;
-		delete[] DPM.MCurr;
-		delete[] DPM.MWork;
-		delete[] DPM.DPrev;
-		delete[] DPM.DCurr;
-		delete[] DPM.DWork;
-		delete[] DPM.MxRowA;
-		delete[] DPM.LettersB;
-		delete[] DPM.uDeletePos;
-		delete[] DPM.TraceBack;
+		delete[] DPM.get().MPrev;
+		delete[] DPM.get().MCurr;
+		delete[] DPM.get().MWork;
+		delete[] DPM.get().DPrev;
+		delete[] DPM.get().DCurr;
+		delete[] DPM.get().DWork;
+		delete[] DPM.get().MxRowA;
+		delete[] DPM.get().LettersB;
+		delete[] DPM.get().uDeletePos;
+		delete[] DPM.get().TraceBack;
 		}
 
-	DPM.uLength = uLength;
+	DPM.get().uLength = uLength;
 
-	DPM.MPrev = new SCORE[uLength];
-	DPM.MCurr = new SCORE[uLength];
-	DPM.MWork = new SCORE[uLength];
+	DPM.get().MPrev = new SCORE[uLength];
+	DPM.get().MCurr = new SCORE[uLength];
+	DPM.get().MWork = new SCORE[uLength];
 
-	DPM.DPrev = new SCORE[uLength];
-	DPM.DCurr = new SCORE[uLength];
-	DPM.DWork = new SCORE[uLength];
-	DPM.MxRowA = new SCORE *[uLength];
-	DPM.LettersB = new unsigned[uLength];
-	DPM.uDeletePos = new unsigned[uLength];
+	DPM.get().DPrev = new SCORE[uLength];
+	DPM.get().DCurr = new SCORE[uLength];
+	DPM.get().DWork = new SCORE[uLength];
+	DPM.get().MxRowA = new SCORE *[uLength];
+	DPM.get().LettersB = new unsigned[uLength];
+	DPM.get().uDeletePos = new unsigned[uLength];
 
-	DPM.TraceBack = new int*[uLength];
+	DPM.get().TraceBack = new int*[uLength];
 
 	for (unsigned i = 0; i < uLength; ++i)
-		DPM.TraceBack[i] = new int[uLength];
+		DPM.get().TraceBack[i] = new int[uLength];
 	}
 
 static void RowFromSeq(const Seq &s, SCORE *Row[])
@@ -121,22 +122,22 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 
 	AllocDPMem(uLengthA, uLengthB);
 
-	SCORE *MPrev = DPM.MPrev;
-	SCORE *MCurr = DPM.MCurr;
-	SCORE *MWork = DPM.MWork;
+	SCORE *MPrev = DPM.get().MPrev;
+	SCORE *MCurr = DPM.get().MCurr;
+	SCORE *MWork = DPM.get().MWork;
 
-	SCORE *DPrev = DPM.DPrev;
-	SCORE *DCurr = DPM.DCurr;
-	SCORE *DWork = DPM.DWork;
-	SCORE **MxRowA = DPM.MxRowA;
-	unsigned *LettersB = DPM.LettersB;
+	SCORE *DPrev = DPM.get().DPrev;
+	SCORE *DCurr = DPM.get().DCurr;
+	SCORE *DWork = DPM.get().DWork;
+	SCORE **MxRowA = DPM.get().MxRowA;
+	unsigned *LettersB = DPM.get().LettersB;
 
 	RowFromSeq(seqA, MxRowA);
 	LettersFromSeq(seqB, LettersB);
 
-	unsigned *uDeletePos = DPM.uDeletePos;
+	unsigned *uDeletePos = DPM.get().uDeletePos;
 
-	int **TraceBack = DPM.TraceBack;
+	int **TraceBack = DPM.get().TraceBack;
 
 #if	DEBUG
 	for (unsigned i = 0; i < uPrefixCountA; ++i)

@@ -64,27 +64,27 @@ static bool TryRealign(MSA &msaIn, const Tree &tree, const unsigned Leaves1[],
 	bool bAnyChanges = !pathAfter.Equal(pathBefore);
 	unsigned uDiffCount1;
 	unsigned uDiffCount2;
-	static unsigned* Edges1 = NULL;
-	static unsigned* Edges2 = NULL;
-	static unsigned uEdges1size = 0;
-	static unsigned uEdges2size = 0;
+	static TLS<unsigned*> Edges1(NULL);
+	static TLS<unsigned*> Edges2(NULL);
+	static TLS<unsigned> uEdges1size(0);
+	static TLS<unsigned> uEdges2size(0);
 	unsigned uEdgeMaxCount = pathBefore.GetEdgeCount() > pathAfter.GetEdgeCount() ? pathBefore.GetEdgeCount() : pathAfter.GetEdgeCount();
-	if( uEdges1size < uEdgeMaxCount )
+	if( uEdges1size.get() < uEdgeMaxCount )
 	{
-		if( Edges1 != NULL )
-			delete[] Edges1;
-		Edges1 = new unsigned[uEdgeMaxCount+100];
-		uEdges1size = uEdgeMaxCount;
+		if( Edges1.get() != NULL )
+			delete[] Edges1.get();
+		Edges1.get() = new unsigned[uEdgeMaxCount+100];
+		uEdges1size.get() = uEdgeMaxCount;
 	}
-	if( uEdges2size < uEdgeMaxCount )
+	if( uEdges2size.get() < uEdgeMaxCount )
 	{
-		if( Edges2 != NULL )
-			delete[] Edges2;
-		Edges2 = new unsigned[uEdgeMaxCount+100];
-		uEdges2size = uEdgeMaxCount;
+		if( Edges2.get() != NULL )
+			delete[] Edges2.get();
+		Edges2.get() = new unsigned[uEdgeMaxCount+100];
+		uEdges2size.get() = uEdgeMaxCount;
 	}
 
-	DiffPaths(pathBefore, pathAfter, Edges1, &uDiffCount1, Edges2, &uDiffCount2);
+	DiffPaths(pathBefore, pathAfter, Edges1.get(), &uDiffCount1, Edges2.get(), &uDiffCount2);
 
 #if	TRACE
 	Log("TryRealign, msa1=\n");
@@ -106,8 +106,8 @@ static bool TryRealign(MSA &msaIn, const Tree &tree, const unsigned Leaves1[],
 	SetMSAWeightsMuscle(msaRealigned);
 
 #if	DIFFOBJSCORE
-	const SCORE scoreDiff = DiffObjScore(msaIn, pathBefore, Edges1, uDiffCount1,
-	  msaRealigned, pathAfter, Edges2, uDiffCount2);
+	const SCORE scoreDiff = DiffObjScore(msaIn, pathBefore, Edges1.get(), uDiffCount1,
+	  msaRealigned, pathAfter, Edges2.get(), uDiffCount2);
 	bool bAccept = (scoreDiff > 0);
 	*ptrscoreBefore = 0;
 	*ptrscoreAfter = scoreDiff;

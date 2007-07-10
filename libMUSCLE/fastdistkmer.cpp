@@ -4,6 +4,7 @@
 #include "seq.h"
 #include "distfunc.h"
 #include <math.h>
+#include "threadstorage.h"
 
 #define TRACE	0
 
@@ -62,18 +63,18 @@ const unsigned TABLE_SIZE = N_4;
 // For debug output
 const char *KmerToStr(unsigned Kmer)
 	{
-	static char s[5];
+	static TLS<char[5]> s;
 
 	unsigned c3 = (Kmer/N_3)%N;
 	unsigned c2 = (Kmer/N_2)%N;
 	unsigned c1 = (Kmer/N)%N;
 	unsigned c0 = Kmer%N;
 
-	s[0] = LetterToChar(c3);
-	s[1] = LetterToChar(c2);
-	s[2] = LetterToChar(c1);
-	s[3] = LetterToChar(c0);
-	return s;
+	s.get()[0] = LetterToChar(c3);
+	s.get()[1] = LetterToChar(c2);
+	s.get()[2] = LetterToChar(c1);
+	s.get()[3] = LetterToChar(c0);
+	return s.get();
 	}
 
 void CountKmers(const byte s[], unsigned uSeqLength, byte KmerCounts[])

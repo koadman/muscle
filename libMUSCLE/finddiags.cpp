@@ -1,16 +1,17 @@
 #include "muscle.h"
 #include "profile.h"
 #include "diaglist.h"
+#include "threadstorage.h"
 
 #define TRACE	0
 
 const unsigned KTUP = 5;
 const unsigned KTUPS = 6*6*6*6*6;
-static unsigned TuplePos[KTUPS];
+static TLS<unsigned[KTUPS]> TuplePos;
 
 static char *TupleToStr(int t)
 	{
-	static char s[7];
+	static TLS<char[7]> s;
 	int t1, t2, t3, t4, t5;
 
 	t1 = t%6;
@@ -19,12 +20,12 @@ static char *TupleToStr(int t)
 	t4 = (t/(6*6*6))%6;
 	t5 = (t/(6*6*6*6))%6;
 
-	s[4] = '0' + t1;
-	s[3] = '0' + t2;
-	s[2] = '0' + t3;
-	s[1] = '0' + t4;
-	s[0] = '0' + t5;
-	return s;
+	s.get()[4] = '0' + t1;
+	s.get()[3] = '0' + t2;
+	s.get()[2] = '0' + t3;
+	s.get()[1] = '0' + t4;
+	s.get()[0] = '0' + t5;
+	return s.get();
 	}
 
 static unsigned GetTuple(const ProfPos *PP, unsigned uPos)
@@ -90,14 +91,14 @@ void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 	if (uLengthB < KTUP)
 		Quit("FindDiags: profile too short");
 
-	memset(TuplePos, EMPTY, sizeof(TuplePos));
+	memset(TuplePos.get(), EMPTY, sizeof(TuplePos.get()));
 
 	for (unsigned uPos = 0; uPos < uLengthB - KTUP; ++uPos)
 		{
 		const unsigned uTuple = GetTuple(PB, uPos);
 		if (EMPTY == uTuple)
 			continue;
-		TuplePos[uTuple] = uPos;
+		TuplePos.get()[uTuple] = uPos;
 		}
 
 // Find matches
@@ -106,7 +107,7 @@ void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 		const unsigned uTuple = GetTuple(PA, uPosA);
 		if (EMPTY == uTuple)
 			continue;
-		const unsigned uPosB = TuplePos[uTuple];
+		const unsigned uPosB = TuplePos.get()[uTuple];
 		if (EMPTY == uPosB)
 			continue;
 

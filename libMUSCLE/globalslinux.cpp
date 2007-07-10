@@ -1,4 +1,5 @@
 #include "muscle.h"
+#include "threadstorage.h"
 
 #ifndef	WIN32
 #include <sys/time.h>
@@ -13,7 +14,7 @@ const int MEM_WARNING_THRESHOLD = 20*ONE_MB;
 
 double GetNAN()
 	{
-	static unsigned long nan[2]={0xffffffff, 0x7fffffff};
+	static const unsigned long nan[2]={0xffffffff, 0x7fffffff};
 	double dNAN = *( double* )nan;
 	return dNAN;
 	}
@@ -30,27 +31,27 @@ void Break()
 	//DebugBreak();
 	}
 
-static char szCmdLine[4096];
+static TLS<char[4096]> szCmdLine;
 
 void *ptrStartBreak = sbrk(0);
 
 const char *GetCmdLine()
 	{
-	return szCmdLine;
+	return szCmdLine.get();
 	}
 
 double GetMemUseMB()
 	{
-	static char statm[64];
-	static int PageSize;
-	if (0 == statm[0])
+	static TLS<char[64]> statm;
+	static TLS<int> PageSize;
+	if (0 == statm.get()[0])
 		{
-		PageSize = sysconf(_SC_PAGESIZE);
+		PageSize.get() = sysconf(_SC_PAGESIZE);
 		pid_t pid = getpid();
-		sprintf(statm, "/proc/%d/statm", (int) pid);
+		sprintf(statm.get(), "/proc/%d/statm", (int) pid);
 		}
 
-	int fd = open(statm, O_RDONLY);
+	int fd = open(statm.get(), O_RDONLY);
 	if (-1 == fd)
 		return -1;
 	char Buffer[64];
@@ -65,14 +66,14 @@ double GetMemUseMB()
 			{
 			Warned = true;
 			Warning("*Warning* Cannot read %s errno=%d %s",
-			  statm, errno, strerror(errno));
+			  statm.get(), errno, strerror(errno));
 			}
 		return 0;
 		}
 	Buffer[n] = 0;
 	int Pages = atoi(Buffer);
 
-	return ((double) Pages * (double) PageSize)/1e6;
+	return ((double) Pages * (double) PageSize.get())/1e6;
 	}
 
 void SaveCmdLine(int argc, char *argv[])

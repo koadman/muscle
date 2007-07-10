@@ -3,15 +3,16 @@
 #include "seqvect.h"
 #include "profile.h"
 #include "tree.h"
+#include "threadstorage.h"
 
 // These global variables are a hack to allow the tree
 // dependent iteration code to communicate the edge
 // used to divide the tree. The three-way weighting
 // scheme needs to know this edge in order to compute
 // sequence weights.
-static const Tree *g_ptrMuscleTree = 0;
-unsigned g_uTreeSplitNode1 = NULL_NEIGHBOR;
-unsigned g_uTreeSplitNode2 = NULL_NEIGHBOR;
+static TLS<const Tree *> g_ptrMuscleTree(0);
+TLS<unsigned> g_uTreeSplitNode1(NULL_NEIGHBOR);
+TLS<unsigned> g_uTreeSplitNode2(NULL_NEIGHBOR);
 
 void MSA::GetFractionalWeightedCounts(unsigned uColIndex, bool bNormalize,
   FCOUNT fcCounts[], FCOUNT *ptrfcGapStart, FCOUNT *ptrfcGapEnd,
@@ -383,46 +384,46 @@ void SetMSAWeightsMuscle(MSA &msa)
 	Quit("SetMSAWeightsMuscle, Invalid method=%d", Method);
 	}
 
-static WEIGHT *g_MuscleWeights;
-static unsigned g_uMuscleIdCount;
+static TLS<WEIGHT *> g_MuscleWeights;
+static TLS<unsigned> g_uMuscleIdCount;
 
 WEIGHT GetMuscleSeqWeightById(unsigned uId)
 	{
-	if (0 == g_MuscleWeights)
+	if (0 == g_MuscleWeights.get())
 		Quit("g_MuscleWeights = 0");
-	if (uId >= g_uMuscleIdCount)
+	if (uId >= g_uMuscleIdCount.get())
 		Quit("GetMuscleSeqWeightById(%u): count=%u",
-		  uId, g_uMuscleIdCount);
+		  uId, g_uMuscleIdCount.get());
 
-	return g_MuscleWeights[uId];
+	return g_MuscleWeights.get()[uId];
 	}
 
 void SetMuscleTree(const Tree &tree)
 	{
-	g_ptrMuscleTree = &tree;
+	g_ptrMuscleTree.get() = &tree;
 
 	if (SEQWEIGHT_ClustalW != GetSeqWeightMethod())
 		return;
 
-	delete[] g_MuscleWeights;
+	delete[] g_MuscleWeights.get();
 
 	const unsigned uLeafCount = tree.GetLeafCount();
-	g_uMuscleIdCount = uLeafCount;
-	g_MuscleWeights = new WEIGHT[uLeafCount];
-	CalcClustalWWeights(tree, g_MuscleWeights);
+	g_uMuscleIdCount.get() = uLeafCount;
+	g_MuscleWeights.get() = new WEIGHT[uLeafCount];
+	CalcClustalWWeights(tree, g_MuscleWeights.get());
 	}
 
 void SetClustalWWeightsMuscle(MSA &msa)
 	{
-	if (0 == g_MuscleWeights)
+	if (0 == g_MuscleWeights.get())
 		Quit("g_MuscleWeights = 0");
 	const unsigned uSeqCount = msa.GetSeqCount();
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		{
 		const unsigned uId = msa.GetSeqId(uSeqIndex);
-		if (uId >= g_uMuscleIdCount)
+		if (uId >= g_uMuscleIdCount.get())
 			Quit("SetClustalWWeightsMuscle: id out of range");
-		msa.SetSeqWeight(uSeqIndex, g_MuscleWeights[uId]);
+		msa.SetSeqWeight(uSeqIndex, g_MuscleWeights.get()[uId]);
 		}
 	msa.NormalizeWeights((WEIGHT) 1.0);
 	}
@@ -431,16 +432,16 @@ void SetClustalWWeightsMuscle(MSA &msa)
 
 void SetThreeWayWeightsMuscle(MSA &msa)
 	{
-	if (NULL_NEIGHBOR == g_uTreeSplitNode1 || NULL_NEIGHBOR == g_uTreeSplitNode2)
+	if (NULL_NEIGHBOR == g_uTreeSplitNode1.get() || NULL_NEIGHBOR == g_uTreeSplitNode2.get())
 		{
 		msa.SetHenikoffWeightsPB();
 		return;
 		}
 
-	const unsigned uMuscleSeqCount = g_ptrMuscleTree->GetLeafCount();
+	const unsigned uMuscleSeqCount = g_ptrMuscleTree.get()->GetLeafCount();
 	WEIGHT *Weights = new WEIGHT[uMuscleSeqCount];
 
-	CalcThreeWayWeights(*g_ptrMuscleTree, g_uTreeSplitNode1, g_uTreeSplitNode2,
+	CalcThreeWayWeights(*(g_ptrMuscleTree.get()), g_uTreeSplitNode1.get(), g_uTreeSplitNode2.get(),
 	  Weights);
 
 	const unsigned uMSASeqCount = msa.GetSeqCount();

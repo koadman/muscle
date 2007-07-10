@@ -2,6 +2,7 @@
 #include "msa.h"
 #include "profile.h"
 #include "objscore.h"
+#include "threadstorage.h"
 
 #if	DOUBLE_AFFINE
 
@@ -44,10 +45,10 @@ static SCORE GapPenalty(unsigned uLength, bool Term)
 #endif
 	}
 
-static const MSA *g_ptrMSA1;
-static const MSA *g_ptrMSA2;
-static unsigned g_uSeqIndex1;
-static unsigned g_uSeqIndex2;
+static TLS<const MSA *> g_ptrMSA1;
+static TLS<const MSA *> g_ptrMSA2;
+static TLS<unsigned> g_uSeqIndex1;
+static TLS<unsigned> g_uSeqIndex2;
 
 static void LogGap(unsigned uStart, unsigned uEnd, unsigned uGapLength,
   bool bNTerm, bool bCTerm)
@@ -58,8 +59,8 @@ static void LogGap(unsigned uStart, unsigned uEnd, unsigned uGapLength,
 	unsigned uMyLength = 0;
 	for (unsigned i = uStart; i <= uEnd; ++i)
 		{
-		bool bGap1 = g_ptrMSA1->IsGap(g_uSeqIndex1, i);
-		bool bGap2 = g_ptrMSA2->IsGap(g_uSeqIndex2, i);
+		bool bGap1 = g_ptrMSA1.get()->IsGap(g_uSeqIndex1.get(), i);
+		bool bGap2 = g_ptrMSA2.get()->IsGap(g_uSeqIndex2.get(), i);
 		if (!bGap1 && !bGap2)
 			Quit("Error -- neither gapping");
 		if (bGap1 && bGap2)
@@ -81,10 +82,10 @@ static void LogGap(unsigned uStart, unsigned uEnd, unsigned uGapLength,
 static SCORE ScoreSeqPair(const MSA &msa1, unsigned uSeqIndex1,
   const MSA &msa2, unsigned uSeqIndex2, SCORE *ptrLetters, SCORE *ptrGaps)
 	{
-	g_ptrMSA1 = &msa1;
-	g_ptrMSA2 = &msa2;
-	g_uSeqIndex1 = uSeqIndex1;
-	g_uSeqIndex2 = uSeqIndex2;
+	g_ptrMSA1.get() = &msa1;
+	g_ptrMSA2.get() = &msa2;
+	g_uSeqIndex1.get() = uSeqIndex1;
+	g_uSeqIndex2.get() = uSeqIndex2;
 
 	const unsigned uColCount = msa1.GetColCount();
 	const unsigned uColCount2 = msa2.GetColCount();

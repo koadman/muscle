@@ -1,6 +1,7 @@
 #include "muscle.h"
 #include "profile.h"
 #include "pwpath.h"
+#include "threadstorage.h"
 
 struct DP_MEMORY
 	{
@@ -22,45 +23,45 @@ struct DP_MEMORY
 	int **TraceBack;
 	};
 
-static struct DP_MEMORY DPM;
+static TLS<struct DP_MEMORY> DPM;
 
 void FreeDPMemSPN()
 	{
-	const unsigned uOldLength = DPM.uLength;
+	const unsigned uOldLength = DPM.get().uLength;
 	if (0 == uOldLength)
 		return;
 
 	for (unsigned i = 0; i < uOldLength; ++i)
 		{
-		delete[] DPM.TraceBack[i];
-		delete[] DPM.FreqsA[i];
-		delete[] DPM.SortOrderA[i];
+		delete[] DPM.get().TraceBack[i];
+		delete[] DPM.get().FreqsA[i];
+		delete[] DPM.get().SortOrderA[i];
 		}
 	for (unsigned n = 0; n < 4; ++n)
-		delete[] DPM.ScoreMxB[n];
+		delete[] DPM.get().ScoreMxB[n];
 
-	delete[] DPM.MPrev;
-	delete[] DPM.MCurr;
-	delete[] DPM.MWork;
-	delete[] DPM.DPrev;
-	delete[] DPM.DCurr;
-	delete[] DPM.DWork;
-	delete[] DPM.uDeletePos;
-	delete[] DPM.GapOpenA;
-	delete[] DPM.GapOpenB;
-	delete[] DPM.GapCloseA;
-	delete[] DPM.GapCloseB;
-	delete[] DPM.SortOrderA;
-	delete[] DPM.FreqsA;
-	delete[] DPM.ScoreMxB;
-	delete[] DPM.TraceBack;
+	delete[] DPM.get().MPrev;
+	delete[] DPM.get().MCurr;
+	delete[] DPM.get().MWork;
+	delete[] DPM.get().DPrev;
+	delete[] DPM.get().DCurr;
+	delete[] DPM.get().DWork;
+	delete[] DPM.get().uDeletePos;
+	delete[] DPM.get().GapOpenA;
+	delete[] DPM.get().GapOpenB;
+	delete[] DPM.get().GapCloseA;
+	delete[] DPM.get().GapCloseB;
+	delete[] DPM.get().SortOrderA;
+	delete[] DPM.get().FreqsA;
+	delete[] DPM.get().ScoreMxB;
+	delete[] DPM.get().TraceBack;
 	}
 
 static void AllocDPMem(unsigned uLengthA, unsigned uLengthB)
 	{
 // Max prefix length
 	unsigned uLength = (uLengthA > uLengthB ? uLengthA : uLengthB) + 1;
-	if (uLength < DPM.uLength)
+	if (uLength < DPM.get().uLength)
 		return;
 
 // Add 256 to allow for future expansion and
@@ -68,64 +69,64 @@ static void AllocDPMem(unsigned uLengthA, unsigned uLengthB)
 	uLength += 256;
 	uLength += 32 - uLength%32;
 
-	const unsigned uOldLength = DPM.uLength;
+	const unsigned uOldLength = DPM.get().uLength;
 	if (uOldLength > 0)
 		{
 		for (unsigned i = 0; i < uOldLength; ++i)
 			{
-			delete[] DPM.TraceBack[i];
-			delete[] DPM.FreqsA[i];
-			delete[] DPM.SortOrderA[i];
+			delete[] DPM.get().TraceBack[i];
+			delete[] DPM.get().FreqsA[i];
+			delete[] DPM.get().SortOrderA[i];
 			}
 		for (unsigned n = 0; n < 4; ++n)
-			delete[] DPM.ScoreMxB[n];
+			delete[] DPM.get().ScoreMxB[n];
 
-		delete[] DPM.MPrev;
-		delete[] DPM.MCurr;
-		delete[] DPM.MWork;
-		delete[] DPM.DPrev;
-		delete[] DPM.DCurr;
-		delete[] DPM.DWork;
-		delete[] DPM.uDeletePos;
-		delete[] DPM.GapOpenA;
-		delete[] DPM.GapOpenB;
-		delete[] DPM.GapCloseA;
-		delete[] DPM.GapCloseB;
-		delete[] DPM.SortOrderA;
-		delete[] DPM.FreqsA;
-		delete[] DPM.ScoreMxB;
-		delete[] DPM.TraceBack;
+		delete[] DPM.get().MPrev;
+		delete[] DPM.get().MCurr;
+		delete[] DPM.get().MWork;
+		delete[] DPM.get().DPrev;
+		delete[] DPM.get().DCurr;
+		delete[] DPM.get().DWork;
+		delete[] DPM.get().uDeletePos;
+		delete[] DPM.get().GapOpenA;
+		delete[] DPM.get().GapOpenB;
+		delete[] DPM.get().GapCloseA;
+		delete[] DPM.get().GapCloseB;
+		delete[] DPM.get().SortOrderA;
+		delete[] DPM.get().FreqsA;
+		delete[] DPM.get().ScoreMxB;
+		delete[] DPM.get().TraceBack;
 		}
 
-	DPM.uLength = uLength;
+	DPM.get().uLength = uLength;
 
-	DPM.GapOpenA = new SCORE[uLength];
-	DPM.GapOpenB = new SCORE[uLength];
-	DPM.GapCloseA = new SCORE[uLength];
-	DPM.GapCloseB = new SCORE[uLength];
+	DPM.get().GapOpenA = new SCORE[uLength];
+	DPM.get().GapOpenB = new SCORE[uLength];
+	DPM.get().GapCloseA = new SCORE[uLength];
+	DPM.get().GapCloseB = new SCORE[uLength];
 
-	DPM.SortOrderA = new unsigned*[uLength];
-	DPM.FreqsA = new FCOUNT*[uLength];
-	DPM.ScoreMxB = new SCORE*[4];
-	DPM.MPrev = new SCORE[uLength];
-	DPM.MCurr = new SCORE[uLength];
-	DPM.MWork = new SCORE[uLength];
+	DPM.get().SortOrderA = new unsigned*[uLength];
+	DPM.get().FreqsA = new FCOUNT*[uLength];
+	DPM.get().ScoreMxB = new SCORE*[4];
+	DPM.get().MPrev = new SCORE[uLength];
+	DPM.get().MCurr = new SCORE[uLength];
+	DPM.get().MWork = new SCORE[uLength];
 
-	DPM.DPrev = new SCORE[uLength];
-	DPM.DCurr = new SCORE[uLength];
-	DPM.DWork = new SCORE[uLength];
-	DPM.uDeletePos = new unsigned[uLength];
+	DPM.get().DPrev = new SCORE[uLength];
+	DPM.get().DCurr = new SCORE[uLength];
+	DPM.get().DWork = new SCORE[uLength];
+	DPM.get().uDeletePos = new unsigned[uLength];
 
-	DPM.TraceBack = new int*[uLength];
+	DPM.get().TraceBack = new int*[uLength];
 
 	for (unsigned uLetter = 0; uLetter < 4; ++uLetter)
-		DPM.ScoreMxB[uLetter] = new SCORE[uLength];
+		DPM.get().ScoreMxB[uLetter] = new SCORE[uLength];
 
 	for (unsigned i = 0; i < uLength; ++i)
 		{
-		DPM.SortOrderA[i] = new unsigned[4];
-		DPM.FreqsA[i] = new FCOUNT[4];
-		DPM.TraceBack[i] = new int[uLength];
+		DPM.get().SortOrderA[i] = new unsigned[4];
+		DPM.get().FreqsA[i] = new FCOUNT[4];
+		DPM.get().TraceBack[i] = new int[uLength];
 		}
 	}
 
@@ -140,24 +141,24 @@ SCORE GlobalAlignSPN(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	AllocDPMem(uLengthA, uLengthB);
 
-	SCORE *GapOpenA = DPM.GapOpenA;
-	SCORE *GapOpenB = DPM.GapOpenB;
-	SCORE *GapCloseA = DPM.GapCloseA;
-	SCORE *GapCloseB = DPM.GapCloseB;
+	SCORE *GapOpenA = DPM.get().GapOpenA;
+	SCORE *GapOpenB = DPM.get().GapOpenB;
+	SCORE *GapCloseA = DPM.get().GapCloseA;
+	SCORE *GapCloseB = DPM.get().GapCloseB;
 
-	unsigned **SortOrderA = DPM.SortOrderA;
-	FCOUNT **FreqsA = DPM.FreqsA;
-	SCORE **ScoreMxB = DPM.ScoreMxB;
-	SCORE *MPrev = DPM.MPrev;
-	SCORE *MCurr = DPM.MCurr;
-	SCORE *MWork = DPM.MWork;
+	unsigned **SortOrderA = DPM.get().SortOrderA;
+	FCOUNT **FreqsA = DPM.get().FreqsA;
+	SCORE **ScoreMxB = DPM.get().ScoreMxB;
+	SCORE *MPrev = DPM.get().MPrev;
+	SCORE *MCurr = DPM.get().MCurr;
+	SCORE *MWork = DPM.get().MWork;
 
-	SCORE *DPrev = DPM.DPrev;
-	SCORE *DCurr = DPM.DCurr;
-	SCORE *DWork = DPM.DWork;
-	unsigned *uDeletePos = DPM.uDeletePos;
+	SCORE *DPrev = DPM.get().DPrev;
+	SCORE *DCurr = DPM.get().DCurr;
+	SCORE *DWork = DPM.get().DWork;
+	unsigned *uDeletePos = DPM.get().uDeletePos;
 
-	int **TraceBack = DPM.TraceBack;
+	int **TraceBack = DPM.get().TraceBack;
 
 	for (unsigned i = 0; i < uLengthA; ++i)
 		{

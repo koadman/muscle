@@ -4,8 +4,8 @@
 const float INFINITY = float(1e29);
 const unsigned NILL = uInsane;
 
-static float *ShortestPathEstimate;
-static unsigned *Predecessor;
+static TLS<float *> ShortestPathEstimate;
+static TLS<unsigned *> Predecessor;
 
 static void GetMostDistantPair(DistFunc &DF, unsigned *ptrIndex1, unsigned *ptrIndex2)
 	{
@@ -43,20 +43,20 @@ static void InitializeSingleSource(DistFunc &DF, unsigned uIndex)
 
 	for (unsigned i = 0; i < uNodeCount; ++i)
 		{
-		ShortestPathEstimate[i] = INFINITY;
-		Predecessor[i] = NILL;
+		ShortestPathEstimate.get()[i] = INFINITY;
+		Predecessor.get()[i] = NILL;
 		}
-	ShortestPathEstimate[uIndex] = 0;
+	ShortestPathEstimate.get()[uIndex] = 0;
 	}
 
 static void Relax(DistFunc &DF, unsigned u, unsigned v)
 	{
 	float w = DF.GetDist(u, v);
-	float d = ShortestPathEstimate[u] + w;
-	if (ShortestPathEstimate[v] > d)
+	float d = ShortestPathEstimate.get()[u] + w;
+	if (ShortestPathEstimate.get()[v] > d)
 		{
-		ShortestPathEstimate[v] = d;
-		Predecessor[v] = u;
+		ShortestPathEstimate.get()[v] = d;
+		Predecessor.get()[v] = u;
 		}
 	}
 

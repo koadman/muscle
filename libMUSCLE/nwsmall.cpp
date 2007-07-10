@@ -3,6 +3,7 @@
 #include "pwpath.h"
 #include "profile.h"
 #include <stdio.h>
+#include "threadstorage.h"
 
 // NW small memory
 
@@ -244,11 +245,11 @@ Done:
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	static TLS<char[16]> str;
 	if (s < -100000)
 		return "     *";
-	sprintf(str, "%6.1f", s);
-	return str;
+	sprintf(str.get(), "%6.1f", s);
+	return str.get();
 	}
 
 static void LogDP(const SCORE *DPM_, const ProfPos *PA, const ProfPos *PB,
@@ -364,12 +365,13 @@ static void ListTB(char *TBM_, const ProfPos *PA, const ProfPos *PB,
 
 static const char *BitsToStr(char Bits)
 	{
-	static char Str[9];
+	static TLS<char[9]> Str;
 
-	sprintf(Str, "%cM %cD %cI",
+	sprintf(Str.get(), "%cM %cD %cI",
 	  Get_M_Char(Bits),
 	  Get_D_Char(Bits),
 	  Get_I_Char(Bits));
+	return Str.get();
 	}
 #endif	// TRACE
 
@@ -457,38 +459,38 @@ static inline void SetBitTBI(char **TB, unsigned i, unsigned j, char c)
 #define LogMatrices()	/* empty */
 #endif
 
-static unsigned uCachePrefixCountB;
-static unsigned uCachePrefixCountA;
-static SCORE *CacheMCurr;
-static SCORE *CacheMNext;
-static SCORE *CacheMPrev;
-static SCORE *CacheDRow;
-static char **CacheTB;
+static TLS<unsigned> uCachePrefixCountB;
+static TLS<unsigned> uCachePrefixCountA;
+static TLS<SCORE *> CacheMCurr;
+static TLS<SCORE *> CacheMNext;
+static TLS<SCORE *> CacheMPrev;
+static TLS<SCORE *> CacheDRow;
+static TLS<char **> CacheTB;
 
 static void AllocCache(unsigned uPrefixCountA, unsigned uPrefixCountB)
 	{
-	if (uPrefixCountA <= uCachePrefixCountA && uPrefixCountB <= uCachePrefixCountB)
+	if (uPrefixCountA <= uCachePrefixCountA.get() && uPrefixCountB <= uCachePrefixCountB.get())
 		return;
 
-	delete[] CacheMCurr;
-	delete[] CacheMNext;
-	delete[] CacheMPrev;
-	delete[] CacheDRow;
-	for (unsigned i = 0; i < uCachePrefixCountA; ++i)
-		delete[] CacheTB[i];
-	delete[] CacheTB;
+	delete[] CacheMCurr.get();
+	delete[] CacheMNext.get();
+	delete[] CacheMPrev.get();
+	delete[] CacheDRow.get();
+	for (unsigned i = 0; i < uCachePrefixCountA.get(); ++i)
+		delete[] CacheTB.get()[i];
+	delete[] CacheTB.get();
 
-	uCachePrefixCountA = uPrefixCountA + 1024;
-	uCachePrefixCountB = uPrefixCountB + 1024;
+	uCachePrefixCountA.get() = uPrefixCountA + 1024;
+	uCachePrefixCountB.get() = uPrefixCountB + 1024;
 
-	CacheMCurr = new SCORE[uCachePrefixCountB];
-	CacheMNext = new SCORE[uCachePrefixCountB];
-	CacheMPrev = new SCORE[uCachePrefixCountB];
-	CacheDRow = new SCORE[uCachePrefixCountB];
+	CacheMCurr.get() = new SCORE[uCachePrefixCountB.get()];
+	CacheMNext.get() = new SCORE[uCachePrefixCountB.get()];
+	CacheMPrev.get() = new SCORE[uCachePrefixCountB.get()];
+	CacheDRow.get() = new SCORE[uCachePrefixCountB.get()];
 
-	CacheTB = new char *[uCachePrefixCountA];
-	for (unsigned i = 0; i < uCachePrefixCountA; ++i)
-		CacheTB[i] = new char [uCachePrefixCountB];
+	CacheTB.get() = new char *[uCachePrefixCountA.get()];
+	for (unsigned i = 0; i < uCachePrefixCountA.get(); ++i)
+		CacheTB.get()[i] = new char [uCachePrefixCountB.get()];
 	}
 
 SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
@@ -508,12 +510,12 @@ SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	AllocCache(uPrefixCountA, uPrefixCountB);
 
-	SCORE *MCurr = CacheMCurr;
-	SCORE *MNext = CacheMNext;
-	SCORE *MPrev = CacheMPrev;
-	SCORE *DRow = CacheDRow;
+	SCORE *MCurr = CacheMCurr.get();
+	SCORE *MNext = CacheMNext.get();
+	SCORE *MPrev = CacheMPrev.get();
+	SCORE *DRow = CacheDRow.get();
 
-	char **TB = CacheTB;
+	char **TB = CacheTB.get();
 	for (unsigned i = 0; i < uPrefixCountA; ++i)
 		memset(TB[i], 0, uPrefixCountB);
 

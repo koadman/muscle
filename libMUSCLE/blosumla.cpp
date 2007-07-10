@@ -4,7 +4,7 @@
 #define GAPGAPVAL	5.0
 
 // Blosum62 log-average factor matrix
-static float Blosum62LA[20][20] =
+static const float Blosum62LA[20][20] =
 	{
 #define v(x)	((float) x)
 #define S_ROW(n, c, A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y) \

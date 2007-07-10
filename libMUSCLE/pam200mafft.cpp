@@ -3,7 +3,7 @@
 // Adjusted PAM200 scoring matrix as used by default in MAFFT.
 //	Katoh, Misawa, Kuma and Miyata (2002), NAR 30(14), 3059-3066.
 
-static float PAM200[23][23] =
+static const float PAM200[23][23] =
 	{
 //   A      C      D      E      F      G      H      I      K      L      M      N      P      Q      R      S      T      V      W      Y      B      Z      X      
    408,    20,    54,    52,  -182,   179,   -68,   109,   -35,   -47,    39,   106,   206,   -14,   -12,   257,   293,   191,  -306,  -219,     0,     0,     0, // A

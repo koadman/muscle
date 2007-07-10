@@ -1,5 +1,6 @@
 #include "muscle.h"
 #include <ctype.h>
+#include "threadstorage.h"
 
 /***
 From Bioperl docs:
@@ -250,23 +251,23 @@ bool IsRNA(char c)
 	return strchr("AGCUNagcun", c) != 0;
 	}
 
-static char InvalidLetters[256];
-static int InvalidLetterCount = 0;
+static TLS<char[256]> InvalidLetters;
+static TLS<int> InvalidLetterCount(0);
 
 void ClearInvalidLetterWarning()
 	{
-	memset(InvalidLetters, 0, 256);
+	memset(InvalidLetters.get(), 0, 256);
 	}
 
 void InvalidLetterWarning(char c, char w)
 	{
-	InvalidLetters[(unsigned char) c] = 1;
-	++InvalidLetterCount;
+	InvalidLetters.get()[(unsigned char) c] = 1;
+	++InvalidLetterCount.get();
 	}
 
 void ReportInvalidLetters()
 	{
-	if (0 == InvalidLetterCount)
+	if (0 == InvalidLetterCount.get())
 		return;
 
 	char Str[257];
@@ -275,7 +276,7 @@ void ReportInvalidLetters()
 	int n = 0;
 	for (int i = 0; i < 256; ++i)
 		{
-		if (InvalidLetters[i])
+		if (InvalidLetters.get()[i])
 			Str[n++] = (char) i;
 		}
 	Warning("Assuming %s (see -seqtype option), invalid letters found: %s",

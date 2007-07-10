@@ -2,6 +2,7 @@
 #include "distfunc.h"
 #include "seqvect.h"
 #include <math.h>
+#include "threadstorage.h"
 
 #define TRACE 0
 
@@ -9,8 +10,8 @@
 #define MAX(x, y)	(((x) > (y)) ? (x) : (y))
 
 const unsigned TUPLE_COUNT = 6*6*6*6*6*6;
-static unsigned char Count1[TUPLE_COUNT];
-static unsigned char Count2[TUPLE_COUNT];
+static TLS<unsigned char[TUPLE_COUNT]> Count1;
+static TLS<unsigned char[TUPLE_COUNT]> Count2;
 
 // Nucleotide groups according to MAFFT (sextet5)
 // 0 =  A
@@ -18,8 +19,7 @@ static unsigned char Count2[TUPLE_COUNT];
 // 2 =  G
 // 3 =  T
 // 4 =  other
-
-static unsigned ResidueGroup[] =
+static const unsigned ResidueGroup[] =
 	{
 	0,		// NX_A,
 	1,		// NX_C,
@@ -30,11 +30,12 @@ static unsigned ResidueGroup[] =
 	4,		// NX_Y,
 	4,		// NX_GAP
 	};
-static unsigned uResidueGroupCount = sizeof(ResidueGroup)/sizeof(ResidueGroup[0]);
+
+static const unsigned uResidueGroupCount = sizeof(ResidueGroup)/sizeof(ResidueGroup[0]);
 
 static char *TupleToStr(int t)
 	{
-	static char s[7];
+	static TLS<char[7]> s;
 	int t1, t2, t3, t4, t5, t6;
 
 	t1 = t%6;
@@ -44,13 +45,13 @@ static char *TupleToStr(int t)
 	t5 = (t/(6*6*6*6))%6;
 	t6 = (t/(6*6*6*6*6))%6;
 
-	s[5] = '0' + t1;
-	s[4] = '0' + t2;
-	s[3] = '0' + t3;
-	s[2] = '0' + t4;
-	s[1] = '0' + t5;
-	s[0] = '0' + t6;
-	return s;
+	s.get()[5] = '0' + t1;
+	s.get()[4] = '0' + t2;
+	s.get()[3] = '0' + t3;
+	s.get()[2] = '0' + t4;
+	s.get()[1] = '0' + t5;
+	s.get()[0] = '0' + t6;
+	return s.get();
 	}
 
 static unsigned GetTuple(const unsigned uLetters[], unsigned n)
@@ -146,7 +147,7 @@ void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 
 		const unsigned uTupleCount = uSeqLength1 - 5;
 		const unsigned *L = Letters[uSeq1];
-		CountTuples(L, uTupleCount, Count1);
+		CountTuples(L, uTupleCount, Count1.get());
 #if	TRACE
 		{
 		Log("Seq1=%d\n", uSeq1);
@@ -156,7 +157,7 @@ void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 		Log("\n");
 
 		Log("Tuples:\n");
-		ListCount(Count1);
+		ListCount(Count1.get());
 		}
 #endif
 
@@ -180,10 +181,10 @@ void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 		// First pass through seq 2 to count tuples
 			const unsigned uTupleCount = uSeqLength2 - 5;
 			const unsigned *L = Letters[uSeq2];
-			CountTuples(L, uTupleCount, Count2);
+			CountTuples(L, uTupleCount, Count2.get());
 #if	TRACE
 			Log("Seq2=%d Counts=\n", uSeq2);
-			ListCount(Count2);
+			ListCount(Count2.get());
 #endif
 
 		// Second pass to accumulate sum of shared tuples
@@ -194,10 +195,10 @@ void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 			for (unsigned n = 0; n < uTupleCount; ++n)
 				{
 				const unsigned uTuple = GetTuple(L, n);
-				uSum += MIN(Count1[uTuple], Count2[uTuple]);
+				uSum += MIN(Count1.get()[uTuple], Count2.get()[uTuple]);
 
 			// This is a hack to make sure each unique tuple counted only once.
-				Count2[uTuple] = 0;
+				Count2.get()[uTuple] = 0;
 				}
 #if	TRACE
 			{

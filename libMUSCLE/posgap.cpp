@@ -2,7 +2,7 @@
 
 // Pascaralle and Argos gap factors
 // after Table 1 in Thompson et. al. ClustalW NAR paper.
-static double PAFFacs[20] =
+static const double PAFFacs[20] =
 	{
 	1.13,		// A
 	1.13,		// C
@@ -45,7 +45,7 @@ SCORE PAFactor(const FCOUNT fcCounts[])
 	return (SCORE) (dSum/fLetterCount);
 	}
 
-static bool Hydrophilic[20] =
+static const bool Hydrophilic[20] =
 	{
 	false,		// A
 	false,		// C
@@ -105,7 +105,7 @@ bool IsHydrophilic(const unsigned uCounts[])
 // W		y			n
 // H		n			n
 // K		n			n
-static bool Hydrophobic[20] =
+static const bool Hydrophobic[20] =
 	{
 	true,		// A
 	true,		// C

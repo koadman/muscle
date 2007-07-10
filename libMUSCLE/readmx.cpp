@@ -5,9 +5,9 @@
 
 const int MAX_LINE = 4096;
 const int MAX_HEADINGS = 32;
-static char Heading[MAX_HEADINGS];
-static unsigned HeadingCount = 0;
-static float Mx[32][32];
+static TLS<char[MAX_HEADINGS]> Heading;
+static TLS<unsigned> HeadingCount(0);
+static TLS<float[32][32]> Mx;
 
 static void LogMx()
 	{
@@ -21,7 +21,7 @@ static void LogMx()
 		{
 		Log("%c    ", LetterToChar(i));
 		for (int j = 0; j < 20; ++j)
-			Log("%5.1f", Mx[i][j]);
+			Log("%5.1f", Mx.get()[i][j]);
 		Log("\n");
 		}
 	Log("\n");
@@ -29,8 +29,8 @@ static void LogMx()
 
 static unsigned MxCharToLetter(char c)
 	{
-	for (unsigned Letter = 0; Letter < HeadingCount; ++Letter)
-		if (Heading[Letter] == c)
+	for (unsigned Letter = 0; Letter < HeadingCount.get(); ++Letter)
+		if (Heading.get()[Letter] == c)
 			return Letter;
 	Quit("Letter '%c' has no heading", c);
 	return 0;
@@ -55,27 +55,27 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 		}
 
 // Read column headers
-	HeadingCount = 0;
+	HeadingCount.get() = 0;
 	for (char *p = Line; *p; ++p)
 		{
 		char c = *p;
 		if (!isspace(c))
-			Heading[HeadingCount++] = c;
+			Heading.get()[HeadingCount.get()++] = c;
 		}
 
-	if (HeadingCount > 0 && Heading[HeadingCount-1] == '*')
-		--HeadingCount;
+	if (HeadingCount.get() > 0 && Heading.get()[HeadingCount.get()-1] == '*')
+		--HeadingCount.get();
 
 // AED 22/12/2006: don't force a 20 char matrix since nt matrices will have only 4
-//	if (HeadingCount < 20)
+//	if (HeadingCount.get() < 20)
 //		Quit("Error in matrix file: < 20 headers, line='%s'", Line);
 
 #if TRACE
 	{
 	Log("ReadMx\n");
-	Log("%d headings: ", HeadingCount);
-	for (unsigned i = 0; i < HeadingCount; ++i)
-		Log("%c", Heading[i]);
+	Log("%d headings: ", HeadingCount.get());
+	for (unsigned i = 0; i < HeadingCount.get(); ++i)
+		Log("%c", Heading.get()[i]);
 	Log("\n");
 	}
 #endif
@@ -83,10 +83,10 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 // Zero out matrix
 	for (int i = 0; i < MAX_ALPHA; ++i)
 		for (int j = 0; j < MAX_ALPHA; ++j)
-			Mx[i][j] = 0.0;
+			Mx.get()[i][j] = 0.0;
 
 // Read data lines
-	for (unsigned RowIndex = 0; RowIndex < HeadingCount; ++RowIndex)
+	for (unsigned RowIndex = 0; RowIndex < HeadingCount.get(); ++RowIndex)
 		{
 		bool EndOfFile = File.GetTrimLine(Line, sizeof(Line));
 		if (EndOfFile)
@@ -112,7 +112,7 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 
 		char *p = Line + 1;
 		char *maxp = p + strlen(Line);
-		for (unsigned Col = 0; Col < HeadingCount - 1; ++Col)
+		for (unsigned Col = 0; Col < HeadingCount.get() - 1; ++Col)
 			{
 			if (p >= maxp)
 				Quit("Too few fields in line of matrix file: '%s'", Line);
@@ -122,11 +122,11 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 			while (!isspace(*p))
 				++p;
 			float v = (float) atof(Value);
-			char HeaderChar = Heading[Col];
+			char HeaderChar = Heading.get()[Col];
 			if (IsResidueChar(HeaderChar))
 				{
 				unsigned ColLetter = CharToLetter(HeaderChar);
-				Mx[RowLetter][ColLetter] = v;
+				Mx.get()[RowLetter][ColLetter] = v;
 				}
 			p += 1;
 			}
@@ -136,15 +136,15 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 	for (int i = 0; i < 20; ++i)
 		for (int j = 0; j < i; ++j)
 			{
-			if (Mx[i][j] != Mx[j][i])
+			if (Mx.get()[i][j] != Mx.get()[j][i])
 				{
 				Warning("Matrix is not symmetrical, %c->%c=%g, %c->%c=%g",
 				  CharToLetter(i),
 				  CharToLetter(j),
-				  Mx[i][j],
+				  Mx.get()[i][j],
 				  CharToLetter(j),
 				  CharToLetter(i),
-				  Mx[j][i]);
+				  Mx.get()[j][i]);
 				goto ExitLoop;
 				}
 			}
@@ -153,5 +153,5 @@ ExitLoop:;
 	if (g_bVerbose)
 		LogMx();
 
-	return &Mx;
+	return &Mx.get();
 	}

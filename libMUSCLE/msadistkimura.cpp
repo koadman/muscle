@@ -16,7 +16,7 @@
 // ClustalW uses a table lookup for values > 0.75.
 // The following table was copied from the ClustalW file dayhoff.h.
 
-static int dayhoff_pams[]={
+static const int dayhoff_pams[]={
   195,   /* 75.0% observed d; 195 PAMs estimated = 195% estimated d */
   196,   /* 75.1% observed d; 196 PAMs estimated */
                   197,    198,    199,    200,    200,    201,    202,  203,    
@@ -41,7 +41,7 @@ static int dayhoff_pams[]={
          /* 92.9% observed; 945 PAMs */    
   988    /* 93.0% observed; 988 PAMs */
 };
-static int iTableEntries = sizeof(dayhoff_pams)/sizeof(dayhoff_pams[0]);
+static const int iTableEntries = sizeof(dayhoff_pams)/sizeof(dayhoff_pams[0]);
 
 double KimuraDist(double dPctId)
 	{

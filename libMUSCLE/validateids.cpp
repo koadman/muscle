@@ -4,17 +4,17 @@
 #include "seqvect.h"
 
 #if	DEBUG
-static SeqVect *g_ptrMuscleSeqVect = 0;
-static MSA MuscleInputMSA;
+static TLS<SeqVect *> g_ptrMuscleSeqVect(0);
+static TLS<MSA> MuscleInputMSA;
 
 void SetMuscleInputMSA(MSA &msa)
 	{
-	MuscleInputMSA.Copy(msa);
+	MuscleInputMSA.get().Copy(msa);
 	}
 
 void SetMuscleSeqVect(SeqVect &v)
 	{
-	g_ptrMuscleSeqVect = &v;
+	g_ptrMuscleSeqVect.get() = &v;
 	}
 
 void ValidateMuscleIdsSeqVect(const MSA &msa)
@@ -24,7 +24,7 @@ void ValidateMuscleIdsSeqVect(const MSA &msa)
 		{
 		const unsigned uId = msa.GetSeqId(uSeqIndex);
 		const char *ptrNameMSA = msa.GetSeqName(uSeqIndex);
-		const char *ptrName = g_ptrMuscleSeqVect->GetSeqName(uId);
+		const char *ptrName = g_ptrMuscleSeqVect.get()->GetSeqName(uId);
 		if (0 != strcmp(ptrNameMSA, ptrName))
 			Quit("ValidateMuscleIdsSeqVect, names don't match");
 		}
@@ -37,11 +37,11 @@ void ValidateMuscleIdsMSA(const MSA &msa)
 		{
 		const unsigned uId = msa.GetSeqId(uSeqIndex);
 		const char *ptrNameMSA = msa.GetSeqName(uSeqIndex);
-		const char *ptrName = MuscleInputMSA.GetSeqName(uId);
+		const char *ptrName = MuscleInputMSA.get().GetSeqName(uId);
 		if (0 != strcmp(ptrNameMSA, ptrName))
 			{
 			Log("Input MSA:\n");
-			MuscleInputMSA.LogMe();
+			MuscleInputMSA.get().LogMe();
 			Log("MSA being tested:\n");
 			msa.LogMe();
 			Log("Id=%u\n", uId);
@@ -54,12 +54,12 @@ void ValidateMuscleIdsMSA(const MSA &msa)
 
 void ValidateMuscleIds(const MSA &msa)
 	{
-	if (0 != g_ptrMuscleSeqVect)
+	if (0 != g_ptrMuscleSeqVect.get())
 		ValidateMuscleIdsSeqVect(msa);
-	else if (0 != MuscleInputMSA.GetSeqCount())
+	else if (0 != MuscleInputMSA.get().GetSeqCount())
 		ValidateMuscleIdsMSA(msa);
 	else
-		Quit("ValidateMuscleIds, ptrMuscleSeqVect=0 && 0 == MuscleInputMSA.SeqCount()");
+		Quit("ValidateMuscleIds, ptrMuscleSeqVect=0 && 0 == MuscleInputMSA.get().SeqCount()");
 
 	}
 
@@ -72,7 +72,7 @@ void ValidateMuscleIdsSeqVect(const Tree &tree)
 			continue;
 		const unsigned uId = tree.GetLeafId(uNodeIndex);
 		const char *ptrNameTree = tree.GetLeafName(uNodeIndex);
-		const char *ptrName = g_ptrMuscleSeqVect->GetSeqName(uId);
+		const char *ptrName = g_ptrMuscleSeqVect.get()->GetSeqName(uId);
 		if (0 != strcmp(ptrNameTree, ptrName))
 			Quit("ValidateMuscleIds: names don't match");
 		}
@@ -87,7 +87,7 @@ void ValidateMuscleIdsMSA(const Tree &tree)
 			continue;
 		const unsigned uId = tree.GetLeafId(uNodeIndex);
 		const char *ptrNameTree = tree.GetLeafName(uNodeIndex);
-		const char *ptrName = MuscleInputMSA.GetSeqName(uId);
+		const char *ptrName = MuscleInputMSA.get().GetSeqName(uId);
 		if (0 != strcmp(ptrNameTree, ptrName))
 			Quit("ValidateMuscleIds: names don't match");
 		}
@@ -95,11 +95,11 @@ void ValidateMuscleIdsMSA(const Tree &tree)
 
 void ValidateMuscleIds(const Tree &tree)
 	{
-	if (0 != g_ptrMuscleSeqVect)
+	if (0 != g_ptrMuscleSeqVect.get())
 		ValidateMuscleIdsSeqVect(tree);
-	else if (0 != MuscleInputMSA.GetSeqCount())
+	else if (0 != MuscleInputMSA.get().GetSeqCount())
 		ValidateMuscleIdsMSA(tree);
 	else
-		Quit("ValidateMuscleIds, ptrMuscleSeqVect=0 && 0 == MuscleInputMSA.SeqCount");
+		Quit("ValidateMuscleIds, ptrMuscleSeqVect=0 && 0 == MuscleInputMSA.get().SeqCount");
 	}
 #endif

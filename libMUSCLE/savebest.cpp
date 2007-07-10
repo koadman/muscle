@@ -2,38 +2,39 @@
 #include "msa.h"
 #include "textfile.h"
 #include <time.h>
+#include "threadstorage.h"
 
-static MSA *ptrBestMSA;
-static const char *pstrOutputFileName;
+static TLS<MSA *> ptrBestMSA;
+static TLS<const char *> pstrOutputFileName;
 
 void SetOutputFileName(const char *out)
 	{
-	pstrOutputFileName = out;
+	pstrOutputFileName.get() = out;
 	}
 
 void SetCurrentAlignment(MSA &msa)
 	{
-	ptrBestMSA = &msa;
+	ptrBestMSA.get() = &msa;
 	}
 
 void SaveCurrentAlignment()
 	{
-	static bool bCalled = false;
-	if (bCalled)
+	static TLS<bool> bCalled(false);
+	if (bCalled.get())
 		{
 		fprintf(stderr,
 		  "\nRecursive call to SaveCurrentAlignment, giving up attempt to save.\n");
 		exit(EXIT_FatalError);
 		}
 
-	if (0 == ptrBestMSA)
+	if (0 == ptrBestMSA.get())
 		{
 		fprintf(stderr, "\nAlignment not completed, cannot save.\n");
 		Log("Alignment not completed, cannot save.\n");
 		exit(EXIT_FatalError);
 		}
 
-	if (0 == pstrOutputFileName)
+	if (0 == pstrOutputFileName.get())
 		{
 		fprintf(stderr, "\nOutput file name not specified, cannot save.\n");
 		exit(EXIT_FatalError);
@@ -41,8 +42,8 @@ void SaveCurrentAlignment()
 
 	fprintf(stderr, "\nSaving current alignment ...\n");
 
-	TextFile fileOut(pstrOutputFileName, true);
-	ptrBestMSA->ToFASTAFile(fileOut);
+	TextFile fileOut(pstrOutputFileName.get(), true);
+	ptrBestMSA.get()->ToFASTAFile(fileOut);
 
 	fprintf(stderr, "Current alignment saved to \"%s\".\n", pstrOutputFileName);
 	Log("Current alignment saved to \"%s\".\n", pstrOutputFileName);

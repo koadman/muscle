@@ -1,7 +1,7 @@
 #include "muscle.h"
 #include "msa.h"
 
-static int Blosum62[23][23] =
+static const int Blosum62[23][23] =
 	{
 //   A   B   C   D   E    F   G   H   I   K    L   M   N   P   Q    R   S   T   V   W    X   Y   Z 
 	+4, -2, +0, -2, -1,  -2, +0, -2, -1, -1,  -1, -1, -2, -1, -1,  -1, +1, +0, +0, -3,  -1, -2, -1,  // A
@@ -33,7 +33,7 @@ static int Blosum62[23][23] =
 	-1, +2, -4, +2, +5,  -3, -2, +0, -3, +1,  -3, -2, +0, -1, +2,  +0, +0, -1, -2, -3,  -1, -2, +5,  // Z
 	};
 
-static int toi_tab[26] =
+static const int toi_tab[26] =
 	{
 	0,	// A
 	1,	// B

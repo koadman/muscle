@@ -1,6 +1,7 @@
 #include "muscle.h"
 #include "pwpath.h"
 #include "profile.h"
+#include "threadstorage.h"
 
 #if	DOUBLE_AFFINE
 
@@ -29,11 +30,11 @@ static char XlatEdgeType(char c)
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	static TLS<char[16]> str;
 	if (s < -100000)
 		return "     *";
-	sprintf(str, "%6.1f", s);
-	return str;
+	sprintf(str.get(), "%6.1f", s);
+	return str.get();
 	}
 
 static void ListDP(const SCORE *DPM_, const ProfPos *PA, const ProfPos *PB,

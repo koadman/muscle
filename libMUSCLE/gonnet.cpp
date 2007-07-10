@@ -4,7 +4,7 @@
 #define ROW(A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y) \
 	{ A/4.0, C/4.0, D/4.0, E/4.0, F/4.0, G/4.0, H/4.0, I/4.0, K/4.0, L/4.0, M/4.0, N/4.0, P/4.0, Q/4.0, R/4.0, S/4.0, T/4.0, V/4.0, W/4.0, Y/4.0 },
 
-static double Gonnet80[20][20] =
+static const double Gonnet80[20][20] =
 	{
 //        A       C       D       E       F       G       H       I       K       L
 //        M       N       P       Q       R       S       T       V       W       Y
@@ -69,7 +69,7 @@ ROW(    590,    920,    550,    500,   1730,    300,   1450,    770,    640,    
         870,    850,    480,    710,    740,    780,    660,    770,   1470,   2470) // Y
 	};
 
-static double Gonnet120[20][20] =
+static const double Gonnet120[20][20] =
 	{
 //        A       C       D       E       F       G       H       I       K       L
 //        M       N       P       Q       R       S       T       V       W       Y
@@ -134,7 +134,7 @@ ROW(    480,    760,    430,    400,   1510,    220,   1220,    650,    520,    
         740,    680,    370,    580,    590,    610,    540,    630,   1290,   2070) // Y
 	};
 
-static SCORE Gonnet160[20][20] =
+static const SCORE Gonnet160[20][20] =
 	{
 //        A       C       D       E       F       G       H       I       K       L
 //        M       N       P       Q       R       S       T       V       W       Y
@@ -264,7 +264,7 @@ ROW(    41,    65,    36,    34,   134,    18,   105,    58,    43,    67,
         65,    56,    30,    49,    49,    50,    46,    54,   116,   178) // Y
 	};
 
-static double Gonnet250[20][20] =
+static const double Gonnet250[20][20] =
 	{
 //        A       C       D       E       F       G       H       I       K       L
 //        M       N       P       Q       R       S       T       V       W       Y
@@ -329,7 +329,7 @@ ROW(    300,    470,    240,    250,   1030,    120,    740,    450,    310,    
         500,    380,    210,    350,    340,    330,    330,    410,    930,   1300) // Y
 	};
 
-static double Gonnet350[20][20] =
+static const double Gonnet350[20][20] =
 	{
 //        A       C       D       E       F       G       H       I       K       L
 //        M       N       P       Q       R       S       T       V       W       Y

@@ -3,15 +3,15 @@
 
 const char *SecsToStr(unsigned long Secs)
 	{
-	static char Str[16];
+	static TLS<char[16]> Str;
 	long hh, mm, ss;
 
 	hh = Secs/(60*60);
 	mm = (Secs/60)%60;
 	ss = Secs%60;
 
-	sprintf(Str, "%02d:%02d:%02d", hh, mm, ss);
-	return Str;
+	sprintf(Str.get(), "%02d:%02d:%02d", hh, mm, ss);
+	return Str.get();
 	}
 
 const char *BoolToStr(bool b)
@@ -27,10 +27,10 @@ const char *ScoreToStr(SCORE Score)
 // times in a printf-like argument list it works OK.
 	const int iBufferCount = 16;
 	const int iBufferLength = 16;
-	static char szStr[iBufferCount*iBufferLength];
-	static int iBufferIndex = 0;
-	iBufferIndex = (iBufferIndex + 1)%iBufferCount;
-	char *pStr = szStr + iBufferIndex*iBufferLength;
+	static TLS<char[iBufferCount*iBufferLength]> szStr;
+	static TLS<int> iBufferIndex(0);
+	iBufferIndex.get() = (iBufferIndex.get() + 1)%iBufferCount;
+	char *pStr = szStr.get() + iBufferIndex.get()*iBufferLength;
 	sprintf(pStr, "%8g", Score);
 	return pStr;
 	}
@@ -44,10 +44,10 @@ const char *ScoreToStrL(SCORE Score)
 // times in a printf-like argument list it works OK.
 	const int iBufferCount = 16;
 	const int iBufferLength = 16;
-	static char szStr[iBufferCount*iBufferLength];
-	static int iBufferIndex = 0;
-	iBufferIndex = (iBufferIndex + 1)%iBufferCount;
-	char *pStr = szStr + iBufferIndex*iBufferLength;
+	static TLS<char[iBufferCount*iBufferLength]> szStr;
+	static TLS<int> iBufferIndex(0);
+	iBufferIndex.get() = (iBufferIndex.get() + 1)%iBufferCount;
+	char *pStr = szStr.get() + iBufferIndex.get()*iBufferLength;
 	sprintf(pStr, "%.3g", Score);
 	return pStr;
 	}

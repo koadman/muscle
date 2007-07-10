@@ -7,6 +7,7 @@
 #include <assert.h>
 #include <time.h>
 #include <errno.h>
+#include "threadstorage.h"
 
 #if	WIN32
 #include <windows.h>
@@ -17,44 +18,44 @@
 #define	MAX_PATH	260
 #endif
 
-static char g_strListFileName[MAX_PATH];
-static bool g_bListFileAppend = false;
+static TLS<char[MAX_PATH]> g_strListFileName;
+static TLS<bool> g_bListFileAppend(false);
 
-static SEQWEIGHT g_SeqWeight = SEQWEIGHT_Undefined;
+static TLS<SEQWEIGHT> g_SeqWeight(SEQWEIGHT_Undefined);
 
 void SetSeqWeightMethod(SEQWEIGHT Method)
 	{
-	g_SeqWeight = Method;
+	g_SeqWeight.get() = Method;
 	}
 
 SEQWEIGHT GetSeqWeightMethod()
 	{
-	return g_SeqWeight;
+	return g_SeqWeight.get();
 	}
 
 void SetListFileName(const char *ptrListFileName, bool bAppend)
 	{
 	assert(strlen(ptrListFileName) < MAX_PATH);
-	strcpy(g_strListFileName, ptrListFileName);
+	strcpy(g_strListFileName.get(), ptrListFileName);
 	g_bListFileAppend = bAppend;
 	}
 
 void Log(const char szFormat[], ...)
 	{
-	if (0 == g_strListFileName[0])
+	if (0 == g_strListFileName.get()[0])
 		return;
 
-	static FILE *f = NULL;
+	static TLS<FILE *> f(NULL);
 	char *mode;
-	if (g_bListFileAppend)
+	if (g_bListFileAppend.get())
 		mode = "a";
 	else
 		mode = "w";
-	if (NULL == f)
-		f = _fsopen(g_strListFileName, mode, _SH_DENYNO);
-	if (NULL == f)
+	if (NULL == f.get())
+		f.get() = _fsopen(g_strListFileName.get(), mode, _SH_DENYNO);
+	if (NULL == f.get())
 		{
-		perror(g_strListFileName);
+		perror(g_strListFileName.get());
 		exit(EXIT_NotStarted);
 		}
 
@@ -62,20 +63,20 @@ void Log(const char szFormat[], ...)
 	va_list ArgList;
 	va_start(ArgList, szFormat);
 	vsprintf(szStr, szFormat, ArgList);
-	fprintf(f, "%s", szStr);
-	fflush(f);
+	fprintf(f.get(), "%s", szStr);
+	fflush(f.get());
 	}
 
 const char *GetTimeAsStr()
 	{
-	static char szStr[32];
+	static TLS<char[32]> szStr;
 	time_t t;
 	time(&t);
 	struct tm *ptmCurrentTime = localtime(&t);
-	strcpy(szStr, asctime(ptmCurrentTime));
-	assert('\n' == szStr[24]);
-	szStr[24] = 0;
-	return szStr;
+	strcpy(szStr.get(), asctime(ptmCurrentTime));
+	assert('\n' == szStr.get()[24]);
+	szStr.get()[24] = 0;
+	return szStr.get();
 	}
 
 // Exit immediately with error message, printf-style.
@@ -225,7 +226,7 @@ void SetLogFile()
 		strFileName = ValueOpt("log");
 	if (0 == strFileName)
 		return;
-	strcpy(g_strListFileName, strFileName);
+	strcpy(g_strListFileName.get(), strFileName);
 	}
 
 // Get filename, stripping any extension and directory parts.

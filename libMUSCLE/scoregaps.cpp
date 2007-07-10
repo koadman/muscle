@@ -1,6 +1,7 @@
 #include "muscle.h"
 #include "msa.h"
 #include "objscore.h"
+#include "threadstorage.h"
 
 #define TRACE	0
 
@@ -11,33 +12,33 @@ struct GAPINFO
 	unsigned End;
 	};
 
-static GAPINFO **g_Gaps;
-static GAPINFO *g_FreeList;
-static unsigned g_MaxSeqCount;
-static unsigned g_MaxColCount;
-static unsigned g_ColCount;
-static bool *g_ColDiff;
+static TLS<GAPINFO **> g_Gaps;
+static TLS<GAPINFO *> g_FreeList;
+static TLS<unsigned> g_MaxSeqCount;
+static TLS<unsigned> g_MaxColCount;
+static TLS<unsigned> g_ColCount;
+static TLS<bool *> g_ColDiff;
 
 static GAPINFO *NewGapInfo()
 	{
-	if (0 == g_FreeList)
+	if (0 == g_FreeList.get())
 		{
 		const int NEWCOUNT = 256;
 		GAPINFO *NewList = new GAPINFO[NEWCOUNT];
-		g_FreeList = &NewList[0];
+		g_FreeList.get() = &NewList[0];
 		for (int i = 0; i < NEWCOUNT-1; ++i)
 			NewList[i].Next = &NewList[i+1];
 		NewList[NEWCOUNT-1].Next = 0;
 		}
-	GAPINFO *GI = g_FreeList;
-	g_FreeList = g_FreeList->Next;
+	GAPINFO *GI = g_FreeList.get();
+	g_FreeList.get() = g_FreeList.get()->Next;
 	return GI;
 	}
 
 static void FreeGapInfo(GAPINFO *GI)
 	{
-	GI->Next = g_FreeList;
-	g_FreeList = GI;
+	GI->Next = g_FreeList.get();
+	g_FreeList.get() = GI;
 	}
 
 // TODO: This could be much faster, no need to look
@@ -58,7 +59,7 @@ static void FindIntersectingGaps(const MSA &msa, unsigned SeqIndex)
 				InGap = true;
 				Start = Col;
 				}
-			if (g_ColDiff[Col])
+			if (g_ColDiff.get()[Col])
 				Intersects = true;
 			}
 		else if (InGap)
@@ -69,8 +70,8 @@ static void FindIntersectingGaps(const MSA &msa, unsigned SeqIndex)
 				GAPINFO *GI = NewGapInfo();
 				GI->Start = Start;
 				GI->End = Col - 1;
-				GI->Next = g_Gaps[SeqIndex];
-				g_Gaps[SeqIndex] = GI;
+				GI->Next = g_Gaps.get()[SeqIndex];
+				g_Gaps.get()[SeqIndex] = GI;
 				}
 			Intersects = false;
 			}
@@ -98,11 +99,11 @@ static SCORE Penalty(unsigned Length, bool Term)
 //	{
 //	Log("ScorePair(%d,%d)\n", Seq1, Seq2);
 //	Log("Gaps seq 1: ");
-//	for (GAPINFO *GI = g_Gaps[Seq1]; GI; GI = GI->Next)
+//	for (GAPINFO *GI = g_Gaps.get()[Seq1]; GI; GI = GI->Next)
 //		Log(" %d-%d", GI->Start, GI->End);
 //	Log("\n");
 //	Log("Gaps seq 2: ");
-//	for (GAPINFO *GI = g_Gaps[Seq2]; GI; GI = GI->Next)
+//	for (GAPINFO *GI = g_Gaps.get()[Seq2]; GI; GI = GI->Next)
 //		Log(" %d-%d", GI->Start, GI->End);
 //	Log("\n");
 //	}
@@ -126,29 +127,29 @@ SCORE ScoreGaps(const MSA &msa, const unsigned DiffCols[], unsigned DiffColCount
 #endif
 	const unsigned SeqCount = msa.GetSeqCount();
 	const unsigned ColCount = msa.GetColCount();
-	g_ColCount = ColCount;
+	g_ColCount.get() = ColCount;
 
-	if (SeqCount > g_MaxSeqCount)
+	if (SeqCount > g_MaxSeqCount.get())
 		{
-		delete[] g_Gaps;
-		g_MaxSeqCount = SeqCount + 256;
-		g_Gaps = new GAPINFO *[g_MaxSeqCount];
+		delete[] g_Gaps.get();
+		g_MaxSeqCount.get() = SeqCount + 256;
+		g_Gaps.get() = new GAPINFO *[g_MaxSeqCount.get()];
 		}
-	memset(g_Gaps, 0, SeqCount*sizeof(GAPINFO *));
+	memset(g_Gaps.get(), 0, SeqCount*sizeof(GAPINFO *));
 
-	if (ColCount > g_MaxColCount)
+	if (ColCount > g_MaxColCount.get())
 		{
-		delete[] g_ColDiff;
-		g_MaxColCount = ColCount + 256;
-		g_ColDiff = new bool[g_MaxColCount];
+		delete[] g_ColDiff.get();
+		g_MaxColCount.get() = ColCount + 256;
+		g_ColDiff.get() = new bool[g_MaxColCount.get()];
 		}
 
-	memset(g_ColDiff, 0, g_ColCount*sizeof(bool));
+	memset(g_ColDiff.get(), 0, g_ColCount.get()*sizeof(bool));
 	for (unsigned i = 0; i < DiffColCount; ++i)
 		{
 		unsigned Col = DiffCols[i];
 		assert(Col < ColCount);
-		g_ColDiff[Col] = true;
+		g_ColDiff.get()[Col] = true;
 		}
 
 	for (unsigned SeqIndex = 0; SeqIndex < SeqCount; ++SeqIndex)
@@ -160,7 +161,7 @@ SCORE ScoreGaps(const MSA &msa, const unsigned DiffCols[], unsigned DiffColCount
 	Log("Intersecting gaps:\n");
 	Log("      ");
 	for (unsigned Col = 0; Col < ColCount; ++Col)
-		Log("%c", g_ColDiff[Col] ? '*' : ' ');
+		Log("%c", g_ColDiff.get()[Col] ? '*' : ' ');
 	Log("\n");
 	Log("      ");
 	for (unsigned Col = 0; Col < ColCount; ++Col)
@@ -172,7 +173,7 @@ SCORE ScoreGaps(const MSA &msa, const unsigned DiffCols[], unsigned DiffColCount
 		for (unsigned Col = 0; Col < ColCount; ++Col)
 			Log("%c", msa.GetChar(Seq, Col));
 		Log("  :: ");
-		for (GAPINFO *GI = g_Gaps[Seq]; GI; GI = GI->Next)
+		for (GAPINFO *GI = g_Gaps.get()[Seq]; GI; GI = GI->Next)
 			Log(" (%d,%d)", GI->Start, GI->End);
 		Log("  >%s\n", msa.GetSeqName(Seq));
 		}

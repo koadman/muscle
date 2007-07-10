@@ -3,6 +3,7 @@
 #include "pwpath.h"
 #include "profile.h"
 #include <stdio.h>
+#include "threadstorage.h"
 
 #if	DOUBLE_AFFINE
 
@@ -366,7 +367,7 @@ Done:
 
 static const char *LocalScoreToStr(SCORE s)
 	{
-	static char str[16];
+	char str[16];
 	if (s < -100000)
 		return "     *";
 	sprintf(str, "%6.1f", s);
@@ -518,14 +519,15 @@ static void ListTB(char *TBM_, const ProfPos *PA, const ProfPos *PB,
 
 static const char *BitsToStr(char Bits)
 	{
-	static char Str[32];
+	static TLS<char[32]> Str;
 
-	sprintf(Str, "%cM %cD %cE %cI %cJ",
+	sprintf(Str.get(), "%cM %cD %cE %cI %cJ",
 	  Get_M_Char(Bits),
 	  Get_D_Char(Bits),
 	  Get_E_Char(Bits),
 	  Get_I_Char(Bits),
 	  Get_J_Char(Bits));
+	return Str;
 	}
 #endif	// TRACE
 
