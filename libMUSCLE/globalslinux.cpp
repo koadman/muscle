@@ -81,8 +81,8 @@ void SaveCmdLine(int argc, char *argv[])
 	for (int i = 0; i < argc; ++i)
 		{
 		if (i > 0)
-			strcat(szCmdLine, " ");
-		strcat(szCmdLine, argv[i]);
+			strcat(szCmdLine.get(), " ");
+		strcat(szCmdLine.get(), argv[i]);
 		}
 	}
 

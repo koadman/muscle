@@ -1,7 +1,7 @@
 AM_CXXFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1
 
 LIBMUSCLE_H = \
-alpha.h cluster.h clust.h clustsetdf.h clustset.h clustsetmsa.h diaglist.h distcalc.h distfunc.h dpregionlist.h dpreglist.h edgelist.h enumopts.h enums.h estring.h gapscoredimer.h gonnet.h intmath.h msadist.h msa.h muscle.h objscore.h params.h profile.h pwpath.h refine.h scorehistory.h seq.h seqvect.h textfile.h timing.h tree.h types.h unixio.h 
+alpha.h cluster.h clust.h clustsetdf.h clustset.h clustsetmsa.h diaglist.h distcalc.h distfunc.h dpregionlist.h dpreglist.h edgelist.h enumopts.h enums.h estring.h gapscoredimer.h gonnet.h intmath.h msadist.h msa.h muscle.h objscore.h params.h profile.h pwpath.h refine.h scorehistory.h seq.h seqvect.h textfile.h timing.h tree.h types.h unixio.h threadstorage.h 
 
 LIBMUSCLE_SRC = \
 aligngivenpath.cpp aligngivenpathsw.cpp aligntwomsas.cpp aligntwoprofs.cpp \
