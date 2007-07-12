@@ -54,8 +54,8 @@ void Call_MY_ASSERT(const char *file, int line, bool b, const char *msg);
 #define assert(exp)     ((void)0)
 #endif
 
-extern int g_argc;
-extern char **g_argv;
+extern TLS<int> g_argc;
+extern TLS<char **> g_argv;
 
 #define Rotate(a, b, c)	{ SCORE *tmp = a; a = b; b = c; c = tmp; }
 
@@ -95,9 +95,7 @@ const char INVALID_STATE = '*';
 const BASETYPE BTInsane = (BASETYPE) dInsane;
 const WEIGHT wInsane = BTInsane;
 
-extern double g_dNAN;
-
-extern unsigned long g_tStart;
+extern TLS<double> g_dNAN;
 
 void Quit(const char szFormat[], ...);
 void Warning(const char szFormat[], ...);
@@ -328,4 +326,4 @@ void WriteScoreFile(const MSA &msa);
 char ConsensusChar(const ProfPos &PP);
 void Stabilize(const MSA &msa, MSA &msaStable);
 void MuscleOutput(MSA &msa);
-PTR_SCOREMATRIX ReadMx(TextFile &File);
+DYN_PTR_SCOREMATRIX ReadMx(TextFile &File);

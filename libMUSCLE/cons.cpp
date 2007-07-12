@@ -30,7 +30,7 @@ double MSA::GetAvgCons() const
 double MSA::GetCons(unsigned uColIndex) const
 	{
 	unsigned Counts[MAX_ALPHA];
-	for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+	for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 		Counts[uLetter] = 0;
 
 	unsigned uMaxCount = 0;

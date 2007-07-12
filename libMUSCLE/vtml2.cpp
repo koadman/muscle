@@ -13,7 +13,7 @@
 //         A        C        D        E        F        G        H        I        K        L
 //         M        N        P        Q        R        S        T        V        W        Y
 // VTML200
-float VTML_LA[32][32] =
+SCOREMATRIX VTML_LA =
 	{
 ROW( 2.25080, 1.31180, 0.82704, 0.88740, 0.55520, 1.09860, 0.71673, 0.80805, 0.81213, 0.68712,
      0.79105, 0.86777, 0.99328, 0.86644, 0.72821, 1.33924, 1.20373, 1.05956, 0.38107, 0.54373) // A
@@ -86,7 +86,7 @@ const float VTML_SP_CENTER = (float) 22.0;
 	v(R), v(S), v(T), v(V), v(W), v(Y), v(X) },
 
 // VTML 240
-float VTML_SP[32][32] =
+SCOREMATRIX VTML_SP =
 	{
 //     A    C    D    E    F    G    H    I    K    L    M    N    P    Q    R    S    T    V    W    Y  X
 ROW(  58,  23, -12,  -7, -44,  10, -23, -14, -14, -27, -17,  -8,   1,  -9, -22,  23,  15,   5, -74, -45, 0) // A
@@ -118,7 +118,7 @@ ROW(   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 
 	{ v(A), v(C), v(D), v(E), v(F), v(G), v(H), v(I), v(K), v(L), v(M), v(N), v(P), v(Q), \
 	v(R), v(S), v(T), v(V), v(W), v(Y), v(X) },
 
-float VTML_SPNoCenter[32][32] =
+const float VTML_SPNoCenter[32][32] =
 	{
 //     A    C    D    E    F    G    H    I    K    L    M    N    P    Q    R    S    T    V    W    Y  X
 RNC(  58,  23, -12,  -7, -44,  10, -23, -14, -14, -27, -17,  -8,   1,  -9, -22,  23,  15,   5, -74, -45, 0) // A

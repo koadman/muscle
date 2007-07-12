@@ -4,6 +4,7 @@
 #include "msa.h"
 #include "pwpath.h"
 #include <math.h>	// for log function
+#include "threadstorage.h"
 
 class DiagList;
 class WeightList;
@@ -51,7 +52,7 @@ struct ProgNode
 extern unsigned ResidueGroup[];
 const unsigned RESIDUE_GROUP_MULTIPLE = (unsigned) ~0;
 
-extern PTR_SCOREMATRIX g_ptrScoreMatrix;
+extern TLS<PTR_SCOREMATRIX> g_ptrScoreMatrix;
 
 ProfPos *ProfileFromMSA(const MSA &a);
 

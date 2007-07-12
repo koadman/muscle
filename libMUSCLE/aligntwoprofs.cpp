@@ -24,7 +24,7 @@ SCORE AlignTwoProfs(
 	  ptrPout, ptruLengthOut);
 
 #if	HYDRO
-	if (ALPHA_Amino == g_Alpha)
+	if (ALPHA_Amino == g_Alpha.get())
 		Hydro(*ptrPout, *ptruLengthOut);
 #endif
 	return Score;

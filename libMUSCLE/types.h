@@ -6,6 +6,7 @@ typedef unsigned short ushort;
 
 typedef float SCOREMATRIX[32][32];
 typedef SCOREMATRIX *PTR_SCOREMATRIX;
+typedef SCOREMATRIX *DYN_PTR_SCOREMATRIX;
 
 class MSA;
 class Seq;

@@ -7,17 +7,17 @@
 
 #define	TRACE	0
 
-extern bool g_bKeepSimpleDP;
-extern SCORE *g_DPM;
-extern SCORE *g_DPD;
-extern SCORE *g_DPE;
-extern SCORE *g_DPI;
-extern SCORE *g_DPJ;
-extern char *g_TBM;
-extern char *g_TBD;
-extern char *g_TBE;
-extern char *g_TBI;
-extern char *g_TBJ;
+extern TLS<bool> g_bKeepSimpleDP;
+extern TLS<SCORE *> g_DPM;
+extern TLS<SCORE *> g_DPD;
+extern TLS<SCORE *> g_DPE;
+extern TLS<SCORE *> g_DPI;
+extern TLS<SCORE *> g_DPJ;
+extern TLS<char *> g_TBM;
+extern TLS<char *> g_TBD;
+extern TLS<char *> g_TBE;
+extern TLS<char *> g_TBI;
+extern TLS<char *> g_TBJ;
 
 static char XlatEdgeType(char c)
 	{
@@ -105,7 +105,7 @@ static void ListDPM(const SCORE *DPM_, const ProfPos *PA, const ProfPos *PB,
 		Log("%4u:%c  ", uPrefixLengthA, c);
 		for (unsigned uPrefixLengthB = 0; uPrefixLengthB < uPrefixCountB; ++uPrefixLengthB)
 			{
-			SCORE x = (uPrefixLengthA + uPrefixLengthB)*g_scoreGapExtend;
+			SCORE x = (uPrefixLengthA + uPrefixLengthB)*g_scoreGapExtend.get();
 			SCORE s = DPM(uPrefixLengthA, uPrefixLengthB) - x;
 			Log(" %s", LocalScoreToStr(s));
 			}
@@ -177,10 +177,10 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		DPM(uPrefixLengthA, 0) = MINUS_INFINITY;
 
 	// D=LetterA+GapB
-		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend;
+		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend.get();
 		TBD(uPrefixLengthA, 0) = 'D';
 
-		DPE(uPrefixLengthA, 0) = DPE(uPrefixLengthA - 1, 0) + g_scoreGapExtend2;
+		DPE(uPrefixLengthA, 0) = DPE(uPrefixLengthA - 1, 0) + g_scoreGapExtend2.get();
 		TBE(uPrefixLengthA, 0) = 'E';
 
 	// I=GapA+LetterB, impossible with empty prefix
@@ -199,10 +199,10 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		DPE(0, uPrefixLengthB) = MINUS_INFINITY;
 
 	// I=GapA+LetterB
-		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend;
+		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend.get();
 		TBI(0, uPrefixLengthB) = 'I';
 
-		DPJ(0, uPrefixLengthB) = DPJ(0, uPrefixLengthB - 1) + g_scoreGapExtend2;
+		DPJ(0, uPrefixLengthB) = DPJ(0, uPrefixLengthB - 1) + g_scoreGapExtend2.get();
 		TBJ(0, uPrefixLengthB) = 'J';
 		}
 
@@ -287,7 +287,7 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			SCORE scoreMD = DPM(uPrefixLengthA-1, uPrefixLengthB) +
 			  PA[uPrefixLengthA-1].m_scoreGapOpen;
 			SCORE scoreDD = DPD(uPrefixLengthA-1, uPrefixLengthB) +
-			  g_scoreGapExtend;
+			  g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMD >= scoreDD)
@@ -309,7 +309,7 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			SCORE scoreME = DPM(uPrefixLengthA-1, uPrefixLengthB) +
 			  PA[uPrefixLengthA-1].m_scoreGapOpen2;
 			SCORE scoreEE = DPE(uPrefixLengthA-1, uPrefixLengthB) +
-			  g_scoreGapExtend2;
+			  g_scoreGapExtend2.get();
 
 			SCORE scoreBest;
 			if (scoreME >= scoreEE)
@@ -331,7 +331,7 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			SCORE scoreMI = DPM(uPrefixLengthA, uPrefixLengthB-1) +
 			  PB[uPrefixLengthB-1].m_scoreGapOpen;
 			SCORE scoreII = DPI(uPrefixLengthA, uPrefixLengthB-1) +
-			  g_scoreGapExtend;
+			  g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMI >= scoreII)
@@ -353,7 +353,7 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			SCORE scoreMJ = DPM(uPrefixLengthA, uPrefixLengthB-1) +
 			  PB[uPrefixLengthB-1].m_scoreGapOpen2;
 			SCORE scoreJJ = DPJ(uPrefixLengthA, uPrefixLengthB-1) +
-			  g_scoreGapExtend2;
+			  g_scoreGapExtend2.get();
 
 			SCORE scoreBest;
 			if (scoreMJ > scoreJJ)
@@ -512,19 +512,19 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	if (Path.GetMatchCount() + Path.GetInsertCount() != uLengthB)
 		Quit("Path count B");
 
-	if (g_bKeepSimpleDP)
+	if (g_bKeepSimpleDP.get())
 		{
-		g_DPM = DPM_;
-		g_DPD = DPD_;
-		g_DPE = DPE_;
-		g_DPI = DPI_;
-		g_DPJ = DPJ_;
+		g_DPM.get() = DPM_;
+		g_DPD.get() = DPD_;
+		g_DPE.get() = DPE_;
+		g_DPI.get() = DPI_;
+		g_DPJ.get() = DPJ_;
 
-		g_TBM = TBM_;
-		g_TBD = TBD_;
-		g_TBE = TBE_;
-		g_TBI = TBI_;
-		g_TBJ = TBJ_;
+		g_TBM.get() = TBM_;
+		g_TBD.get() = TBD_;
+		g_TBE.get() = TBE_;
+		g_TBI.get() = TBI_;
+		g_TBJ.get() = TBJ_;
 		}
 	else
 		{

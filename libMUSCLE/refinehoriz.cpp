@@ -6,8 +6,8 @@
 #include "scorehistory.h"
 #include "objscore.h"
 
-unsigned g_uRefineHeightSubtree;
-unsigned g_uRefineHeightSubtreeTotal;
+TLS<unsigned> g_uRefineHeightSubtree;
+TLS<unsigned> g_uRefineHeightSubtreeTotal;
 
 #define TRACE			0
 #define DIFFOBJSCORE	0
@@ -190,8 +190,8 @@ static void RefineHeightParts(MSA &msaIn, const Tree &tree,
 		  &scoreBefore, &scoreAfter, bLockLeft, bLockRight);
 		SetCurrentAlignment(msaIn);
 
-		++g_uRefineHeightSubtree;
-		Progress(g_uRefineHeightSubtree, g_uRefineHeightSubtreeTotal);
+		++g_uRefineHeightSubtree.get();
+		Progress(g_uRefineHeightSubtree.get(), g_uRefineHeightSubtreeTotal.get());
 
 #if	TRACE
 		if (uIter > 0)
@@ -248,8 +248,8 @@ bool RefineHoriz(MSA &msaIn, const Tree &tree, unsigned uIters, bool bLockLeft,
 		bool bAnyChangesThisIter = false;
 		IncIter();
 		SetProgressDesc("Refine biparts");
-		g_uRefineHeightSubtree = 0;
-		g_uRefineHeightSubtreeTotal = uInternalNodeCount*2 - 1;
+		g_uRefineHeightSubtree.get() = 0;
+		g_uRefineHeightSubtreeTotal.get() = uInternalNodeCount*2 - 1;
 
 		bool bReverse = (uIter%2 != 0);
 		unsigned *Internals;

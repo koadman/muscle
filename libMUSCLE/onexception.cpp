@@ -1,7 +1,7 @@
 #include "muscle.h"
 #include <stdio.h>
 
-static char szOnExceptionMessage[] =
+static const char szOnExceptionMessage[] =
 	{
 	"\nFatal error, exception caught.\n"
 	};

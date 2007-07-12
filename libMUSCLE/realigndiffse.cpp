@@ -126,7 +126,7 @@ void RealignDiffsE(const MSA &msaIn, const SeqVect &v,
 
 	ProgressStepsDone();
 
-	if (g_bBrenner)
+	if (g_bBrenner.get())
 		MakeRootMSABrenner((SeqVect &) v, NewTree, NewProgNodes, msaOut);
 	else
 		MakeRootMSA(v, NewTree, NewProgNodes, msaOut);

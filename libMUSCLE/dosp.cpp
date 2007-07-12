@@ -7,13 +7,13 @@
 
 void DoSP()
 	{
-	TextFile f(g_pstrSPFileName);
+	TextFile f(g_pstrSPFileName.get());
 
 	MSA a;
 	a.FromFile(f);
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = a.GuessAlpha();
@@ -41,20 +41,20 @@ void DoSP()
 
 	const unsigned uSeqCount = a.GetSeqCount();
 	if (0 == uSeqCount)
-		Quit("No sequences in input file %s", g_pstrSPFileName);
+		Quit("No sequences in input file %s", g_pstrSPFileName.get());
 
 	MSA::SetIdCount(uSeqCount);
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		a.SetSeqId(uSeqIndex, uSeqIndex);
 
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetSeqWeightMethod(g_SeqWeight1.get());
 	Tree tree;
-	TreeFromMSA(a, tree, g_Cluster2, g_Distance2, g_Root2);
+	TreeFromMSA(a, tree, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
 	SetMuscleTree(tree);
 	SetMSAWeightsMuscle((MSA &) a);
 
 	SCORE SP = ObjScoreSP(a);
 
-	Log("File=%s;SP=%.4g\n", g_pstrSPFileName, SP);
-	fprintf(stderr, "File=%s;SP=%.4g\n", g_pstrSPFileName, SP);
+	Log("File=%s;SP=%.4g\n", g_pstrSPFileName.get(), SP);
+	fprintf(stderr, "File=%s;SP=%.4g\n", g_pstrSPFileName.get(), SP);
 	}

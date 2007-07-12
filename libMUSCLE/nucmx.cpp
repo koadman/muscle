@@ -10,7 +10,7 @@ const float NUC_SP_CENTER = 2*NUC_EXTEND;
 #define ROW(A, C, G, T) \
 	{ v(A), v(C), v(G), v(T) },
 
-float NUC_SP[32][32] =
+SCOREMATRIX NUC_SP =
 	{
 //         A        C        G        T
 ROW(      91,    -114,     -31,    -123) // A

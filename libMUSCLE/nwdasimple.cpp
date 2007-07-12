@@ -8,17 +8,17 @@
 
 #define	TRACE	0
 
-bool g_bKeepSimpleDP;
-SCORE *g_DPM;
-SCORE *g_DPD;
-SCORE *g_DPE;
-SCORE *g_DPI;
-SCORE *g_DPJ;
-char *g_TBM;
-char *g_TBD;
-char *g_TBE;
-char *g_TBI;
-char *g_TBJ;
+TLS<bool> g_bKeepSimpleDP;
+TLS<SCORE *> g_DPM;
+TLS<SCORE *> g_DPD;
+TLS<SCORE *> g_DPE;
+TLS<SCORE *> g_DPI;
+TLS<SCORE *> g_DPJ;
+TLS<char *> g_TBM;
+TLS<char *> g_TBD;
+TLS<char *> g_TBE;
+TLS<char *> g_TBI;
+TLS<char *> g_TBJ;
 
 #if	DOUBLE_AFFINE
 
@@ -144,8 +144,8 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		{
 		DPM(uPrefixLengthA, 0) = MINUS_INFINITY;
 
-		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend;
-		DPE(uPrefixLengthA, 0) = DPE(uPrefixLengthA - 1, 0) + g_scoreGapExtend2;
+		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend.get();
+		DPE(uPrefixLengthA, 0) = DPE(uPrefixLengthA - 1, 0) + g_scoreGapExtend2.get();
 
 		TBD(uPrefixLengthA, 0) = 'D';
 		TBE(uPrefixLengthA, 0) = 'E';
@@ -162,8 +162,8 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		DPD(0, uPrefixLengthB) = MINUS_INFINITY;
 		DPE(0, uPrefixLengthB) = MINUS_INFINITY;
 
-		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend;
-		DPJ(0, uPrefixLengthB) = DPJ(0, uPrefixLengthB - 1) + g_scoreGapExtend2;
+		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend.get();
+		DPJ(0, uPrefixLengthB) = DPJ(0, uPrefixLengthB - 1) + g_scoreGapExtend2.get();
 
 		TBI(0, uPrefixLengthB) = 'I';
 		TBJ(0, uPrefixLengthB) = 'J';
@@ -235,7 +235,7 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		// Delete D=LetterA+GapB
 			SCORE scoreMD = DPM(uPrefixLengthA-1, uPrefixLengthB) +
 			  PA[uPrefixLengthA-1].m_scoreGapOpen;
-			SCORE scoreDD = DPD(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend;
+			SCORE scoreDD = DPD(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMD >= scoreDD)
@@ -256,7 +256,7 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		// Delete E=LetterA+GapB
 			SCORE scoreME = DPM(uPrefixLengthA-1, uPrefixLengthB) +
 			  PA[uPrefixLengthA-1].m_scoreGapOpen2;
-			SCORE scoreEE = DPE(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend2;
+			SCORE scoreEE = DPE(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend2.get();
 
 			SCORE scoreBest;
 			if (scoreME >= scoreEE)
@@ -277,7 +277,7 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			{
 			SCORE scoreMI = DPM(uPrefixLengthA, uPrefixLengthB-1) +
 			  PB[uPrefixLengthB - 1].m_scoreGapOpen;
-			SCORE scoreII = DPI(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend;
+			SCORE scoreII = DPI(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMI >= scoreII)
@@ -298,7 +298,7 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			{
 			SCORE scoreMJ = DPM(uPrefixLengthA, uPrefixLengthB-1) +
 			  PB[uPrefixLengthB - 1].m_scoreGapOpen2;
-			SCORE scoreJJ = DPJ(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend2;
+			SCORE scoreJJ = DPJ(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend2.get();
 
 			SCORE scoreBest;
 			if (scoreMJ >= scoreJJ)
@@ -461,19 +461,19 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	Log("Score = %s Path = %s\n", LocalScoreToStr(BestScore), LocalScoreToStr(scorePath));
 #endif
 
-	if (g_bKeepSimpleDP)
+	if (g_bKeepSimpleDP.get())
 		{
-		g_DPM = DPM_;
-		g_DPD = DPD_;
-		g_DPE = DPE_;
-		g_DPI = DPI_;
-		g_DPJ = DPJ_;
+		g_DPM.get() = DPM_;
+		g_DPD.get() = DPD_;
+		g_DPE.get() = DPE_;
+		g_DPI.get() = DPI_;
+		g_DPJ.get() = DPJ_;
 
-		g_TBM = TBM_;
-		g_TBD = TBD_;
-		g_TBE = TBE_;
-		g_TBI = TBI_;
-		g_TBJ = TBJ_;
+		g_TBM.get() = TBM_;
+		g_TBD.get() = TBD_;
+		g_TBE.get() = TBE_;
+		g_TBI.get() = TBI_;
+		g_TBJ.get() = TBJ_;
 		}
 	else
 		{

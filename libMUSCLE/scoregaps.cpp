@@ -82,9 +82,9 @@ static SCORE Penalty(unsigned Length, bool Term)
 	{
 	if (0 == Length)
 		return 0;
-	SCORE s1 = g_scoreGapOpen + g_scoreGapExtend*(Length - 1);
+	SCORE s1 = g_scoreGapOpen.get() + g_scoreGapExtend.get()*(Length - 1);
 #if	DOUBLE_AFFINE
-	SCORE s2 = g_scoreGapOpen2 + g_scoreGapExtend2*(Length - 1);
+	SCORE s2 = g_scoreGapOpen2.get() + g_scoreGapExtend2.get()*(Length - 1);
 	if (s1 > s2)
 		return s1;
 	return s2;

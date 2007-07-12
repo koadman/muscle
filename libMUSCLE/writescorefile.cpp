@@ -2,8 +2,8 @@
 #include "msa.h"
 #include <errno.h>
 
-extern float VTML_SP[32][32];
-extern float NUC_SP[32][32];
+extern SCOREMATRIX VTML_SP;
+extern SCOREMATRIX NUC_SP;
 
 static double GetColScore(const MSA &msa, unsigned uCol)
 	{
@@ -15,17 +15,17 @@ static double GetColScore(const MSA &msa, unsigned uCol)
 		if (msa.IsGap(uSeq1, uCol))
 			continue;
 		unsigned uLetter1 = msa.GetLetterEx(uSeq1, uCol);
-		if (uLetter1 >= g_AlphaSize)
+		if (uLetter1 >= g_AlphaSize.get())
 			continue;
 		for (unsigned uSeq2 = uSeq1 + 1; uSeq2 < uSeqCount; ++uSeq2)
 			{
 			if (msa.IsGap(uSeq2, uCol))
 				continue;
 			unsigned uLetter2 = msa.GetLetterEx(uSeq2, uCol);
-			if (uLetter2 >= g_AlphaSize)
+			if (uLetter2 >= g_AlphaSize.get())
 				continue;
 			double Score;
-			switch (g_Alpha)
+			switch (g_Alpha.get())
 				{
 			case ALPHA_Amino:
 				Score = VTML_SP[uLetter1][uLetter2];
@@ -35,7 +35,7 @@ static double GetColScore(const MSA &msa, unsigned uCol)
 				Score = NUC_SP[uLetter1][uLetter2];
 				break;
 			default:
-				Quit("GetColScore: invalid alpha=%d", g_Alpha);
+				Quit("GetColScore: invalid alpha=%d", g_Alpha.get());
 				}
 			dSum += Score;
 			++uPairCount;
@@ -48,9 +48,9 @@ static double GetColScore(const MSA &msa, unsigned uCol)
 
 void WriteScoreFile(const MSA &msa)
 	{
-	FILE *f = fopen(g_pstrScoreFileName, "w");
+	FILE *f = fopen(g_pstrScoreFileName.get(), "w");
 	if (0 == f)
-		Quit("Cannot open score file '%s' errno=%d", g_pstrScoreFileName, errno);
+		Quit("Cannot open score file '%s' errno=%d", g_pstrScoreFileName.get(), errno);
 
 	const unsigned uColCount = msa.GetColCount();
 	const unsigned uSeqCount = msa.GetSeqCount();

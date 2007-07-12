@@ -7,7 +7,7 @@
 #include "profile.h"
 #include "timing.h"
 
-static char g_strUseTreeWarning[] =
+static const char g_strUseTreeWarning[] =
 "\n******** WARNING ****************\n"
 "\nYou specified the -usetree option.\n"
 "Note that a good evolutionary tree may NOT be a good\n"
@@ -17,13 +17,13 @@ static char g_strUseTreeWarning[] =
 
 void DoMuscle()
 	{
-	SetOutputFileName(g_pstrOutFileName);
-	SetInputFileName(g_pstrInFileName);
+	SetOutputFileName(g_pstrOutFileName.get());
+	SetInputFileName(g_pstrInFileName.get());
 
-	SetMaxIters(g_uMaxIters);
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetMaxIters(g_uMaxIters.get());
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile fileIn(g_pstrInFileName);
+	TextFile fileIn(g_pstrInFileName.get());
 	SeqVect v;
 	v.FromFASTAFile(fileIn);
 	const unsigned uSeqCount = v.Length();
@@ -32,7 +32,7 @@ void DoMuscle()
 		Quit("No sequences in input file");
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = v.GuessAlpha();
@@ -73,7 +73,7 @@ void DoMuscle()
 		}
 
 	SetIter(1);
-	g_bDiags = g_bDiags1;
+	g_bDiags.get() = g_bDiags1.get();
 	SetSeqStats(uSeqCount, uMaxL, uTotL/uSeqCount);
 
 	SetMuscleSeqVect(v);
@@ -86,10 +86,10 @@ void DoMuscle()
 		v.SetSeqId(uSeqIndex, uSeqIndex);
 
 	if (0 == uSeqCount)
-		Quit("Input file '%s' has no sequences", g_pstrInFileName);
+		Quit("Input file '%s' has no sequences", g_pstrInFileName.get());
 	if (1 == uSeqCount)
 		{
-		TextFile fileOut(g_pstrOutFileName, true);
+		TextFile fileOut(g_pstrOutFileName.get(), true);
 		v.ToFile(fileOut);
 		return;
 		}
@@ -99,14 +99,14 @@ void DoMuscle()
 
 // First iteration
 	Tree GuideTree;
-	if (0 != g_pstrUseTreeFileName)
+	if (0 != g_pstrUseTreeFileName.get())
 		{
 	// Discourage users...
-		if (!g_bUseTreeNoWarn)
+		if (!g_bUseTreeNoWarn.get())
 			fprintf(stderr, g_strUseTreeWarning);
 
 	// Read tree from file
-		TextFile TreeFile(g_pstrUseTreeFileName);
+		TextFile TreeFile(g_pstrUseTreeFileName.get());
 		GuideTree.FromFile(TreeFile);
 
 	// Make sure tree is rooted
@@ -137,14 +137,14 @@ void DoMuscle()
 			}
 		}
 	else
-		TreeFromSeqVect(v, GuideTree, g_Cluster1, g_Distance1, g_Root1);
+		TreeFromSeqVect(v, GuideTree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get());
 
 	const char *Tree1 = ValueOpt("Tree1");
 	if (0 != Tree1)
 		{
 		TextFile f(Tree1, true);
 		GuideTree.ToFile(f);
-		if (g_bCluster)
+		if (g_bCluster.get())
 			return;
 		}
 
@@ -153,39 +153,39 @@ void DoMuscle()
 
 	MSA msa;
 	ProgNode *ProgNodes = 0;
-	if (g_bLow)
+	if (g_bLow.get())
 		ProgNodes = ProgressiveAlignE(v, GuideTree, msa);
 	else
 		ProgressiveAlign(v, GuideTree, msa);
 	SetCurrentAlignment(msa);
 
-	if (0 != g_pstrComputeWeightsFileName)
+	if (0 != g_pstrComputeWeightsFileName.get())
 		{
 		extern void OutWeights(const char *FileName, const MSA &msa);
 		SetMSAWeightsMuscle(msa);
-		OutWeights(g_pstrComputeWeightsFileName, msa);
+		OutWeights(g_pstrComputeWeightsFileName.get(), msa);
 		return;
 		}
 
 	ValidateMuscleIds(msa);
 
-	if (1 == g_uMaxIters || 2 == uSeqCount)
+	if (1 == g_uMaxIters.get() || 2 == uSeqCount)
 		{
-		//TextFile fileOut(g_pstrOutFileName, true);
+		//TextFile fileOut(g_pstrOutFileName.get(), true);
 		//MHackEnd(msa);
 		//msa.ToFile(fileOut);
 		MuscleOutput(msa);
 		return;
 		}
 
-	if (0 == g_pstrUseTreeFileName)
+	if (0 == g_pstrUseTreeFileName.get())
 		{
-		g_bDiags = g_bDiags2;
+		g_bDiags.get() = g_bDiags2.get();
 		SetIter(2);
 
-		if (g_bLow)
+		if (g_bLow.get())
 			{
-			if (0 != g_uMaxTreeRefineIters)
+			if (0 != g_uMaxTreeRefineIters.get())
 				RefineTreeE(msa, v, GuideTree, ProgNodes);
 			}
 		else
@@ -199,25 +199,25 @@ void DoMuscle()
 			}
 		}
 
-	SetSeqWeightMethod(g_SeqWeight2);
+	SetSeqWeightMethod(g_SeqWeight2.get());
 	SetMuscleTree(GuideTree);
 
-	if (g_bAnchors)
-		RefineVert(msa, GuideTree, g_uMaxIters - 2);
+	if (g_bAnchors.get())
+		RefineVert(msa, GuideTree, g_uMaxIters.get() - 2);
 	else
-		RefineHoriz(msa, GuideTree, g_uMaxIters - 2, false, false);
+		RefineHoriz(msa, GuideTree, g_uMaxIters.get() - 2, false, false);
 
 #if	0
 // Refining by subfamilies is disabled as it didn't give better
 // results. I tried doing this before and after RefineHoriz.
 // Should get back to this as it seems like this should work.
-	RefineSubfams(msa, GuideTree, g_uMaxIters - 2);
+	RefineSubfams(msa, GuideTree, g_uMaxIters.get() - 2);
 #endif
 
 	ValidateMuscleIds(msa);
 	ValidateMuscleIds(GuideTree);
 
-	//TextFile fileOut(g_pstrOutFileName, true);
+	//TextFile fileOut(g_pstrOutFileName.get(), true);
 	//MHackEnd(msa);
 	//msa.ToFile(fileOut);
 	MuscleOutput(msa);
@@ -227,31 +227,31 @@ void Run()
 	{
 	SetStartTime();
 	Log("Started %s\n", GetTimeAsStr());
-	for (int i = 0; i < g_argc; ++i)
-		Log("%s ", g_argv[i]);
+	for (int i = 0; i < g_argc.get(); ++i)
+		Log("%s ", g_argv.get()[i]);
 	Log("\n");
 
 #if	TIMING
 	TICKS t1 = GetClockTicks();
 #endif
-	if (g_bRefine)
+	if (g_bRefine.get())
 		Refine();
-	else if (g_bRefineW)
+	else if (g_bRefineW.get())
 		{
 		extern void DoRefineW();
 		DoRefineW();
 		}
-	else if (g_bProfDB)
+	else if (g_bProfDB.get())
 		ProfDB();
-	else if (g_bSW)
+	else if (g_bSW.get())
 		Local();
-	else if (0 != g_pstrSPFileName)
+	else if (0 != g_pstrSPFileName.get())
 		DoSP();
-	else if (g_bProfile)
+	else if (g_bProfile.get())
 		Profile();
-	else if (g_bPPScore)
+	else if (g_bPPScore.get())
 		PPScore();
-	else if (g_bPAS)
+	else if (g_bPAS.get())
 		ProgAlignSubFams();
 	else
 		DoMuscle();

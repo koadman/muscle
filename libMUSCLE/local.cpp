@@ -19,26 +19,26 @@ static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		msa.SetSeqId(uSeqIndex, uSeqIndex);
 
-	TreeFromMSA(msa, tree, g_Cluster1, g_Distance1, g_Root1);
+	TreeFromMSA(msa, tree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get());
 	SetMuscleTree(tree);
 	return ProfileFromMSA(msa);
 	}
 
 void Local()
 	{
-	if (0 == g_pstrFileName1 || 0 == g_pstrFileName2)
+	if (0 == g_pstrFileName1.get() || 0 == g_pstrFileName2.get())
 		Quit("Must specify both -in1 and -in2 for -sw");
 
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
 	MSA msa1;
 	MSA msa2;
 
-	MSAFromFileName(g_pstrFileName1, msa1);
-	MSAFromFileName(g_pstrFileName2, msa2);
+	MSAFromFileName(g_pstrFileName1.get(), msa1);
+	MSAFromFileName(g_pstrFileName2.get(), msa2);
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa1.GuessAlpha();
@@ -95,6 +95,6 @@ void Local()
 	msaOut.LogMe();
 #endif
 
-	TextFile fileOut(g_pstrOutFileName, true);
+	TextFile fileOut(g_pstrOutFileName.get(), true);
 	msaOut.ToFile(fileOut);
 	}

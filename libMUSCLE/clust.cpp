@@ -310,7 +310,7 @@ float Clust::ComputeDist(unsigned uNewNodeIndex, unsigned uNodeIndex)
 		return ComputeDistNeighborJoining(uNewNodeIndex, uNodeIndex);
 		}
 	Quit("Clust::ComputeDist, invalid centroid style %u", m_CentroidStyle);
-	return (float) g_dNAN;
+	return (float) g_dNAN.get();
 	}
 
 float Clust::ComputeDistMinLinkage(unsigned uNewNodeIndex, unsigned uNodeIndex)
@@ -362,7 +362,7 @@ float Clust::ComputeDistMAFFT(unsigned uNewNodeIndex, unsigned uNodeIndex)
 	const float dDistR = GetDist(uRightNodeIndex, uNodeIndex);
 	const float dMinDistLR = (dDistL < dDistR ? dDistL : dDistR);
 	const float dSumDistLR = dDistL + dDistR;
-	const float dDist = dMinDistLR*(1 - g_dSUEFF) + dSumDistLR*g_dSUEFF/2;
+	const float dDist = dMinDistLR*(1 - g_dSUEFF.get()) + dSumDistLR*g_dSUEFF.get()/2;
 	return dDist;
 	}
 

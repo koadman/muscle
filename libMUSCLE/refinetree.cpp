@@ -21,9 +21,9 @@ void RefineTree(MSA &msa, Tree &tree)
 	unsigned *IdToDiffsLeafNodeIndex = new unsigned[uSeqCount];
 	unsigned uDiffsCount = uSeqCount;
 	Tree Tree2;
-	for (unsigned uIter = 0; uIter < g_uMaxTreeRefineIters; ++uIter)
+	for (unsigned uIter = 0; uIter < g_uMaxTreeRefineIters.get(); ++uIter)
 		{
-		TreeFromMSA(msa, Tree2, g_Cluster2, g_Distance2, g_Root2);
+		TreeFromMSA(msa, Tree2, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
 
 #if	DEBUG
 		ValidateMuscleIds(Tree2);

@@ -76,13 +76,13 @@ SCORE ScoreSeqPairLetters(const MSA &msa1, unsigned uSeqIndex1,
 	for (unsigned uColIndex = uColStart; uColIndex <= uColEnd; ++uColIndex)
 		{
 		unsigned uLetter1 = msa1.GetLetterEx(uSeqIndex1, uColIndex);
-		if (uLetter1 >= g_AlphaSize)
+		if (uLetter1 >= g_AlphaSize.get())
 			continue;
 		unsigned uLetter2 = msa2.GetLetterEx(uSeqIndex2, uColIndex);
-		if (uLetter2 >= g_AlphaSize)
+		if (uLetter2 >= g_AlphaSize.get())
 			continue;
 
-		SCORE scoreMatch = (*g_ptrScoreMatrix)[uLetter1][uLetter2];
+		SCORE scoreMatch = (*g_ptrScoreMatrix.get())[uLetter1][uLetter2];
 		scoreLetters += scoreMatch;
 		if( MatchScore != NULL )
 			MatchScore[uColIndex] = scoreMatch;
@@ -172,15 +172,15 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 					scoreGaps += TermGapScore(true);
 					cur_gap_score += TermGapScore(true);
 				}else{
-					scoreGaps += g_scoreGapOpen;
-					cur_gap_score += g_scoreGapOpen;
+					scoreGaps += g_scoreGapOpen.get();
+					cur_gap_score += g_scoreGapOpen.get();
 					}
 				bGapping1 = true;
 				}
 			else
 				{
-				scoreGaps += g_scoreGapExtend;
-				cur_gap_score += g_scoreGapExtend;
+				scoreGaps += g_scoreGapExtend.get();
+				cur_gap_score += g_scoreGapExtend.get();
 				}
 			continue;
 			}
@@ -198,15 +198,15 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 					scoreGaps += TermGapScore(true);
 					cur_gap_score += TermGapScore(true);
 				}else{
-					scoreGaps += g_scoreGapOpen;
-					cur_gap_score += g_scoreGapOpen;
+					scoreGaps += g_scoreGapOpen.get();
+					cur_gap_score += g_scoreGapOpen.get();
 					}
 				bGapping2 = true;
 				}
 			else
 				{
-				scoreGaps += g_scoreGapExtend;
-				cur_gap_score += g_scoreGapExtend;
+				scoreGaps += g_scoreGapExtend.get();
+				cur_gap_score += g_scoreGapExtend.get();
 				}
 			continue;
 			}
@@ -228,9 +228,9 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 
 	if (bGapping1 || bGapping2)
 		{
-		scoreGaps -= g_scoreGapOpen;
+		scoreGaps -= g_scoreGapOpen.get();
 		scoreGaps += TermGapScore(true);
-		cur_gap_score -= g_scoreGapOpen;
+		cur_gap_score -= g_scoreGapOpen.get();
 		cur_gap_score += TermGapScore(true);
 
 		if( MatchScore != NULL )
@@ -359,15 +359,15 @@ void FindAnchorColsPP(const MSA &msa1, const MSA &msa2, unsigned AnchorCols[],
 	unsigned *BestCols = new unsigned[uColCount];
 
 	LetterObjScoreXP(msa1, msa2, MatchScore);
-	g_uSmoothWindowLength = 21;	// this is better for DNA
-	g_uAnchorSpacing = 96;
-	WindowSmooth(MatchScore, uColCount, g_uSmoothWindowLength, SmoothScore,
-	  g_dSmoothScoreCeil);
+	g_uSmoothWindowLength.get() = 21;	// this is better for DNA
+	g_uAnchorSpacing.get() = 96;
+	WindowSmooth(MatchScore, uColCount, g_uSmoothWindowLength.get(), SmoothScore,
+	  g_dSmoothScoreCeil.get());
 
 
 	unsigned uBestColCount;
 //	FindBestColsGrade(SmoothScore,uColCount,.85,BestCols,&uBestColCount);
-	FindBestColsComboPP(uColCount, MatchScore, SmoothScore, g_dMinBestColScore, g_dMinSmoothScore,
+	FindBestColsComboPP(uColCount, MatchScore, SmoothScore, g_dMinBestColScore.get(), g_dMinSmoothScore.get(),
 	  BestCols, &uBestColCount);
 /*
 	std::cerr << "found " << uBestColCount << " anchor cols:\n";
@@ -384,7 +384,7 @@ void FindAnchorColsPP(const MSA &msa1, const MSA &msa2, unsigned AnchorCols[],
 	ListBestCols(msa, MatchScore, SmoothScore, BestCols, uBestColCount);
 #endif
 
-	MergeBestCols(MatchScore, BestCols, uBestColCount, g_uAnchorSpacing, AnchorCols,
+	MergeBestCols(MatchScore, BestCols, uBestColCount, g_uAnchorSpacing.get(), AnchorCols,
 	  ptruAnchorColCount);
 /*
 	std::cerr << "\n\nafter merging, have " << *ptruAnchorColCount << " anchor cols:\n";
@@ -427,7 +427,7 @@ void PrepareMSAforScoring( MSA& msa )
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		msa.SetSeqId(uSeqIndex, uSeqIndex);
 
-	TreeFromMSA(msa, tree, g_Cluster2, g_Distance2, g_Root1);
+	TreeFromMSA(msa, tree, g_Cluster2.get(), g_Distance2.get(), g_Root1.get());
 	SetMuscleTree(tree);
 	SetMSAWeightsMuscle(msa);
 }

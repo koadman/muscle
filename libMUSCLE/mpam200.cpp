@@ -7,7 +7,7 @@ const float PAM_200_CENTER = (float) 20.0;
 	{ v(A), v(C), v(D), v(E), v(F), v(G), v(H), v(I), v(K), v(L), \
 	  v(M), v(N), v(P), v(Q), v(R), v(S), v(T), v(V), v(W), v(Y) },
 
-float PAM200[32][32] =
+SCOREMATRIX PAM200 =
 	{
 //       A       C       D       E       F       G       H       I       K       L
 //       M       N       P       Q       R       S       T       V       W       Y

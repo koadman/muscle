@@ -266,7 +266,7 @@ void UPGMA2(const DistCalc &DC, Tree &tree, LINKAGE Linkage)
 				break;
 
 			case LINKAGE_Biased:
-				dtNewDist = g_dSUEFF*AVG(dL, dR) + (1 - g_dSUEFF)*MIN(dL, dR);
+				dtNewDist = g_dSUEFF.get()*AVG(dL, dR) + (1 - g_dSUEFF.get())*MIN(dL, dR);
 				break;
 
 			default:

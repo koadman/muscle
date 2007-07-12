@@ -15,7 +15,7 @@ static TLS<bool *> M;
 
 void MHackStart(SeqVect &v)
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		return;
 
 	const unsigned uSeqCount = v.Length();
@@ -37,7 +37,7 @@ void MHackStart(SeqVect &v)
 
 void MHackEnd(MSA &msa)
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		return;
 	if (0 == M.get())
 		return;

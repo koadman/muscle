@@ -9,13 +9,13 @@
 
 #if	1 // SINGLE_AFFINE
 
-extern bool g_bKeepSimpleDP;
-extern SCORE *g_DPM;
-extern SCORE *g_DPD;
-extern SCORE *g_DPI;
-extern char *g_TBM;
-extern char *g_TBD;
-extern char *g_TBI;
+extern TLS<bool> g_bKeepSimpleDP;
+extern TLS<SCORE *> g_DPM;
+extern TLS<SCORE *> g_DPD;
+extern TLS<SCORE *> g_DPI;
+extern TLS<char *> g_TBM;
+extern TLS<char *> g_TBD;
+extern TLS<char *> g_TBI;
 
 static const char *LocalScoreToStr(SCORE s)
 	{
@@ -121,7 +121,7 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		DPM(uPrefixLengthA, 0) = MINUS_INFINITY;
 
 	// D=LetterA+GapB
-		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend;
+		DPD(uPrefixLengthA, 0) = DPD(uPrefixLengthA - 1, 0) + g_scoreGapExtend.get();
 		TBD(uPrefixLengthA, 0) = 'D';
 
 	// I=GapA+LetterB, impossible with empty prefix
@@ -138,7 +138,7 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		DPD(0, uPrefixLengthB) = MINUS_INFINITY;
 
 	// I=GapA+LetterB
-		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend;
+		DPI(0, uPrefixLengthB) = DPI(0, uPrefixLengthB - 1) + g_scoreGapExtend.get();
 		TBI(0, uPrefixLengthB) = 'I';
 		}
 
@@ -192,7 +192,7 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		// Delete D=LetterA+GapB
 			SCORE scoreMD = DPM(uPrefixLengthA-1, uPrefixLengthB) +
 			  PA[uPrefixLengthA-1].m_scoreGapOpen;
-			SCORE scoreDD = DPD(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend;
+			SCORE scoreDD = DPD(uPrefixLengthA-1, uPrefixLengthB) + g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMD >= scoreDD)
@@ -213,7 +213,7 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			{
 			SCORE scoreMI = DPM(uPrefixLengthA, uPrefixLengthB-1) +
 			  PB[uPrefixLengthB - 1].m_scoreGapOpen;
-			SCORE scoreII = DPI(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend;
+			SCORE scoreII = DPI(uPrefixLengthA, uPrefixLengthB-1) + g_scoreGapExtend.get();
 
 			SCORE scoreBest;
 			if (scoreMI >= scoreII)
@@ -342,15 +342,15 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	Log("Score = %s Path = %s\n", LocalScoreToStr(BestScore), LocalScoreToStr(scorePath));
 #endif
 
-	if (g_bKeepSimpleDP)
+	if (g_bKeepSimpleDP.get())
 		{
-		g_DPM = DPM_;
-		g_DPD = DPD_;
-		g_DPI = DPI_;
+		g_DPM.get() = DPM_;
+		g_DPD.get() = DPD_;
+		g_DPI.get() = DPI_;
 
-		g_TBM = TBM_;
-		g_TBD = TBD_;
-		g_TBI = TBI_;
+		g_TBM.get() = TBM_;
+		g_TBD.get() = TBD_;
+		g_TBI.get() = TBI_;
 		}
 	else
 		{

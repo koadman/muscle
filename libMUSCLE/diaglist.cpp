@@ -66,14 +66,14 @@ void DiagList::FromPath(const PWPath &Path)
 			}
 		else
 			{
-			if (uLength >= g_uMinDiagLength)
+			if (uLength >= g_uMinDiagLength.get())
 				Add(uStartPosA, uStartPosB, uLength);
 			uLength = 0;
 			}
 		}
 
 // Special case for last edge
-	if (uLength >= g_uMinDiagLength)
+	if (uLength >= g_uMinDiagLength.get())
 		Add(uStartPosA, uStartPosB, uLength);
 	}
 
@@ -170,7 +170,7 @@ unsigned DiagBreak(const Diag &d1, const Diag &d2)
 	}
 
 // Merge diagonals that are continuations of each other with
-// short breaks of up to length g_uMaxDiagBreak.
+// short breaks of up to length g_uMaxDiagBreak.get().
 // In a sorted list of diagonals, we only have to check
 // consecutive entries.
 void MergeDiags(DiagList &DL)
@@ -195,7 +195,7 @@ void MergeDiags(DiagList &DL)
 		{
 		const Diag *ptrDiag = &DL.Get(i);
 		unsigned uBreakLength = DiagBreak(*ptrPrev, *ptrDiag);
-		if (uBreakLength <= g_uMaxDiagBreak)
+		if (uBreakLength <= g_uMaxDiagBreak.get())
 			{
 			MergedDiag.m_uStartPosA = ptrPrev->m_uStartPosA;
 			MergedDiag.m_uStartPosB = ptrPrev->m_uStartPosB;

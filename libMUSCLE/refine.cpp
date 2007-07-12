@@ -10,14 +10,14 @@
 
 void Refine()
 	{
-	SetOutputFileName(g_pstrOutFileName);
-	SetInputFileName(g_pstrInFileName);
+	SetOutputFileName(g_pstrOutFileName.get());
+	SetInputFileName(g_pstrInFileName.get());
 	SetStartTime();
 
-	SetMaxIters(g_uMaxIters);
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetMaxIters(g_uMaxIters.get());
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile fileIn(g_pstrInFileName);
+	TextFile fileIn(g_pstrInFileName.get());
 	MSA msa;
 	msa.FromFile(fileIn);
 
@@ -26,7 +26,7 @@ void Refine()
 		Quit("No sequences in input file");
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa.GuessAlpha();
@@ -62,18 +62,18 @@ void Refine()
 	SetMuscleInputMSA(msa);
 
 	Tree GuideTree;
-	TreeFromMSA(msa, GuideTree, g_Cluster2, g_Distance2, g_Root2);
+	TreeFromMSA(msa, GuideTree, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
 	SetMuscleTree(GuideTree);
 
-	if (g_bAnchors)
-		RefineVert(msa, GuideTree, g_uMaxIters);
+	if (g_bAnchors.get())
+		RefineVert(msa, GuideTree, g_uMaxIters.get());
 	else
-		RefineHoriz(msa, GuideTree, g_uMaxIters, false, false);
+		RefineHoriz(msa, GuideTree, g_uMaxIters.get(), false, false);
 
 	ValidateMuscleIds(msa);
 	ValidateMuscleIds(GuideTree);
 
-//	TextFile fileOut(g_pstrOutFileName, true);
+//	TextFile fileOut(g_pstrOutFileName.get(), true);
 //	msa.ToFile(fileOut);
 	MuscleOutput(msa);
 	}

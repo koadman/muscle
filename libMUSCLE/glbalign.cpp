@@ -14,7 +14,7 @@ TICKS g_ticksDP = 0;
 #endif
 
 #if	1
-extern bool g_bKeepSimpleDP;
+extern TLS<bool> g_bKeepSimpleDP;
 SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
   unsigned uLengthB, PWPath &Path);
 SCORE NWDASmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
@@ -40,7 +40,7 @@ SCORE GlobalAlign(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 #if	TIMING
 	TICKS t1 = GetClockTicks();
 #endif
-	g_bKeepSimpleDP = true;
+	g_bKeepSimpleDP.get() = true;
 	PWPath SimplePath;
 	GlobalAlignSimple(PA, uLengthA, PB, uLengthB, SimplePath);
 
@@ -126,7 +126,7 @@ SCORE GlobalAlign(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		}
 
 	SCORE Score = 0;
-	if (g_bDiags)
+	if (g_bDiags.get())
 		Score = GlobalAlignDiags(PA, uLengthA, PB, uLengthB, Path);
 	else
 		Score = GlobalAlignNoDiags(PA, uLengthA, PB, uLengthB, Path);
@@ -140,10 +140,10 @@ SCORE GlobalAlign(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 SCORE GlobalAlignNoDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
   unsigned uLengthB, PWPath &Path)
 	{
-	if (g_bDimer)
+	if (g_bDimer.get())
 		return GlobalAlignDimer(PA, uLengthA, PB, uLengthB, Path);
 
-	switch (g_PPScore)
+	switch (g_PPScore.get())
 		{
 	case PPSCORE_LE:
 		return GlobalAlignLE(PA, uLengthA, PB, uLengthB, Path);

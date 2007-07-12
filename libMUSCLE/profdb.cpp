@@ -10,17 +10,17 @@
 
 void ProfDB()
 	{
-	SetOutputFileName(g_pstrOutFileName);
-	SetInputFileName(g_pstrFileName2);
+	SetOutputFileName(g_pstrOutFileName.get());
+	SetInputFileName(g_pstrFileName2.get());
 	SetStartTime();
 
-	TextFile file1(g_pstrFileName1);
-	TextFile file2(g_pstrFileName2);
+	TextFile file1(g_pstrFileName1.get());
+	TextFile file2(g_pstrFileName2.get());
 
-	SetMaxIters(g_uMaxIters);
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetMaxIters(g_uMaxIters.get());
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile fileIn(g_pstrFileName1);
+	TextFile fileIn(g_pstrFileName1.get());
 	MSA msa1;
 	msa1.FromFile(fileIn);
 
@@ -50,6 +50,6 @@ void ProfDB()
 		}
 	ProgressStepsDone();
 
-	TextFile fileOut(g_pstrOutFileName, true);
+	TextFile fileOut(g_pstrOutFileName.get(), true);
 	msa1.ToFile(fileOut);
 	}

@@ -12,6 +12,9 @@ struct FLAG_OPT
 	const char *m_pstrName;
 	bool m_bSet;
 	};
+#ifdef _OPENMP
+#warning "Command-line option value storage is not OpenMP safe yet"
+#endif
 
 static VALUE_OPT ValueOpts[] =
 	{
@@ -76,7 +79,7 @@ static VALUE_OPT ValueOpts[] =
 	"PHYSOut",			0,
 	"Matrix",			0,
 	};
-static int ValueOptCount = sizeof(ValueOpts)/sizeof(ValueOpts[0]);
+static const int ValueOptCount = sizeof(ValueOpts)/sizeof(ValueOpts[0]);
 
 static FLAG_OPT FlagOpts[] =
 	{
@@ -116,7 +119,7 @@ static FLAG_OPT FlagOpts[] =
 	"PHYI",					false,
 	"PHYS",					false,
 	};
-static int FlagOptCount = sizeof(FlagOpts)/sizeof(FlagOpts[0]);
+static const int FlagOptCount = sizeof(FlagOpts)/sizeof(FlagOpts[0]);
 
 static bool TestSetFlagOpt(const char *Arg)
 	{

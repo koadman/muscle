@@ -5,9 +5,9 @@
 #include "profile.h"
 #include "objscore.h"
 
-bool g_bTracePPScore = false;
-MSA *g_ptrPPScoreMSA1 = 0;
-MSA *g_ptrPPScoreMSA2 = 0;
+TLS<bool> g_bTracePPScore(false);
+TLS<MSA *> g_ptrPPScoreMSA1(0);
+TLS<MSA *> g_ptrPPScoreMSA2(0);
 
 static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 	{
@@ -15,20 +15,20 @@ static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		msa.SetSeqId(uSeqIndex, uSeqIndex);
 
-	TreeFromMSA(msa, tree, g_Cluster2, g_Distance2, g_Root1);
+	TreeFromMSA(msa, tree, g_Cluster2.get(), g_Distance2.get(), g_Root1.get());
 	SetMuscleTree(tree);
 	return ProfileFromMSA(msa);
 	}
 
 void PPScore()
 	{
-	if (0 == g_pstrFileName1 || 0 == g_pstrFileName2)
+	if (0 == g_pstrFileName1.get() || 0 == g_pstrFileName2.get())
 		Quit("-ppscore needs -in1 and -in2");
 
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile file1(g_pstrFileName1);
-	TextFile file2(g_pstrFileName2);
+	TextFile file1(g_pstrFileName1.get());
+	TextFile file2(g_pstrFileName2.get());
 
 	MSA msa1;
 	MSA msa2;
@@ -43,7 +43,7 @@ void PPScore()
 		Quit("Profiles must have the same length");
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa1.GuessAlpha();
@@ -82,9 +82,9 @@ void PPScore()
 	ProfPos *Prof1 = ProfileFromMSALocal(msa1, tree1);
 	ProfPos *Prof2 = ProfileFromMSALocal(msa2, tree2);
 
-	g_bTracePPScore = true;
-	g_ptrPPScoreMSA1 = &msa1;
-	g_ptrPPScoreMSA2 = &msa2;
+	g_bTracePPScore.get() = true;
+	g_ptrPPScoreMSA1.get() = &msa1;
+	g_ptrPPScoreMSA2.get() = &msa2;
 
 	SCORE Score = ObjScoreDP_Profs(Prof1, Prof2, uLength1);
 

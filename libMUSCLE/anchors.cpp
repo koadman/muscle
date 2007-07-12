@@ -198,18 +198,18 @@ void FindAnchorCols(const MSA &msa, unsigned AnchorCols[],
 	unsigned *BestCols = new unsigned[uColCount];
 
 	GetLetterScores(msa, MatchScore);
-	WindowSmooth(MatchScore, uColCount, g_uSmoothWindowLength, SmoothScore,
-	  g_dSmoothScoreCeil);
+	WindowSmooth(MatchScore, uColCount, g_uSmoothWindowLength.get(), SmoothScore,
+	  g_dSmoothScoreCeil.get());
 
 	unsigned uBestColCount;
-	FindBestColsCombo(msa, MatchScore, SmoothScore, g_dMinBestColScore, g_dMinSmoothScore,
+	FindBestColsCombo(msa, MatchScore, SmoothScore, g_dMinBestColScore.get(), g_dMinSmoothScore.get(),
 	  BestCols, &uBestColCount);
 
 #if	TRACE
 	ListBestCols(msa, MatchScore, SmoothScore, BestCols, uBestColCount);
 #endif
 
-	MergeBestCols(MatchScore, BestCols, uBestColCount, g_uAnchorSpacing, AnchorCols,
+	MergeBestCols(MatchScore, BestCols, uBestColCount, g_uAnchorSpacing.get(), AnchorCols,
 	  ptruAnchorColCount);
 
 	delete[] MatchScore;

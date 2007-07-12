@@ -14,24 +14,24 @@ extern SCOREMATRIX VTML_SP;
 extern SCOREMATRIX VTML_SPNoCenter;
 extern SCOREMATRIX NUC_SP;
 
-SCORE g_SPScoreLetters;
-SCORE g_SPScoreGaps;
+TLS<SCORE> g_SPScoreLetters;
+TLS<SCORE> g_SPScoreGaps;
 
 SCORE TermGapScore(bool Gap)
 	{
-	switch (g_TermGaps)
+	switch (g_TermGaps.get())
 		{
 	case TERMGAPS_Full:
 		return 0;
 
 	case TERMGAPS_Half:
 		if (Gap)
-			return g_scoreGapOpen/2;
+			return g_scoreGapOpen.get()/2;
 		return 0;
 
 	case TERMGAPS_Ext:
 		if (Gap)
-			return g_scoreGapExtend;
+			return g_scoreGapExtend.get();
 		return 0;
 		}
 	Quit("TermGapScore?!");
@@ -100,13 +100,13 @@ SCORE ScoreSeqPairLetters(const MSA &msa1, unsigned uSeqIndex1,
 	for (unsigned uColIndex = uColStart; uColIndex <= uColEnd; ++uColIndex)
 		{
 		unsigned uLetter1 = msa1.GetLetterEx(uSeqIndex1, uColIndex);
-		if (uLetter1 >= g_AlphaSize)
+		if (uLetter1 >= g_AlphaSize.get())
 			continue;
 		unsigned uLetter2 = msa2.GetLetterEx(uSeqIndex2, uColIndex);
-		if (uLetter2 >= g_AlphaSize)
+		if (uLetter2 >= g_AlphaSize.get())
 			continue;
 
-		SCORE scoreMatch = (*g_ptrScoreMatrix)[uLetter1][uLetter2];
+		SCORE scoreMatch = (*g_ptrScoreMatrix.get())[uLetter1][uLetter2];
 		scoreLetters += scoreMatch;
 		}
 	return scoreLetters;
@@ -188,11 +188,11 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 				if (uColIndex == uColStart)
 					scoreGaps += TermGapScore(true);
 				else
-					scoreGaps += g_scoreGapOpen;
+					scoreGaps += g_scoreGapOpen.get();
 				bGapping1 = true;
 				}
 			else
-				scoreGaps += g_scoreGapExtend;
+				scoreGaps += g_scoreGapExtend.get();
 			continue;
 			}
 
@@ -206,11 +206,11 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 				if (uColIndex == uColStart)
 					scoreGaps += TermGapScore(true);
 				else
-					scoreGaps += g_scoreGapOpen;
+					scoreGaps += g_scoreGapOpen.get();
 				bGapping2 = true;
 				}
 			else
-				scoreGaps += g_scoreGapExtend;
+				scoreGaps += g_scoreGapExtend.get();
 			continue;
 			}
 
@@ -220,7 +220,7 @@ SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
 
 	if (bGapping1 || bGapping2)
 		{
-		scoreGaps -= g_scoreGapOpen;
+		scoreGaps -= g_scoreGapOpen.get();
 		scoreGaps += TermGapScore(true);
 		}
 	return scoreGaps;
@@ -267,8 +267,8 @@ SCORE ObjScoreSP(const MSA &msa, SCORE MatchScore[])
 
 			scoreTotal += w*scorePair;
 
-			g_SPScoreLetters += w*scoreLetters;
-			g_SPScoreGaps += w*scoreGaps;
+			g_SPScoreLetters.get() += w*scoreLetters;
+			g_SPScoreGaps.get() += w*scoreGaps;
 #if	TRACE
 			Log("%4d  %4d  %6.3f  %6.3f  %10.2f  %10.2f  %10.2f  %10.2f  %10.2f >%s >%s\n",
 			  uSeqIndex1,
@@ -368,13 +368,13 @@ SCORE ObjScoreDP_Profs(const ProfPos *PA, const ProfPos *PB, unsigned uColCount,
 
 		scoreTotal += scoreMatch + scoreGap;
 
-		extern bool g_bTracePPScore;
-		extern MSA *g_ptrPPScoreMSA1;
-		extern MSA *g_ptrPPScoreMSA2;
-		if (g_bTracePPScore)
+		extern TLS<bool> g_bTracePPScore;
+		extern TLS<MSA *> g_ptrPPScoreMSA1;
+		extern TLS<MSA *> g_ptrPPScoreMSA2;
+		if (g_bTracePPScore.get())
 			{
-			const MSA &msa1 = *g_ptrPPScoreMSA1;
-			const MSA &msa2 = *g_ptrPPScoreMSA2;
+			const MSA &msa1 = *g_ptrPPScoreMSA1.get();
+			const MSA &msa2 = *g_ptrPPScoreMSA2.get();
 			const unsigned uSeqCount1 = msa1.GetSeqCount();
 			const unsigned uSeqCount2 = msa2.GetSeqCount();
 
@@ -408,7 +408,7 @@ SCORE ObjScoreDP_Profs(const ProfPos *PA, const ProfPos *PB, unsigned uColCount,
 // objective score in the iterative refinement stage.
 SCORE ObjScorePS(const MSA &msa, SCORE MatchScore[])
 	{
-	if (g_PPScore != PPSCORE_LE)
+	if (g_PPScore.get() != PPSCORE_LE)
 		Quit("FastScoreMSA_LASimple: LA");
 
 	const unsigned uSeqCount = msa.GetSeqCount();

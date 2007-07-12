@@ -42,7 +42,7 @@ static unsigned GetTuple(const ProfPos *PP, unsigned uPos)
 void FindDiagsNuc(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
   unsigned uLengthY, DiagList &DL)
 	{
-	if (ALPHA_DNA != g_Alpha && ALPHA_RNA != g_Alpha)
+	if (ALPHA_DNA != g_Alpha.get() && ALPHA_RNA != g_Alpha.get())
 		Quit("FindDiagsNuc: requires nucleo alphabet");
 
 	DL.Clear();
@@ -142,7 +142,7 @@ void FindDiagsNuc(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 		const unsigned uLength = uEndPosA - uStartPosA + 1;
 		assert(uEndPosB - uStartPosB + 1 == uLength);
 
-		if (uLength >= g_uMinDiagLength)
+		if (uLength >= g_uMinDiagLength.get())
 			{
 			if (bSwap)
 				DL.Add(uStartPosB, uStartPosA, uLength);

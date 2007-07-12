@@ -36,7 +36,7 @@ static unsigned MxCharToLetter(char c)
 	return 0;
 	}
 
-PTR_SCOREMATRIX ReadMx(TextFile &File)
+DYN_PTR_SCOREMATRIX ReadMx(TextFile &File)
 	{
 // Find column headers
 	char Line[MAX_LINE];
@@ -150,7 +150,7 @@ PTR_SCOREMATRIX ReadMx(TextFile &File)
 			}
 ExitLoop:;
 
-	if (g_bVerbose)
+	if (g_bVerbose.get())
 		LogMx();
 
 	SCOREMATRIX& sm = Mx.get();

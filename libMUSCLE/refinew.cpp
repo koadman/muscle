@@ -85,28 +85,28 @@ void RefineW(const MSA &msaIn, MSA &msaOut)
 		msaOut.SetSeqId(uSeqIndex, msaIn.GetSeqId(uSeqIndex));
 		}
 
-	const unsigned uWindowCount = (uColCount + g_uRefineWindow - 1)/g_uRefineWindow;
-	if (0 == g_uWindowTo)
-		g_uWindowTo = uWindowCount - 1;
+	const unsigned uWindowCount = (uColCount + g_uRefineWindow.get() - 1)/g_uRefineWindow.get();
+	if (0 == g_uWindowTo.get())
+		g_uWindowTo.get() = uWindowCount - 1;
 
 #if	MEMDEBUG
 	_CrtSetBreakAlloc(1560);
 #endif
 
-	if (g_uWindowOffset > 0)
+	if (g_uWindowOffset.get() > 0)
 		{
 		MSA msaTmp;
-		MSAFromColRange(msaIn, 0, g_uWindowOffset, msaOut);
+		MSAFromColRange(msaIn, 0, g_uWindowOffset.get(), msaOut);
 		}
 
-	if (!g_bQuiet)
+	if (!g_bQuiet.get())
 		fprintf(stderr, "\n");
-	for (unsigned uWindowIndex = g_uWindowFrom; uWindowIndex <= g_uWindowTo; ++uWindowIndex)
+	for (unsigned uWindowIndex = g_uWindowFrom.get(); uWindowIndex <= g_uWindowTo.get(); ++uWindowIndex)
 		{
-		if (!g_bQuiet)
+		if (!g_bQuiet.get())
 			fprintf(stderr, "Window %d of %d    \r", uWindowIndex, uWindowCount);
-		const unsigned uColFrom = g_uWindowOffset + uWindowIndex*g_uRefineWindow;
-		unsigned uColTo = uColFrom + g_uRefineWindow - 1;
+		const unsigned uColFrom = g_uWindowOffset.get() + uWindowIndex*g_uRefineWindow.get();
+		unsigned uColTo = uColFrom + g_uRefineWindow.get() - 1;
 		if (uColTo >= uColCount)
 			uColTo = uColCount - 1;
 		assert(uColTo >= uColFrom);
@@ -184,7 +184,7 @@ void RefineW(const MSA &msaIn, MSA &msaOut)
 //		AppendMSA(msaOut, msaTmp);
 		// end AED 5/20/06
 
-		if (uWindowIndex == g_uSaveWindow)
+		if (uWindowIndex == g_uSaveWindow.get())
 			{
 			MSA msaInTmp;
 			unsigned uOutCols = msaOut.GetColCount();
@@ -223,7 +223,7 @@ void RefineW(const MSA &msaIn, MSA &msaOut)
 //		AssertMSAEqIgnoreCaseAndGaps(msaInTmp, msaTmp);
 //#endif
 		}
-	if (!g_bQuiet)
+	if (!g_bQuiet.get())
 		fprintf(stderr, "\n");
 
 //	AssertMSAEqIgnoreCaseAndGaps(msaIn, msaOut);//@@uncomment!
@@ -231,14 +231,14 @@ void RefineW(const MSA &msaIn, MSA &msaOut)
 
 void DoRefineW()
 	{
-	SetOutputFileName(g_pstrOutFileName);
-	SetInputFileName(g_pstrInFileName);
+	SetOutputFileName(g_pstrOutFileName.get());
+	SetInputFileName(g_pstrInFileName.get());
 	SetStartTime();
 
-	SetMaxIters(g_uMaxIters);
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetMaxIters(g_uMaxIters.get());
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile fileIn(g_pstrInFileName);
+	TextFile fileIn(g_pstrInFileName.get());
 	MSA msa;
 	msa.FromFile(fileIn);
 
@@ -255,7 +255,7 @@ void DoRefineW()
 	SetMuscleInputMSA(msa);
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa.GuessAlpha();
@@ -287,7 +287,7 @@ void DoRefineW()
 
 //	ValidateMuscleIds(msa);
 
-//	TextFile fileOut(g_pstrOutFileName, true);
+//	TextFile fileOut(g_pstrOutFileName.get(), true);
 //	msaOut.ToFile(fileOut);
 	MuscleOutput(msaOut);
 	}

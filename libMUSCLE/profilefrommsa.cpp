@@ -52,11 +52,11 @@ void ListProfile(const ProfPos *Prof, unsigned uLength, const MSA *ptrMSA)
 
 	Log("\n");
 	Log("  Pos G");
-	for (unsigned n = 0; n < g_AlphaSize; ++n)
+	for (unsigned n = 0; n < g_AlphaSize.get(); ++n)
 		Log("     %c", LetterExToChar(n));
 	Log("\n");
 	Log("  --- -");
-	for (unsigned n = 0; n < g_AlphaSize; ++n)
+	for (unsigned n = 0; n < g_AlphaSize.get(); ++n)
 		Log(" -----");
 	Log("\n");
 
@@ -69,7 +69,7 @@ void ListProfile(const ProfPos *Prof, unsigned uLength, const MSA *ptrMSA)
 		else
 			Log(" %d", PP.m_uResidueGroup);
 
-		for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+		for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 			{
 			FCOUNT f = PP.m_fcCounts[uLetter];
 			if (f == 0.0)
@@ -117,11 +117,11 @@ void ListProfile(const ProfPos *Prof, unsigned uLength, const MSA *ptrMSA)
 
 	Log("\n");
 	Log("  Pos G");
-	for (unsigned n = 0; n < g_AlphaSize; ++n)
+	for (unsigned n = 0; n < g_AlphaSize.get(); ++n)
 		Log("     %c", LetterExToChar(n));
 	Log("\n");
 	Log("  --- -");
-	for (unsigned n = 0; n < g_AlphaSize; ++n)
+	for (unsigned n = 0; n < g_AlphaSize.get(); ++n)
 		Log(" -----");
 	Log("\n");
 
@@ -134,7 +134,7 @@ void ListProfile(const ProfPos *Prof, unsigned uLength, const MSA *ptrMSA)
 		else
 			Log(" %d", PP.m_uResidueGroup);
 
-		for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+		for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 			{
 			FCOUNT f = PP.m_fcCounts[uLetter];
 			if (f == 0.0)
@@ -160,13 +160,13 @@ void SortCounts(const FCOUNT fcCounts[], unsigned SortOrder[])
 		{
 		0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 		};
-	memcpy(SortOrder, InitialSortOrder, g_AlphaSize*sizeof(unsigned));
+	memcpy(SortOrder, InitialSortOrder, g_AlphaSize.get()*sizeof(unsigned));
 
 	bool bAny = true;
 	while (bAny)
 		{
 		bAny = false;
-		for (unsigned n = 0; n < g_AlphaSize - 1; ++n)
+		for (unsigned n = 0; n < g_AlphaSize.get() - 1; ++n)
 			{
 			unsigned i1 = SortOrder[n];
 			unsigned i2 = SortOrder[n+1];
@@ -228,7 +228,7 @@ static unsigned NucleoGroupFromFCounts(const FCOUNT fcCounts[])
 
 unsigned ResidueGroupFromFCounts(const FCOUNT fcCounts[])
 	{
-	switch (g_Alpha)
+	switch (g_Alpha.get())
 		{
 	case ALPHA_Amino:
 		return AminoGroupFromFCounts(fcCounts);
@@ -262,7 +262,7 @@ ProfPos *ProfileFromMSA(const MSA &a)
 		FCOUNT fcGapEnd;
 		FCOUNT fcGapExtend;
 		FCOUNT fOcc;
-		a.GetFractionalWeightedCounts(uColIndex, g_bNormalizeCounts, PP.m_fcCounts,
+		a.GetFractionalWeightedCounts(uColIndex, g_bNormalizeCounts.get(), PP.m_fcCounts,
 		  &fcGapStart, &fcGapEnd, &fcGapExtend, &fOcc,
 		  &PP.m_LL, &PP.m_LG, &PP.m_GL, &PP.m_GG);
 		PP.m_fOcc = fOcc;
@@ -271,11 +271,11 @@ ProfPos *ProfileFromMSA(const MSA &a)
 
 		PP.m_uResidueGroup = ResidueGroupFromFCounts(PP.m_fcCounts);
 
-		for (unsigned i = 0; i < g_AlphaSize; ++i)
+		for (unsigned i = 0; i < g_AlphaSize.get(); ++i)
 			{
 			SCORE scoreSum = 0;
-			for (unsigned j = 0; j < g_AlphaSize; ++j)
-				scoreSum += PP.m_fcCounts[j]*(*g_ptrScoreMatrix)[i][j];
+			for (unsigned j = 0; j < g_AlphaSize.get(); ++j)
+				scoreSum += PP.m_fcCounts[j]*(*g_ptrScoreMatrix.get())[i][j];
 			PP.m_AAScores[i] = scoreSum;
 			}
 
@@ -285,16 +285,16 @@ ProfPos *ProfileFromMSA(const MSA &a)
 		PP.m_fcStartOcc = sStartOcc;
 		PP.m_fcEndOcc = sEndOcc;
 
-		PP.m_scoreGapOpen = sStartOcc*g_scoreGapOpen/2;
-		PP.m_scoreGapClose = sEndOcc*g_scoreGapOpen/2;
+		PP.m_scoreGapOpen = sStartOcc*g_scoreGapOpen.get()/2;
+		PP.m_scoreGapClose = sEndOcc*g_scoreGapOpen.get()/2;
 #if	DOUBLE_AFFINE
-		PP.m_scoreGapOpen2 = sStartOcc*g_scoreGapOpen2/2;
-		PP.m_scoreGapClose2 = sEndOcc*g_scoreGapOpen2/2;
+		PP.m_scoreGapOpen2 = sStartOcc*g_scoreGapOpen2.get()/2;
+		PP.m_scoreGapClose2 = sEndOcc*g_scoreGapOpen2.get()/2;
 #endif
 //		PP.m_scoreGapExtend = (SCORE) ((1.0 - fcGapExtend)*scoreGapExtend);
 
 #if	PAF
-		if (ALHPA_Amino == g_Alpha && sStartOcc > 0.5)
+		if (ALHPA_Amino == g_Alpha.get() && sStartOcc > 0.5)
 			{
 			extern SCORE PAFactor(const FCOUNT fcCounts[]);
 			SCORE paf = PAFactor(PP.m_fcCounts);
@@ -305,7 +305,7 @@ ProfPos *ProfileFromMSA(const MSA &a)
 		}
 
 #if	HYDRO
-	if (ALPHA_Amino == g_Alpha)
+	if (ALPHA_Amino == g_Alpha.get())
 		Hydro(Pos, uColCount);
 #endif
 

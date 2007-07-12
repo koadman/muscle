@@ -86,7 +86,7 @@ ProgNode *ProgressiveAlignE(const SeqVect &v, const Tree &GuideTree, MSA &a)
 			const unsigned uLeft = GuideTree.GetLeft(uTreeNodeIndex);
 			const unsigned uRight = GuideTree.GetRight(uTreeNodeIndex);
 
-			if (g_bVerbose)
+			if (g_bVerbose.get())
 				{
 				Log("Align: (");
 				LogLeafNames(GuideTree, uLeft);
@@ -188,7 +188,7 @@ ProgNode *ProgressiveAlignE(const SeqVect &v, const Tree &GuideTree, MSA &a)
 	while (NULL_NEIGHBOR != uTreeNodeIndex);
 	ProgressStepsDone();
 
-	if (g_bBrenner)
+	if (g_bBrenner.get())
 		MakeRootMSABrenner((SeqVect &) v, GuideTree, ProgNodes, a);
 	else
 		MakeRootMSA(v, GuideTree, ProgNodes, a);

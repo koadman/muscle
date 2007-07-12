@@ -29,7 +29,7 @@ static const double PAFFacs[20] =
 // (Not used: does not appear to work well).
 SCORE PAFactor(const FCOUNT fcCounts[])
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		Quit("PAFFactor: requires amino acid sequence");
 
 	FCOUNT fLetterCount = 0;
@@ -71,7 +71,7 @@ static const bool Hydrophilic[20] =
 
 bool IsHydrophilic(const FCOUNT fcCounts[])
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		Quit("IsHydrophilic: requires amino acid sequence");
 
 	for (unsigned uLetter = 0; uLetter < 20; ++uLetter)
@@ -82,7 +82,7 @@ bool IsHydrophilic(const FCOUNT fcCounts[])
 
 bool IsHydrophilic(const unsigned uCounts[])
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		Quit("IsHydrophilic: requires amino acid sequence");
 
 	for (unsigned uLetter = 0; uLetter < 20; ++uLetter)
@@ -131,7 +131,7 @@ static const bool Hydrophobic[20] =
 
 bool IsHydrophobic(const FCOUNT fcCounts[])
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		Quit("IsHydrophobic: requires amino acid sequence");
 
 	for (unsigned uLetter = 0; uLetter < 20; ++uLetter)

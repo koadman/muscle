@@ -16,8 +16,8 @@ SCORE ObjScore(const MSA &msa, const unsigned SeqIndexes1[],
 #endif
 	const unsigned uSeqCount = msa.GetSeqCount();
 
-	OBJSCORE OS = g_ObjScore;
-	if (g_ObjScore == OBJSCORE_SPM)
+	OBJSCORE OS = g_ObjScore.get();
+	if (g_ObjScore.get() == OBJSCORE_SPM)
 		{
         if (uSeqCount <= 100)
 			OS = OBJSCORE_XP;
@@ -71,7 +71,7 @@ SCORE ObjScore(const MSA &msa, const unsigned SeqIndexes1[],
 		break;
 	
 	default:
-		Quit("Invalid g_ObjScore=%d", g_ObjScore);
+		Quit("Invalid g_ObjScore.get()=%d", g_ObjScore.get());
 		}
 #if	TIMING
 	TICKS t2 = GetClockTicks();

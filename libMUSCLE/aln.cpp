@@ -12,7 +12,7 @@ static char GetAlnConsensusChar(const MSA &a, unsigned uColIndex);
 
 void MSA::ToAlnFile(TextFile &File) const
 	{
-	if (g_bClwStrict)
+	if (g_bClwStrict.get())
 		File.PutString("CLUSTAL W (1.81) multiple sequence alignment\n");
 	else
 		{
@@ -106,7 +106,7 @@ static char GetAlnConsensusChar(const MSA &a, unsigned uColIndex)
 	if (1 == Count)
 		return '*';
 
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		return ' ';
 
 #define B(a)	(1 << AX_##a)

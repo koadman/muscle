@@ -9,7 +9,7 @@
 
 static SCORE ScoreColLetters(const MSA &msa, unsigned uColIndex)
 	{
-	SCOREMATRIX &Mx = *g_ptrScoreMatrix;
+	const SCOREMATRIX &Mx = *g_ptrScoreMatrix.get();
 	const unsigned uSeqCount = msa.GetSeqCount();
 
 #if	BRUTE_LETTERS
@@ -17,13 +17,13 @@ static SCORE ScoreColLetters(const MSA &msa, unsigned uColIndex)
 	for (unsigned uSeqIndex1 = 0; uSeqIndex1 < uSeqCount; ++uSeqIndex1)
 		{
 		unsigned uLetter1 = msa.GetLetterEx(uSeqIndex1, uColIndex);
-		if (uLetter1 >= g_AlphaSize)
+		if (uLetter1 >= g_AlphaSize.get())
 			continue;
 		WEIGHT w1 = msa.GetSeqWeight(uSeqIndex1);
 		for (unsigned uSeqIndex2 = uSeqIndex1 + 1; uSeqIndex2 < uSeqCount; ++uSeqIndex2)
 			{
 			unsigned uLetter2 = msa.GetLetterEx(uSeqIndex2, uColIndex);
-			if (uLetter2 >= g_AlphaSize)
+			if (uLetter2 >= g_AlphaSize.get())
 				continue;
 			WEIGHT w2 = msa.GetSeqWeight(uSeqIndex2);
 			BruteScore += w1*w2*Mx[uLetter1][uLetter2];
@@ -46,18 +46,18 @@ static SCORE ScoreColLetters(const MSA &msa, unsigned uColIndex)
 	for (unsigned uSeqIndex1 = 0; uSeqIndex1 < uSeqCount; ++uSeqIndex1)
 		{
 		unsigned uLetter = msa.GetLetterEx(uSeqIndex1, uColIndex);
-		if (uLetter >= g_AlphaSize)
+		if (uLetter >= g_AlphaSize.get())
 			continue;
 		WEIGHT w = msa.GetSeqWeight(uSeqIndex1);
 		Freqs[uLetter] += w;
 		Score -= w*w*Mx[uLetter][uLetter];
 		}
 
-	for (unsigned uLetter1 = 0; uLetter1 < g_AlphaSize; ++uLetter1)
+	for (unsigned uLetter1 = 0; uLetter1 < g_AlphaSize.get(); ++uLetter1)
 		{
 		const FCOUNT f1 = Freqs[uLetter1];
 		Score += f1*f1*Mx[uLetter1][uLetter1];
-		for (unsigned uLetter2 = uLetter1 + 1; uLetter2 < g_AlphaSize; ++uLetter2)
+		for (unsigned uLetter2 = uLetter1 + 1; uLetter2 < g_AlphaSize.get(); ++uLetter2)
 			{
 			const FCOUNT f2 = Freqs[uLetter2];
 			Score += 2*f1*f2*Mx[uLetter1][uLetter2];

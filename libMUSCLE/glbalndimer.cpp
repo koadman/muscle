@@ -121,7 +121,7 @@ static SCORE ScoreProfPosDimerPSP(const ProfPos &PPA, const ProfPos &PPB)
 
 static SCORE ScoreProfPosDimer(const ProfPos &PPA, const ProfPos &PPB)
 	{
-	switch (g_PPScore)
+	switch (g_PPScore.get())
 		{
 	case PPSCORE_LE:
 		return ScoreProfPosDimerLE(PPA, PPB);
@@ -130,7 +130,7 @@ static SCORE ScoreProfPosDimer(const ProfPos &PPA, const ProfPos &PPB)
 	case PPSCORE_SV:
 		return ScoreProfPosDimerPSP(PPA, PPB);
 		}
-	Quit("Invalid g_PPScore");
+	Quit("Invalid g_PPScore.get()");
 	return 0;
 	}
 

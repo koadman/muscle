@@ -66,7 +66,7 @@ SCORE FastScorePath2(const ProfPos *PA, unsigned uLengthA,
 				scoreGap = PPA.m_scoreGapOpen;
 				break;
 			case 'D':
-//				scoreGap = g_scoreGapExtend;
+//				scoreGap = g_scoreGapExtend.get();
 				scoreGap = 0;
 				break;
 			case 'I':
@@ -92,7 +92,7 @@ SCORE FastScorePath2(const ProfPos *PA, unsigned uLengthA,
 				break;
 			case 'I':
 				scoreGap = 0;
-//				scoreGap = g_scoreGapExtend;
+//				scoreGap = g_scoreGapExtend.get();
 				break;
 			case 'D':
 				Quit("FastScorePath2 DI");

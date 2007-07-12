@@ -192,13 +192,13 @@ void ProgAlignSubFams()
 	{
 	MSA msaOut;
 
-	SetOutputFileName(g_pstrOutFileName);
-	SetInputFileName(g_pstrInFileName);
+	SetOutputFileName(g_pstrOutFileName.get());
+	SetInputFileName(g_pstrInFileName.get());
 
-	SetMaxIters(g_uMaxIters);
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetMaxIters(g_uMaxIters.get());
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
-	TextFile fileIn(g_pstrInFileName);
+	TextFile fileIn(g_pstrInFileName.get());
 	SeqVect v;
 	v.FromFASTAFile(fileIn);
 	const unsigned uSeqCount = v.Length();
@@ -207,7 +207,7 @@ void ProgAlignSubFams()
 		Quit("No sequences in input file");
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = v.GuessAlpha();
@@ -234,7 +234,7 @@ void ProgAlignSubFams()
 	if (ALPHA_DNA == Alpha || ALPHA_RNA == Alpha)
 		{
 		SetPPScore(PPSCORE_SPN);
-		g_Distance1 = DISTANCE_Kmer4_6;
+		g_Distance1.get() = DISTANCE_Kmer4_6;
 		}
 
 	unsigned uMaxL = 0;
@@ -248,7 +248,7 @@ void ProgAlignSubFams()
 		}
 
 	SetIter(1);
-	g_bDiags = g_bDiags1;
+	g_bDiags.get() = g_bDiags1.get();
 	SetSeqStats(uSeqCount, uMaxL, uTotL/uSeqCount);
 
 	MSA::SetIdCount(uSeqCount);
@@ -275,11 +275,11 @@ void ProgAlignSubFams()
 		}
 
 	Tree GuideTree;
-	TreeFromSeqVect(v, GuideTree, g_Cluster1, g_Distance1, g_Root1);
+	TreeFromSeqVect(v, GuideTree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get());
 	SetMuscleTree(GuideTree);
 
 	MSA msa;
-	if (g_bLow)
+	if (g_bLow.get())
 		{
 		ProgNode *ProgNodes = 0;
 		ProgNodes = ProgressiveAlignE(v, GuideTree, msa);
@@ -288,12 +288,12 @@ void ProgAlignSubFams()
 	else
 		ProgressiveAlign(v, GuideTree, msa);
 	SetCurrentAlignment(msa);
-	TreeFromMSA(msa, GuideTree, g_Cluster2, g_Distance2, g_Root2);
+	TreeFromMSA(msa, GuideTree, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
 	SetMuscleTree(GuideTree);
 
 	unsigned *SubFams = new unsigned[uSeqCount];
 	unsigned uSubFamCount;
-	SubFam(GuideTree, g_uMaxSubFamCount, SubFams, &uSubFamCount);
+	SubFam(GuideTree, g_uMaxSubFamCount.get(), SubFams, &uSubFamCount);
 
 	SetProgressDesc("Align node");
 	const unsigned uNodeCount = 2*uSeqCount - 1;
@@ -368,7 +368,7 @@ void ProgAlignSubFams()
 	unsigned uRootNodeIndex = GuideTree.GetRootNodeIndex();
 	ProgNode &RootProgNode = ProgNodes[uRootNodeIndex];
 
-	TextFile fOut(g_pstrOutFileName, true);
+	TextFile fOut(g_pstrOutFileName.get(), true);
 	MHackEnd(RootProgNode.m_MSA);
 	RootProgNode.m_MSA.ToFile(fOut);
 

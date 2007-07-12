@@ -31,22 +31,22 @@ static void InitGapScoreMatrix()
 	const SCORE t = (SCORE) 0.2;
 
 	GapScoreMatrix.get()[LL][LL] = 0;
-	GapScoreMatrix.get()[LL][LG] = g_scoreGapOpen;
+	GapScoreMatrix.get()[LL][LG] = g_scoreGapOpen.get();
 	GapScoreMatrix.get()[LL][GL] = 0;
 	GapScoreMatrix.get()[LL][GG] = 0;
 
-	GapScoreMatrix.get()[LG][LL] = g_scoreGapOpen;
+	GapScoreMatrix.get()[LG][LL] = g_scoreGapOpen.get();
 	GapScoreMatrix.get()[LG][LG] = 0;
-	GapScoreMatrix.get()[LG][GL] = g_scoreGapOpen;
-	GapScoreMatrix.get()[LG][GG] = t*g_scoreGapOpen;	// approximation!
+	GapScoreMatrix.get()[LG][GL] = g_scoreGapOpen.get();
+	GapScoreMatrix.get()[LG][GG] = t*g_scoreGapOpen.get();	// approximation!
 
 	GapScoreMatrix.get()[GL][LL] = 0;
-	GapScoreMatrix.get()[GL][LG] = g_scoreGapOpen;
+	GapScoreMatrix.get()[GL][LG] = g_scoreGapOpen.get();
 	GapScoreMatrix.get()[GL][GL] = 0;
 	GapScoreMatrix.get()[GL][GG] = 0;
 
 	GapScoreMatrix.get()[GG][LL] = 0;
-	GapScoreMatrix.get()[GG][LG] = t*g_scoreGapOpen;	// approximation!
+	GapScoreMatrix.get()[GG][LG] = t*g_scoreGapOpen.get();	// approximation!
 	GapScoreMatrix.get()[GG][GL] = 0;
 	GapScoreMatrix.get()[GG][GG] = 0;
 
@@ -72,14 +72,14 @@ static SCORE SPColBrute(const MSA &msa, unsigned uColIndex)
 			unsigned uLetter2 = msa.GetLetterEx(uSeqIndex2, uColIndex);
 			if (uLetter2 >= 20)
 				continue;
-			SCORE t = w1*w2*(*g_ptrScoreMatrix)[uLetter1][uLetter2];
+			SCORE t = w1*w2*(*g_ptrScoreMatrix.get())[uLetter1][uLetter2];
 #if	TRACE
 			Log("Check %c %c w1=%.3g w2=%.3g Mx=%.3g t=%.3g\n",
 			  LetterToCharAmino(uLetter1),
 			  LetterToCharAmino(uLetter2),
 			  w1,
 			  w2,
-			  (*g_ptrScoreMatrix)[uLetter1][uLetter2],
+			  (*g_ptrScoreMatrix.get())[uLetter1][uLetter2],
 			  t);
 #endif
 			Sum += t;
@@ -155,7 +155,7 @@ static SCORE SPFreqs(const FCOUNT Freqs[])
 		const FCOUNT fi = Freqs[i];
 		if (0 == fi)
 			continue;
-		const float *Row = (*g_ptrScoreMatrix)[i];
+		const float *Row = (*g_ptrScoreMatrix.get())[i];
 		SCORE diagt = fi*fi*Row[i];
 		TotalDiag += diagt;
 #if	TRACE
@@ -223,10 +223,10 @@ static SCORE ObjScoreSPCol(const MSA &msa, unsigned uColIndex)
 		if (uLetter >= 20)
 			continue;
 		Freqs[uLetter] += w;
-		SCORE t = w*w*(*g_ptrScoreMatrix)[uLetter][uLetter];
+		SCORE t = w*w*(*g_ptrScoreMatrix.get())[uLetter][uLetter];
 #if	TRACE
 		Log("FastCol compute freqs & SelfOverCount %c w=%.3g M=%.3g SelfOverCount += %.3g\n",
-		  LetterToCharAmino(uLetter), w, (*g_ptrScoreMatrix)[uLetter][uLetter], t);
+		  LetterToCharAmino(uLetter), w, (*g_ptrScoreMatrix.get())[uLetter][uLetter], t);
 #endif
 		SelfOverCount += t;
 		}

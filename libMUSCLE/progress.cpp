@@ -4,6 +4,9 @@
 
 // Functions that provide visible feedback to the user
 // that progress is being made.
+#ifdef _OPENMP
+#warning "progress indicators have not been made parallel-safe yet"
+#endif
 
 static unsigned g_uIter = 0;		// Main MUSCLE iteration 1, 2..
 static unsigned g_uLocalMaxIters = 0;	// Max iters
@@ -18,9 +21,9 @@ static unsigned g_uTotalSteps;
 double GetCheckMemUseMB()
 	{
 	unsigned MB = (unsigned) GetMemUseMB();
-	if (0 == g_uMaxMB || MB <= g_uMaxMB)
+	if (0 == g_uMaxMB.get() || MB <= g_uMaxMB.get())
 		return MB;
-	fprintf(stderr, "\n\n*** MAX MEMORY %u MB EXCEEDED***\n", g_uMaxMB);
+	fprintf(stderr, "\n\n*** MAX MEMORY %u MB EXCEEDED***\n", g_uMaxMB.get());
 	fprintf(stderr, "Memory allocated so far %u MB, physical RAM %u MB\n",
 	  MB, (unsigned) GetRAMSizeMB());
 	fprintf(stderr, "Use -maxmb <n> option to increase limit, where <n> is in MB.\n");
@@ -64,12 +67,12 @@ void SetInputFileName(const char *pstrFileName)
 
 void SetSeqStats(unsigned uSeqCount, unsigned uMaxL, unsigned uAvgL)
 	{
-	if (g_bQuiet)
+	if (g_bQuiet.get())
 		return;
 
 	fprintf(g_fProgress, "%s %u seqs, max length %u, avg  length %u\n",
 	  g_strFileName, uSeqCount, uMaxL, uAvgL);
-	if (g_bVerbose)
+	if (g_bVerbose.get())
 		Log("%u seqs, max length %u, avg  length %u\n",
 		  uSeqCount, uMaxL, uAvgL);
 	}
@@ -115,7 +118,7 @@ void Progress(const char *szFormat, ...)
 	{
 	CheckMaxTime();
 
-	if (g_bQuiet)
+	if (g_bQuiet.get())
 		return;
 
 	double MB = GetCheckMemUseMB();
@@ -138,7 +141,7 @@ void Progress(unsigned uStep, unsigned uTotalSteps)
 	{
 	CheckMaxTime();
 
-	if (g_bQuiet)
+	if (g_bQuiet.get())
 		return;
 
 	double dPct = ((uStep + 1)*100.0)/uTotalSteps;
@@ -166,7 +169,7 @@ void ProgressStepsDone()
 	{
 	CheckMaxTime();
 
-	if (g_bVerbose)
+	if (g_bVerbose.get())
 		{
 		double MB = GetCheckMemUseMB();
 		Log("Elapsed time %8.8s  Peak memory use %12s  Iteration %3u %s\n",
@@ -176,7 +179,7 @@ void ProgressStepsDone()
 		 g_strDesc);
 		}
 
-	if (g_bQuiet)
+	if (g_bQuiet.get())
 		return;
 
 	Progress(g_uTotalSteps - 1, g_uTotalSteps);

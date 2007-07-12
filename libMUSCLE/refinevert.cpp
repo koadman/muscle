@@ -13,7 +13,7 @@
 void ListVertSavings(unsigned uColCount, unsigned uAnchorColCount,
   const Range *Ranges, unsigned uRangeCount)
 	{
-	if (!g_bVerbose || !g_bAnchors)
+	if (!g_bVerbose.get() || !g_bAnchors.get())
 		return;
 	double dTotalArea = uColCount*uColCount;
 	double dArea = 0.0;

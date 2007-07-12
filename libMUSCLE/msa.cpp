@@ -603,7 +603,7 @@ unsigned MSA::UniqueResidueTypes(unsigned uColIndex) const
 		++(Counts[uLetter]);
 		}
 	unsigned uUniqueCount = 0;
-	for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+	for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 		if (Counts[uLetter] > 0)
 			++uUniqueCount;
 	return uUniqueCount;
@@ -621,19 +621,19 @@ double MSA::GetOcc(unsigned uColIndex) const
 
 void MSA::ToFile(TextFile &File) const
 	{
-	if (g_bMSF)
+	if (g_bMSF.get())
 		ToMSFFile(File);
-	else if (g_bAln)
+	else if (g_bAln.get())
 		ToAlnFile(File);
-	else if (g_bHTML)
+	else if (g_bHTML.get())
 		ToHTMLFile(File);
-	else if (g_bPHYS)
+	else if (g_bPHYS.get())
 		ToPhySequentialFile(File);
-	else if (g_bPHYI)
+	else if (g_bPHYI.get())
 		ToPhyInterleavedFile(File);
 	else
 		ToFASTAFile(File);
-	if (0 != g_pstrScoreFileName)
+	if (0 != g_pstrScoreFileName.get())
 		WriteScoreFile(*this);
 	}
 

@@ -56,7 +56,7 @@ static unsigned GetTuple(const ProfPos *PP, unsigned uPos)
 void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
   unsigned uLengthY, DiagList &DL)
 	{
-	if (ALPHA_Amino != g_Alpha)
+	if (ALPHA_Amino != g_Alpha.get())
 		Quit("FindDiags: requires amino acid alphabet");
 
 	DL.Clear();
@@ -151,7 +151,7 @@ void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 		const unsigned uLength = uEndPosA - uStartPosA + 1;
 		assert(uEndPosB - uStartPosB + 1 == uLength);
 
-		if (uLength >= g_uMinDiagLength)
+		if (uLength >= g_uMinDiagLength.get())
 			{
 			if (bSwap)
 				DL.Add(uStartPosB, uStartPosA, uLength);

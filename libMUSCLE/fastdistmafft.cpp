@@ -10,8 +10,8 @@
 #define MAX(x, y)	(((x) > (y)) ? (x) : (y))
 
 const unsigned TUPLE_COUNT = 6*6*6*6*6*6;
-static unsigned char Count1[TUPLE_COUNT];
-static unsigned char Count2[TUPLE_COUNT];
+static TLS<unsigned char[TUPLE_COUNT]> Count1;
+static TLS<unsigned char[TUPLE_COUNT]> Count2;
 
 // Amino acid groups according to MAFFT (sextet5)
 // 0 =  A G P S T
@@ -50,7 +50,7 @@ unsigned ResidueGroup[] =
 										// This isn't the correct way of avoiding group 6
 	0		// AX_GAP,					// ******** TODO ******************
 	};
-unsigned uResidueGroupCount = sizeof(ResidueGroup)/sizeof(ResidueGroup[0]);
+const unsigned uResidueGroupCount = sizeof(ResidueGroup)/sizeof(ResidueGroup[0]);
 
 static char *TupleToStr(int t)
 	{
@@ -162,7 +162,7 @@ void DistKmer6_6(const SeqVect &v, DistFunc &DF)
 
 		const unsigned uTupleCount = uSeqLength1 - 5;
 		const unsigned *L = Letters[uSeq1];
-		CountTuples(L, uTupleCount, Count1);
+		CountTuples(L, uTupleCount, Count1.get());
 #if	TRACE
 		{
 		Log("Seq1=%d\n", uSeq1);
@@ -196,10 +196,10 @@ void DistKmer6_6(const SeqVect &v, DistFunc &DF)
 		// First pass through seq 2 to count tuples
 			const unsigned uTupleCount = uSeqLength2 - 5;
 			const unsigned *L = Letters[uSeq2];
-			CountTuples(L, uTupleCount, Count2);
+			CountTuples(L, uTupleCount, Count2.get());
 #if	TRACE
 			Log("Seq2=%d Counts=\n", uSeq2);
-			ListCount(Count2);
+			ListCount(Count2.get());
 #endif
 
 		// Second pass to accumulate sum of shared tuples
@@ -210,10 +210,10 @@ void DistKmer6_6(const SeqVect &v, DistFunc &DF)
 			for (unsigned n = 0; n < uTupleCount; ++n)
 				{
 				const unsigned uTuple = GetTuple(L, n);
-				uSum += MIN(Count1[uTuple], Count2[uTuple]);
+				uSum += MIN(Count1.get()[uTuple], Count2.get()[uTuple]);
 
 			// This is a hack to make sure each unique tuple counted only once.
-				Count2[uTuple] = 0;
+				Count2.get()[uTuple] = 0;
 				}
 #if	TRACE
 			{

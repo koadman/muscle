@@ -205,9 +205,9 @@ SCORE GlobalAlignLE(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	else
 		{
 #if	OCC
-		MPrev[0] = (logf(scoreSum) - g_scoreCenter)*OccA[0]*OccB[0];
+		MPrev[0] = (logf(scoreSum) - g_scoreCenter.get())*OccA[0]*OccB[0];
 #else
-		MPrev[0] = (logf(scoreSum) - g_scoreCenter);
+		MPrev[0] = (logf(scoreSum) - g_scoreCenter.get());
 #endif
 		}
 
@@ -238,10 +238,10 @@ SCORE GlobalAlignLE(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 		else
 			{
 #if	OCC
-			MPrev[j] = (logf(scoreSum) - g_scoreCenter)*OccA[0]*OccB[j] +
+			MPrev[j] = (logf(scoreSum) - g_scoreCenter.get())*OccA[0]*OccB[j] +
 			  GapOpenB[0] + GapCloseB[j-1];
 #else
-			MPrev[j] = (logf(scoreSum) - g_scoreCenter) +
+			MPrev[j] = (logf(scoreSum) - g_scoreCenter.get()) +
 			  GapOpenB[0] + GapCloseB[j-1];
 #endif
 			}
@@ -290,9 +290,9 @@ SCORE GlobalAlignLE(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 				MCurr[j] = -2.5;
 			else
 #if	OCC
-				MCurr[j] = (logf(MCurr[j]) - g_scoreCenter)*OccAi*OccB[j];
+				MCurr[j] = (logf(MCurr[j]) - g_scoreCenter.get())*OccAi*OccB[j];
 #else
-				MCurr[j] = (logf(MCurr[j]) - g_scoreCenter);
+				MCurr[j] = (logf(MCurr[j]) - g_scoreCenter.get());
 #endif
 			}
 

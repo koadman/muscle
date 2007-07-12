@@ -95,7 +95,7 @@ static void ListCount(const unsigned char Count[])
 
 void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 	{
-	if (ALPHA_DNA != g_Alpha && ALPHA_RNA != g_Alpha)
+	if (ALPHA_DNA != g_Alpha.get() && ALPHA_RNA != g_Alpha.get())
 		Quit("DistKmer4_6 requires nucleo alphabet");
 
 	const unsigned uSeqCount = v.Length();

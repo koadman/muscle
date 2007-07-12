@@ -1,116 +1,117 @@
 #ifndef params_h
 #define params_h
+#include "threadstorage.h"
 
-extern const char *g_pstrInFileName;
-extern const char *g_pstrOutFileName;
+extern TLS<const char *> g_pstrInFileName;
+extern TLS<const char *> g_pstrOutFileName;
 
-extern const char *g_pstrFASTAOutFileName;
-extern const char *g_pstrMSFOutFileName;
-extern const char *g_pstrClwOutFileName;
-extern const char *g_pstrClwStrictOutFileName;
-extern const char *g_pstrHTMLOutFileName;
-extern const char *g_pstrPHYIOutFileName;
-extern const char *g_pstrPHYSOutFileName;
+extern TLS<const char *> g_pstrFASTAOutFileName;
+extern TLS<const char *> g_pstrMSFOutFileName;
+extern TLS<const char *> g_pstrClwOutFileName;
+extern TLS<const char *> g_pstrClwStrictOutFileName;
+extern TLS<const char *> g_pstrHTMLOutFileName;
+extern TLS<const char *> g_pstrPHYIOutFileName;
+extern TLS<const char *> g_pstrPHYSOutFileName;
 
-extern const char *g_pstrFileName1;
-extern const char *g_pstrFileName2;
+extern TLS<const char *> g_pstrFileName1;
+extern TLS<const char *> g_pstrFileName2;
 
-extern const char *g_pstrSPFileName;
-extern const char *g_pstrMatrixFileName;
+extern TLS<const char *> g_pstrSPFileName;
+extern TLS<const char *> g_pstrMatrixFileName;
 
-extern const char *g_pstrUseTreeFileName;
-extern bool g_bUseTreeNoWarn;
+extern TLS<const char *> g_pstrUseTreeFileName;
+extern TLS<bool> g_bUseTreeNoWarn;
 
-extern const char *g_pstrComputeWeightsFileName;
-extern const char *g_pstrScoreFileName;
+extern TLS<const char *> g_pstrComputeWeightsFileName;
+extern TLS<const char *> g_pstrScoreFileName;
 
-extern SCORE g_scoreGapOpen;
-extern SCORE g_scoreCenter;
-extern SCORE g_scoreGapExtend;
-extern SCORE g_scoreGapAmbig;
+extern TLS<SCORE> g_scoreGapOpen;
+extern TLS<SCORE> g_scoreCenter;
+extern TLS<SCORE> g_scoreGapExtend;
+extern TLS<SCORE> g_scoreGapAmbig;
 
 #if	DOUBLE_AFFINE
-extern SCORE g_scoreGapOpen2;
-extern SCORE g_scoreGapExtend2;
+extern TLS<SCORE> g_scoreGapOpen2;
+extern TLS<SCORE> g_scoreGapExtend2;
 #endif
 
-extern unsigned g_uSmoothWindowLength;
-extern unsigned g_uAnchorSpacing;
-extern unsigned g_uMaxTreeRefineIters;
+extern TLS<unsigned> g_uSmoothWindowLength;
+extern TLS<unsigned> g_uAnchorSpacing;
+extern TLS<unsigned> g_uMaxTreeRefineIters;
 
-extern unsigned g_uMinDiagLength;
-extern unsigned g_uMaxDiagBreak;
-extern unsigned g_uDiagMargin;
+extern TLS<unsigned> g_uMinDiagLength;
+extern TLS<unsigned> g_uMaxDiagBreak;
+extern TLS<unsigned> g_uDiagMargin;
 
-extern unsigned g_uRefineWindow;
-extern unsigned g_uWindowFrom;
-extern unsigned g_uWindowTo;
-extern unsigned g_uSaveWindow;
-extern unsigned g_uWindowOffset;
+extern TLS<unsigned> g_uRefineWindow;
+extern TLS<unsigned> g_uWindowFrom;
+extern TLS<unsigned> g_uWindowTo;
+extern TLS<unsigned> g_uSaveWindow;
+extern TLS<unsigned> g_uWindowOffset;
 
-extern unsigned g_uMaxSubFamCount;
+extern TLS<unsigned> g_uMaxSubFamCount;
 
-extern unsigned g_uHydrophobicRunLength;
-extern float g_dHydroFactor;
+extern TLS<unsigned> g_uHydrophobicRunLength;
+extern TLS<float> g_dHydroFactor;
 
-extern float g_dSmoothScoreCeil;
-extern float g_dMinBestColScore;
-extern float g_dMinSmoothScore;
-extern float g_dSUEFF;
+extern TLS<float> g_dSmoothScoreCeil;
+extern TLS<float> g_dMinBestColScore;
+extern TLS<float> g_dMinSmoothScore;
+extern TLS<float> g_dSUEFF;
 
-extern bool g_bPrecompiledCenter;
-extern bool g_bNormalizeCounts;
-extern bool g_bDiags1;
-extern bool g_bDiags2;
-extern bool g_bDiags;
-extern bool g_bAnchors;
-extern bool g_bCatchExceptions;
+extern TLS<bool> g_bPrecompiledCenter;
+extern TLS<bool> g_bNormalizeCounts;
+extern TLS<bool> g_bDiags1;
+extern TLS<bool> g_bDiags2;
+extern TLS<bool> g_bDiags;
+extern TLS<bool> g_bAnchors;
+extern TLS<bool> g_bCatchExceptions;
 
-extern bool g_bMSF;
-extern bool g_bAln;
-extern bool g_bClwStrict;
-extern bool g_bHTML;
-extern bool g_bPHYI;
-extern bool g_bPHYS;
+extern TLS<bool> g_bMSF;
+extern TLS<bool> g_bAln;
+extern TLS<bool> g_bClwStrict;
+extern TLS<bool> g_bHTML;
+extern TLS<bool> g_bPHYI;
+extern TLS<bool> g_bPHYS;
 
-extern bool g_bQuiet;
-extern bool g_bVerbose;
-extern bool g_bRefine;
-extern bool g_bRefineW;
-extern bool g_bRefineX;
-extern bool g_bLow;
-extern bool g_bSW;
-extern bool g_bCluster;
-extern bool g_bProfile;
-extern bool g_bProfileOnStdIn;
-extern bool g_bAnchoredPP;
-extern bool g_bProfDB;
-extern bool g_bPPScore;
-extern bool g_bBrenner;
-extern bool g_bDimer;
-extern bool g_bVersion;
-extern bool g_bStable;
-extern bool g_bFASTA;
-extern bool g_bPAS;
+extern TLS<bool> g_bQuiet;
+extern TLS<bool> g_bVerbose;
+extern TLS<bool> g_bRefine;
+extern TLS<bool> g_bRefineW;
+extern TLS<bool> g_bRefineX;
+extern TLS<bool> g_bLow;
+extern TLS<bool> g_bSW;
+extern TLS<bool> g_bCluster;
+extern TLS<bool> g_bProfile;
+extern TLS<bool> g_bProfileOnStdIn;
+extern TLS<bool> g_bAnchoredPP;
+extern TLS<bool> g_bProfDB;
+extern TLS<bool> g_bPPScore;
+extern TLS<bool> g_bBrenner;
+extern TLS<bool> g_bDimer;
+extern TLS<bool> g_bVersion;
+extern TLS<bool> g_bStable;
+extern TLS<bool> g_bFASTA;
+extern TLS<bool> g_bPAS;
 
-extern PPSCORE g_PPScore;
-extern OBJSCORE g_ObjScore;
+extern TLS<PPSCORE> g_PPScore;
+extern TLS<OBJSCORE> g_ObjScore;
 
-extern DISTANCE g_Distance1;
-extern CLUSTER g_Cluster1;
-extern ROOT g_Root1;
-extern SEQWEIGHT g_SeqWeight1;
+extern TLS<DISTANCE> g_Distance1;
+extern TLS<CLUSTER> g_Cluster1;
+extern TLS<ROOT> g_Root1;
+extern TLS<SEQWEIGHT> g_SeqWeight1;
 
-extern DISTANCE g_Distance2;
-extern CLUSTER g_Cluster2;
-extern ROOT g_Root2;
-extern SEQWEIGHT g_SeqWeight2;
+extern TLS<DISTANCE> g_Distance2;
+extern TLS<CLUSTER> g_Cluster2;
+extern TLS<ROOT> g_Root2;
+extern TLS<SEQWEIGHT> g_SeqWeight2;
 
-extern unsigned g_uMaxIters;
-extern unsigned long g_ulMaxSecs;
-extern unsigned g_uMaxMB;
+extern TLS<unsigned> g_uMaxIters;
+extern TLS<unsigned long> g_ulMaxSecs;
+extern TLS<unsigned> g_uMaxMB;
 
-extern SEQTYPE g_SeqType;
-extern TERMGAPS g_TermGaps;
+extern TLS<SEQTYPE> g_SeqType;
+extern TLS<TERMGAPS> g_TermGaps;
 
 #endif // params_h

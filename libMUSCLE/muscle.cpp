@@ -13,7 +13,7 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 		Quit("No sequences in input file");
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = v.GuessAlpha();
@@ -40,7 +40,7 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 	if (ALPHA_DNA == Alpha || ALPHA_RNA == Alpha)
 		{
 		SetPPScore(PPSCORE_SPN);
-		g_Distance1 = DISTANCE_Kmer4_6;
+		g_Distance1.get() = DISTANCE_Kmer4_6;
 		}
 
 	unsigned uMaxL = 0;
@@ -54,7 +54,7 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 		}
 
 	SetIter(1);
-	g_bDiags = g_bDiags1;
+	g_bDiags.get() = g_bDiags1.get();
 	SetSeqStats(uSeqCount, uMaxL, uTotL/uSeqCount);
 
 	MSA::SetIdCount(uSeqCount);
@@ -82,29 +82,29 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 
 // First iteration
 	Tree GuideTree;
-	TreeFromSeqVect(v, GuideTree, g_Cluster1, g_Distance1, g_Root1);
+	TreeFromSeqVect(v, GuideTree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get());
 
 	SetMuscleTree(GuideTree);
 
 	ProgNode *ProgNodes = 0;
-	if (g_bLow)
+	if (g_bLow.get())
 		ProgNodes = ProgressiveAlignE(v, GuideTree, msaOut);
 	else
 		ProgressiveAlign(v, GuideTree, msaOut);
 	SetCurrentAlignment(msaOut);
 
-	if (1 == g_uMaxIters || 2 == uSeqCount)
+	if (1 == g_uMaxIters.get() || 2 == uSeqCount)
 		{
 		MHackEnd(msaOut);
 		return;
 		}
 
-	g_bDiags = g_bDiags2;
+	g_bDiags.get() = g_bDiags2.get();
 	SetIter(2);
 
-	if (g_bLow)
+	if (g_bLow.get())
 		{
-		if (0 != g_uMaxTreeRefineIters)
+		if (0 != g_uMaxTreeRefineIters.get())
 			RefineTreeE(msaOut, v, GuideTree, ProgNodes);
 		}
 	else
@@ -118,13 +118,13 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 	delete[] ProgNodes;
 	ProgNodes = 0;
 
-	SetSeqWeightMethod(g_SeqWeight2);
+	SetSeqWeightMethod(g_SeqWeight2.get());
 	SetMuscleTree(GuideTree);
 
-	if (g_bAnchors)
-		RefineVert(msaOut, GuideTree, g_uMaxIters - 2);
+	if (g_bAnchors.get())
+		RefineVert(msaOut, GuideTree, g_uMaxIters.get() - 2);
 	else
-		RefineHoriz(msaOut, GuideTree, g_uMaxIters - 2, false, false);
+		RefineHoriz(msaOut, GuideTree, g_uMaxIters.get() - 2, false, false);
 
 	MHackEnd(msaOut);
 	}

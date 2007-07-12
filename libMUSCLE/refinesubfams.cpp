@@ -67,7 +67,7 @@ bool RefineSubfams(MSA &msa, const Tree &tree, unsigned uIters)
 	GetSubfams(tree, dMaxHeight, uMaxSubfamCount, &Subfams, &uSubfamCount);
 	assert(uSubfamCount <= uSeqCount);
 
-	if (g_bVerbose)
+	if (g_bVerbose.get())
 		LogSubfams(tree, Subfams, uSubfamCount);
 
 	MSA *SubfamMSAs = new MSA[uSubfamCount];
@@ -101,10 +101,10 @@ bool RefineSubfams(MSA &msa, const Tree &tree, unsigned uIters)
 	// re-estimate, may also be a waste of CPU & mem.
 	/////////////////////////////////////////////////
 		Tree SubfamTree;
-		TreeFromMSA(msaSubfam, SubfamTree, g_Cluster2, g_Distance2, g_Root2);
+		TreeFromMSA(msaSubfam, SubfamTree, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
 
 		bool bAnyChangesThisSubfam;
-		if (g_bAnchors)
+		if (g_bAnchors.get())
 			bAnyChangesThisSubfam = RefineVert(msaSubfam, SubfamTree, uIters);
 		else
 			bAnyChangesThisSubfam = RefineHoriz(msaSubfam, SubfamTree, uIters, false, false);

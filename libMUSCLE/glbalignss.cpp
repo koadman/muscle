@@ -16,7 +16,7 @@ static SCORE Subst(const Seq &seqA, const Seq &seqB, unsigned i, unsigned j)
 
 	unsigned uLetterA = seqA.GetLetter(i);
 	unsigned uLetterB = seqB.GetLetter(j);
-	return VTML_SP[uLetterA][uLetterB] + g_scoreCenter;
+	return VTML_SP[uLetterA][uLetterB] + g_scoreCenter.get();
 	}
 
 struct DP_MEMORY
@@ -160,7 +160,7 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 	//		B	XXXXX
 	//			0   j
 	// So gap-open at j=0, gap-close at j-1.
-		MPrev[j] = MxRowA[0][uLetterB] + g_scoreGapOpen/2; // term gaps half
+		MPrev[j] = MxRowA[0][uLetterB] + g_scoreGapOpen.get()/2; // term gaps half
 		TraceBack[0][j] = -(int) j;
 
 	// Assume no D->I transitions, then can't be a delete if only
@@ -194,7 +194,7 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 	// So gap-open at i=0, gap-close at i-1.
 		ptrMCurr_j = MCurr;
 		assert(ptrMCurr_j == &(MCurr[0]));
-		*ptrMCurr_j += g_scoreGapOpen/2;	// term gaps half
+		*ptrMCurr_j += g_scoreGapOpen.get()/2;	// term gaps half
 
 		++ptrMCurr_j;
 
@@ -204,7 +204,7 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 		SCORE *ptrMPrev_j = MPrev;
 		SCORE *ptrDPrev = DPrev;
 		SCORE d = *ptrDPrev;
-		SCORE DNew = *ptrMPrev_j + g_scoreGapOpen;
+		SCORE DNew = *ptrMPrev_j + g_scoreGapOpen.get();
 		if (DNew > d)
 			{
 			d = DNew;
@@ -226,7 +226,7 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 		// Here, MPrev_j is preserved from previous
 		// iteration so with current i,j is M[i-1][j-1]
 			SCORE MPrev_j = *ptrMPrev_j;
-			SCORE INew = MPrev_j + g_scoreGapOpen;
+			SCORE INew = MPrev_j + g_scoreGapOpen.get();
 			if (INew > IPrev_j_1)
 				{
 				IPrev_j_1 = INew;
@@ -261,7 +261,7 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 			MPrev_j = *(++ptrMPrev_j);
 			assert(ptrDPrev == &(DPrev[j]));
 			SCORE d = *ptrDPrev;
-			SCORE DNew = MPrev_j + g_scoreGapOpen;
+			SCORE DNew = MPrev_j + g_scoreGapOpen.get();
 			if (DNew > d)
 				{
 				d = DNew;
@@ -297,14 +297,14 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 	SCORE scoreMax = MPrev[uLengthB-1];
 	int iTraceBack = 0;
 
-	SCORE scoreD = DPrev[uLengthB-1] - g_scoreGapOpen/2;	// term gaps half
+	SCORE scoreD = DPrev[uLengthB-1] - g_scoreGapOpen.get()/2;	// term gaps half
 	if (scoreD > scoreMax)
 		{
 		scoreMax = scoreD;
 		iTraceBack = (int) uLengthA - (int) uDeletePos[uLengthB-1];
 		}
 
-	SCORE scoreI = IPrev - g_scoreGapOpen/2;
+	SCORE scoreI = IPrev - g_scoreGapOpen.get()/2;
 	if (scoreI > scoreMax)
 		{
 		scoreMax = scoreI;

@@ -22,7 +22,7 @@ void MSA::GetFractionalWeightedCounts(unsigned uColIndex, bool bNormalize,
 	const unsigned uSeqCount = GetSeqCount();
 	const unsigned uColCount = GetColCount();
 
-	memset(fcCounts, 0, g_AlphaSize*sizeof(FCOUNT));
+	memset(fcCounts, 0, g_AlphaSize.get()*sizeof(FCOUNT));
 	WEIGHT wTotal = 0;
 	FCOUNT fGap = 0;
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
@@ -36,7 +36,7 @@ void MSA::GetFractionalWeightedCounts(unsigned uColIndex, bool bNormalize,
 		else if (IsWildcard(uSeqIndex, uColIndex))
 			{
 			const unsigned uLetter = GetLetterEx(uSeqIndex, uColIndex);
-			switch (g_Alpha)
+			switch (g_Alpha.get())
 				{
 			case ALPHA_Amino:
 				switch (uLetter)
@@ -80,7 +80,7 @@ void MSA::GetFractionalWeightedCounts(unsigned uColIndex, bool bNormalize,
 				break;
 
 			default:
-				Quit("Alphabet %d not supported", g_Alpha);
+				Quit("Alphabet %d not supported", g_Alpha.get());
 				}
 			continue;
 			}
@@ -94,7 +94,7 @@ void MSA::GetFractionalWeightedCounts(unsigned uColIndex, bool bNormalize,
 		{
 		if (wTotal > 1.001)
 			Quit("wTotal=%g\n", wTotal);
-		for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+		for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 			fcCounts[uLetter] /= wTotal;
 //		AssertNormalized(fcCounts);
 		}

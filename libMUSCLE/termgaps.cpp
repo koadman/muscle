@@ -9,7 +9,7 @@ void SetTermGaps(const ProfPos *Prof, unsigned uLength)
 	ProfPos *First = (ProfPos *) Prof;
 	ProfPos *Last = (ProfPos *) (Prof + uLength - 1);
 
-	switch (g_TermGaps)
+	switch (g_TermGaps.get())
 		{
 	case TERMGAPS_Full:
 		break;
@@ -31,6 +31,6 @@ void SetTermGaps(const ProfPos *Prof, unsigned uLength)
 		break;
 
 	default:
-		Quit("Invalid g_TermGaps");
+		Quit("Invalid g_TermGaps.get()");
 		}
 	}

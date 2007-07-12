@@ -111,18 +111,18 @@ static void ScoresFromFreqsPos(ProfPos *Prof, unsigned uLength, unsigned uPos)
 	else
 		fcClose = PP.m_GG + PP.m_LG;
 
-	PP.m_scoreGapOpen = (SCORE) ((1.0 - fcOpen)*g_scoreGapOpen/2.0);
-	PP.m_scoreGapClose = (SCORE) ((1.0 - fcClose)*g_scoreGapOpen/2.0);
+	PP.m_scoreGapOpen = (SCORE) ((1.0 - fcOpen)*g_scoreGapOpen.get()/2.0);
+	PP.m_scoreGapClose = (SCORE) ((1.0 - fcClose)*g_scoreGapOpen.get()/2.0);
 #if	DOUBLE_AFFINE
-	PP.m_scoreGapOpen2 = (SCORE) ((1.0 - fcOpen)*g_scoreGapOpen2/2.0);
-	PP.m_scoreGapClose2 = (SCORE) ((1.0 - fcClose)*g_scoreGapOpen2/2.0);
+	PP.m_scoreGapOpen2 = (SCORE) ((1.0 - fcOpen)*g_scoreGapOpen2.get()/2.0);
+	PP.m_scoreGapClose2 = (SCORE) ((1.0 - fcClose)*g_scoreGapOpen2.get()/2.0);
 #endif
 
-	for (unsigned i = 0; i < g_AlphaSize; ++i)
+	for (unsigned i = 0; i < g_AlphaSize.get(); ++i)
 		{
 		SCORE scoreSum = 0;
-		for (unsigned j = 0; j < g_AlphaSize; ++j)
-			scoreSum += PP.m_fcCounts[j]*(*g_ptrScoreMatrix)[i][j];
+		for (unsigned j = 0; j < g_AlphaSize.get(); ++j)
+			scoreSum += PP.m_fcCounts[j]*(*g_ptrScoreMatrix.get())[i][j];
 		PP.m_AAScores[i] = scoreSum;
 		}
 	}
@@ -618,7 +618,7 @@ static void SetFreqs(
 	const ProfPos &PPB = uPrefixLengthB > 0 ? PB[uPrefixLengthB-1] : PPStart;
 	ProfPos &PPO = POut[uColIndexOut];
 
-	if (g_bNormalizeCounts)
+	if (g_bNormalizeCounts.get())
 		{
 		const FCOUNT fA = PPA.m_fOcc*wA/(wA + wB);
 		const FCOUNT fB = PPB.m_fOcc*wB/(wA + wB);

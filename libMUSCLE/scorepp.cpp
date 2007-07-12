@@ -7,7 +7,7 @@ char ConsensusChar(const ProfPos &PP)
 	FCOUNT fcMostCommon = PP.m_fcCounts[0];
 	bool bMoreThanOneLetter = false;
 	bool bAnyLetter = false;
-	for (unsigned uLetter = 0; uLetter < g_AlphaSize; ++uLetter)
+	for (unsigned uLetter = 0; uLetter < g_AlphaSize.get(); ++uLetter)
 		{
 		const FCOUNT fc = PP.m_fcCounts[uLetter];
 		if (fc > 0)
@@ -44,7 +44,7 @@ SCORE ScoreProfPos2LA(const ProfPos &PPA, const ProfPos &PPB)
 	if (0 == Score)
 		return -2.5;
 	SCORE logScore = logf(Score);
-	return (SCORE) ((logScore - g_scoreCenter)*(PPA.m_fOcc * PPB.m_fOcc));
+	return (SCORE) ((logScore - g_scoreCenter.get())*(PPA.m_fOcc * PPB.m_fOcc));
 	}
 
 SCORE ScoreProfPos2NS(const ProfPos &PPA, const ProfPos &PPB)
@@ -58,7 +58,7 @@ SCORE ScoreProfPos2NS(const ProfPos &PPA, const ProfPos &PPB)
 			break;
 		Score += fcLetter*PPB.m_AAScores[uLetter];
 		}
-	return Score - g_scoreCenter;
+	return Score - g_scoreCenter.get();
 	}
 
 SCORE ScoreProfPos2SP(const ProfPos &PPA, const ProfPos &PPB)
@@ -72,7 +72,7 @@ SCORE ScoreProfPos2SP(const ProfPos &PPA, const ProfPos &PPB)
 			break;
 		Score += fcLetter*PPB.m_AAScores[uLetter];
 		}
-	return Score - g_scoreCenter;
+	return Score - g_scoreCenter.get();
 	}
 
 SCORE ScoreProfPos2SPN(const ProfPos &PPA, const ProfPos &PPB)
@@ -86,19 +86,19 @@ SCORE ScoreProfPos2SPN(const ProfPos &PPA, const ProfPos &PPB)
 			break;
 		Score += fcLetter*PPB.m_AAScores[uLetter];
 		}
-	return Score - g_scoreCenter;
+	return Score - g_scoreCenter.get();
 	}
 
 SCORE ScoreProfPos2(const ProfPos &PPA, const ProfPos &PPB)
 	{
-	if (PPSCORE_SP == g_PPScore)
+	if (PPSCORE_SP == g_PPScore.get())
 		return ScoreProfPos2NS(PPA, PPB);
-	else if (PPSCORE_LE == g_PPScore)
+	else if (PPSCORE_LE == g_PPScore.get())
 		return ScoreProfPos2LA(PPA, PPB);
-	else if (PPSCORE_SV == g_PPScore)
+	else if (PPSCORE_SV == g_PPScore.get())
 		return ScoreProfPos2SP(PPA, PPB);
-	else if (PPSCORE_SPN == g_PPScore)
+	else if (PPSCORE_SPN == g_PPScore.get())
 		return ScoreProfPos2SPN(PPA, PPB);
-	Quit("Invalid g_PPScore");
+	Quit("Invalid g_PPScore.get()");
 	return 0;
 	}

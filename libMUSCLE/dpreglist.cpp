@@ -50,9 +50,9 @@ void DPRegionList::LogMe() const
 void DiagListToDPRegionList(const DiagList &DL, DPRegionList &RL,
   unsigned uLengthA, unsigned uLengthB)
 	{
-	if (g_uDiagMargin > g_uMinDiagLength/2)
+	if (g_uDiagMargin.get() > g_uMinDiagLength.get()/2)
 		Quit("Invalid parameters, diagmargin=%d must be <= 2*diaglength=%d",
-		  g_uDiagMargin, g_uMinDiagLength);
+		  g_uDiagMargin.get(), g_uMinDiagLength.get());
 
 	unsigned uStartPosA = 0;
 	unsigned uStartPosB = 0;
@@ -61,11 +61,11 @@ void DiagListToDPRegionList(const DiagList &DL, DPRegionList &RL,
 	for (unsigned uDiagIndex = 0; uDiagIndex < uDiagCount; ++uDiagIndex)
 		{
 		const Diag &d = DL.Get(uDiagIndex);
-		assert(d.m_uLength >= g_uMinDiagLength);
-		const unsigned uStartVertexA = d.m_uStartPosA + g_uDiagMargin - 1;
-		const unsigned uStartVertexB = d.m_uStartPosB + g_uDiagMargin - 1;
-		const unsigned uEndVertexA = d.m_uStartPosA + d.m_uLength - g_uDiagMargin;
-		const unsigned uEndVertexB = d.m_uStartPosB + d.m_uLength - g_uDiagMargin;
+		assert(d.m_uLength >= g_uMinDiagLength.get());
+		const unsigned uStartVertexA = d.m_uStartPosA + g_uDiagMargin.get() - 1;
+		const unsigned uStartVertexB = d.m_uStartPosB + g_uDiagMargin.get() - 1;
+		const unsigned uEndVertexA = d.m_uStartPosA + d.m_uLength - g_uDiagMargin.get();
+		const unsigned uEndVertexB = d.m_uStartPosB + d.m_uLength - g_uDiagMargin.get();
 
 		r.m_Type = DPREGIONTYPE_Rect;
 		r.m_Rect.m_uStartPosA = uStartPosA;
@@ -93,8 +93,8 @@ void DiagListToDPRegionList(const DiagList &DL, DPRegionList &RL,
 		uStartPosB = uEndVertexB;
 		}
 
-	assert((int) uLengthA - (int) uStartPosA >= (int) g_uDiagMargin);
-	assert((int) uLengthB - (int) uStartPosB >= (int) g_uDiagMargin);
+	assert((int) uLengthA - (int) uStartPosA >= (int) g_uDiagMargin.get());
+	assert((int) uLengthB - (int) uStartPosB >= (int) g_uDiagMargin.get());
 
 	r.m_Type = DPREGIONTYPE_Rect;
 	r.m_Rect.m_uStartPosA = uStartPosA;

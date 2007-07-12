@@ -11,7 +11,7 @@ static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		msa.SetSeqId(uSeqIndex, uSeqIndex);
 
-	TreeFromMSA(msa, tree, g_Cluster2, g_Distance2, g_Root1);
+	TreeFromMSA(msa, tree, g_Cluster2.get(), g_Distance2.get(), g_Root1.get());
 	SetMuscleTree(tree);
 	return ProfileFromMSA(msa);
 	}
@@ -19,7 +19,7 @@ static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 void SetProfileProfileAlphabet(MSA &msa1, MSA &msa2)
 {
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa1.GuessAlpha();
@@ -74,19 +74,19 @@ void ProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut)
 // Do profile-profile alignment
 void Profile()
 	{
-	if ( !g_bProfileOnStdIn && (0 == g_pstrFileName1 || 0 == g_pstrFileName2))
+	if ( !g_bProfileOnStdIn.get() && (0 == g_pstrFileName1.get() || 0 == g_pstrFileName2.get()))
 		Quit("-profile needs -in1 and -in2 or -ProfileOnStdIn");
 
-	SetSeqWeightMethod(g_SeqWeight1);
+	SetSeqWeightMethod(g_SeqWeight1.get());
 
 	MSA msa1;
 	MSA msa2;
 	MSA msaOut;
 
-	if( !g_bProfileOnStdIn )
+	if( !g_bProfileOnStdIn.get() )
 	{
-		TextFile file1(g_pstrFileName1);
-		TextFile file2(g_pstrFileName2);
+		TextFile file1(g_pstrFileName1.get());
+		TextFile file2(g_pstrFileName2.get());
 		msa1.FromFile(file1);
 		msa2.FromFile(file2);
 	}else{
@@ -97,7 +97,7 @@ void Profile()
 	}
 
 	ALPHA Alpha = ALPHA_Undefined;
-	switch (g_SeqType)
+	switch (g_SeqType.get())
 		{
 	case SEQTYPE_Auto:
 		Alpha = msa1.GuessAlpha();
@@ -134,7 +134,7 @@ void Profile()
 	//msa2.FromFile(file2);
 
 	//ALPHA Alpha = ALPHA_Undefined;
-	//switch (g_SeqType)
+	//switch (g_SeqType.get())
 	//	{
 	//case SEQTYPE_Auto:
 	//	Alpha = msa1.GuessAlpha();
@@ -184,12 +184,12 @@ void Profile()
 	//AlignTwoMSAsGivenPath(Path, msa1, msa2, msaOut);
 
 	SetProfileProfileAlphabet(msa1, msa2);
-	if( g_bAnchoredPP )
+	if( g_bAnchoredPP.get() )
 		AnchoredProfileProfile(msa1, msa2, msaOut);
 	else
 		ProfileProfile(msa1, msa2, msaOut);
 
-//	TextFile fileOut(g_pstrOutFileName, true);
+//	TextFile fileOut(g_pstrOutFileName.get(), true);
 //	msaOut.ToFile(fileOut);
 	MuscleOutput(msaOut);
 	}

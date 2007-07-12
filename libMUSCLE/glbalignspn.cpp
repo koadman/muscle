@@ -133,7 +133,7 @@ static void AllocDPMem(unsigned uLengthA, unsigned uLengthB)
 SCORE GlobalAlignSPN(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
   unsigned uLengthB, PWPath &Path)
 	{
-	if (ALPHA_DNA != g_Alpha || ALPHA_RNA == g_Alpha)
+	if (ALPHA_DNA != g_Alpha.get() || ALPHA_RNA == g_Alpha.get())
 		Quit("GlobalAlignSPN: must be nucleo");
 
 	const unsigned uPrefixCountA = uLengthA + 1;
@@ -206,7 +206,7 @@ SCORE GlobalAlignSPN(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			break;
 		scoreSum += fcLetter*ScoreMxB[uLetter][0];
 		}
-	MPrev[0] = scoreSum - g_scoreCenter;
+	MPrev[0] = scoreSum - g_scoreCenter.get();
 
 // D(0,0) is -infinity (requires I->D).
 	DPrev[0] = MINUS_INFINITY;
@@ -230,7 +230,7 @@ SCORE GlobalAlignSPN(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 				break;
 			scoreSum += fcLetter*ScoreMxB[uLetter][j];
 			}
-		MPrev[j] = scoreSum - g_scoreCenter + GapOpenB[0] + GapCloseB[j-1];
+		MPrev[j] = scoreSum - g_scoreCenter.get() + GapOpenB[0] + GapCloseB[j-1];
 		TraceBack[0][j] = -(int) j;
 
 	// Assume no D->I transitions, then can't be a delete if only
@@ -268,7 +268,7 @@ SCORE GlobalAlignSPN(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 			}
 
 		for (unsigned j = 0; j < uLengthB; ++j)
-			MCurr[j] -= g_scoreCenter;
+			MCurr[j] -= g_scoreCenter.get();
 
 		ptrMCurr_j = MCurr;
 		unsigned *ptrDeletePos = uDeletePos;

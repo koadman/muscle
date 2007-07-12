@@ -60,9 +60,9 @@ SCORE GlobalAlignDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	DiagList DL;
 
-	if (ALPHA_Amino == g_Alpha)
+	if (ALPHA_Amino == g_Alpha.get())
 		FindDiags(PA, uLengthA, PB, uLengthB, DL);
-	else if (ALPHA_DNA == g_Alpha || ALPHA_RNA == g_Alpha)
+	else if (ALPHA_DNA == g_Alpha.get() || ALPHA_RNA == g_Alpha.get())
 		FindDiagsNuc(PA, uLengthA, PB, uLengthB, DL);
 	else
 		Quit("GlobalAlignDiags: bad alpha");
@@ -165,7 +165,7 @@ SCORE GlobalAlignDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 void ListDiagSavings()
 	{
-	if (!g_bVerbose || !g_bDiags)
+	if (!g_bVerbose.get() || !g_bDiags.get())
 		return;
 	double dAreaSaved = g_dDPAreaWithoutDiags.get() - g_dDPAreaWithDiags.get();
 	double dPct = dAreaSaved*100.0/g_dDPAreaWithoutDiags.get();

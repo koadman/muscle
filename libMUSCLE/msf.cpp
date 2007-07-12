@@ -69,7 +69,7 @@ void MSA::ToMSFFile(TextFile &File, const char *ptrComment) const
 	else
 		File.PutString("\n");
 
-	char seqtype = (g_Alpha == ALPHA_DNA || g_Alpha == ALPHA_RNA) ? 'N' : 'A';
+	char seqtype = (g_Alpha.get() == ALPHA_DNA || g_Alpha.get() == ALPHA_RNA) ? 'N' : 'A';
 	File.PutFormat("  MSF: %u  Type: %c  Check: 0000  ..\n\n",
 	  GetColCount(), seqtype);
 

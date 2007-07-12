@@ -18,7 +18,7 @@ SCORE GlobalAlign(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	TICKS t1 = GetClockTicks();
 #endif
 	SCORE Score = 0;
-	if (g_bDiags)
+	if (g_bDiags.get())
 		Score = GlobalAlignDiags(PA, uLengthA, PB, uLengthB, Path);
 	else
 		Score = GlobalAlignNoDiags(PA, uLengthA, PB, uLengthB, Path);
@@ -32,10 +32,10 @@ SCORE GlobalAlign(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 SCORE GlobalAlignNoDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
   unsigned uLengthB, PWPath &Path)
 	{
-	if (g_bDimer)
+	if (g_bDimer.get())
 		return GlobalAlignDimer(PA, uLengthA, PB, uLengthB, Path);
 
-	switch (g_PPScore)
+	switch (g_PPScore.get())
 		{
 	case PPSCORE_LE:
 		return GlobalAlignLE(PA, uLengthA, PB, uLengthB, Path);

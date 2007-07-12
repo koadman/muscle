@@ -51,12 +51,12 @@ void SaveCurrentAlignment()
 
 void CheckMaxTime()
 	{
-	if (0 == g_ulMaxSecs)
+	if (0 == g_ulMaxSecs.get())
 		return;
 
 	time_t Now = time(0);
 	time_t ElapsedSecs = Now - GetStartTime();
-	if (ElapsedSecs <= (time_t) g_ulMaxSecs)
+	if (ElapsedSecs <= (time_t) g_ulMaxSecs.get())
 		return;
 
 	Log("Max time %s exceeded, elapsed seconds = %ul\n",

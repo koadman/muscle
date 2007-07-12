@@ -29,55 +29,54 @@ Symbol       Meaning      Nucleic Acid
 IUPAC-IUB SYMBOLS FOR NUCLEOTIDE NOMENCLATURE:
          Cornish-Bowden (1985) Nucl. Acids Res. 13: 3021-3030.
 ***/
+TLS<unsigned[MAX_CHAR]> g_CharToLetter;
+TLS<unsigned[MAX_CHAR]> g_CharToLetterEx;
 
-unsigned g_CharToLetter[MAX_CHAR];
-unsigned g_CharToLetterEx[MAX_CHAR];
+TLS<char[MAX_ALPHA]> g_LetterToChar;
+TLS<char[MAX_ALPHA_EX]> g_LetterExToChar;
 
-char g_LetterToChar[MAX_ALPHA];
-char g_LetterExToChar[MAX_ALPHA_EX];
+TLS<char[MAX_CHAR]> g_UnalignChar;
+TLS<char[MAX_CHAR]> g_AlignChar;
 
-char g_UnalignChar[MAX_CHAR];
-char g_AlignChar[MAX_CHAR];
+TLS<bool[MAX_CHAR]> g_IsWildcardChar;
+TLS<bool[MAX_CHAR]> g_IsResidueChar;
 
-bool g_IsWildcardChar[MAX_CHAR];
-bool g_IsResidueChar[MAX_CHAR];
-
-ALPHA g_Alpha = ALPHA_Undefined;
-unsigned g_AlphaSize = 0;
+TLS<ALPHA> g_Alpha(ALPHA_Undefined);
+TLS<unsigned> g_AlphaSize(0);
 
 #define Res(c, Letter)												\
 	{																\
 	const unsigned char Upper = (unsigned char) toupper(c);			\
 	const unsigned char Lower = (unsigned char) tolower(c);			\
-	g_CharToLetter[Upper] = Letter;									\
-	g_CharToLetter[Lower] = Letter;									\
-	g_CharToLetterEx[Upper] = Letter;								\
-	g_CharToLetterEx[Lower] = Letter;								\
-	g_LetterToChar[Letter] = Upper;									\
-	g_LetterExToChar[Letter] = Upper;								\
-	g_IsResidueChar[Upper] = true;									\
-	g_IsResidueChar[Lower] = true;									\
-	g_AlignChar[Upper] = Upper;										\
-	g_AlignChar[Lower] = Upper;										\
-	g_UnalignChar[Upper] = Lower;									\
-	g_UnalignChar[Lower] = Lower;									\
+	g_CharToLetter.get()[Upper] = Letter;									\
+	g_CharToLetter.get()[Lower] = Letter;									\
+	g_CharToLetterEx.get()[Upper] = Letter;								\
+	g_CharToLetterEx.get()[Lower] = Letter;								\
+	g_LetterToChar.get()[Letter] = Upper;									\
+	g_LetterExToChar.get()[Letter] = Upper;								\
+	g_IsResidueChar.get()[Upper] = true;									\
+	g_IsResidueChar.get()[Lower] = true;									\
+	g_AlignChar.get()[Upper] = Upper;										\
+	g_AlignChar.get()[Lower] = Upper;										\
+	g_UnalignChar.get()[Upper] = Lower;									\
+	g_UnalignChar.get()[Lower] = Lower;									\
 	}
 
 #define Wild(c, Letter)												\
 	{																\
 	const unsigned char Upper = (unsigned char) toupper(c);			\
 	const unsigned char Lower = (unsigned char) tolower(c);			\
-	g_CharToLetterEx[Upper] = Letter;								\
-	g_CharToLetterEx[Lower] = Letter;								\
-	g_LetterExToChar[Letter] = Upper;								\
-	g_IsResidueChar[Upper] = true;									\
-	g_IsResidueChar[Lower] = true;									\
-	g_AlignChar[Upper] = Upper;										\
-	g_AlignChar[Lower] = Upper;										\
-	g_UnalignChar[Upper] = Lower;									\
-	g_UnalignChar[Lower] = Lower;									\
-	g_IsWildcardChar[Lower] = true;									\
-	g_IsWildcardChar[Upper] = true;									\
+	g_CharToLetterEx.get()[Upper] = Letter;								\
+	g_CharToLetterEx.get()[Lower] = Letter;								\
+	g_LetterExToChar.get()[Letter] = Upper;								\
+	g_IsResidueChar.get()[Upper] = true;									\
+	g_IsResidueChar.get()[Lower] = true;									\
+	g_AlignChar.get()[Upper] = Upper;										\
+	g_AlignChar.get()[Lower] = Upper;										\
+	g_UnalignChar.get()[Upper] = Lower;									\
+	g_UnalignChar.get()[Lower] = Lower;									\
+	g_IsWildcardChar.get()[Lower] = true;									\
+	g_IsWildcardChar.get()[Upper] = true;									\
 	}
 
 static unsigned GetAlphaSize(ALPHA Alpha)
@@ -97,26 +96,26 @@ static unsigned GetAlphaSize(ALPHA Alpha)
 
 static void InitArrays()
 	{
-	memset(g_CharToLetter, 0xff, sizeof(g_CharToLetter));
-	memset(g_CharToLetterEx, 0xff, sizeof(g_CharToLetterEx));
+	memset(g_CharToLetter.get(), 0xff, sizeof(g_CharToLetter.get()));
+	memset(g_CharToLetterEx.get(), 0xff, sizeof(g_CharToLetterEx.get()));
 
-	memset(g_LetterToChar, '?', sizeof(g_LetterToChar));
-	memset(g_LetterExToChar, '?', sizeof(g_LetterExToChar));
+	memset(g_LetterToChar.get(), '?', sizeof(g_LetterToChar.get()));
+	memset(g_LetterExToChar.get(), '?', sizeof(g_LetterExToChar.get()));
 
-	memset(g_AlignChar, '?', sizeof(g_UnalignChar));
-	memset(g_UnalignChar, '?', sizeof(g_UnalignChar));
+	memset(g_AlignChar.get(), '?', sizeof(g_UnalignChar.get()));
+	memset(g_UnalignChar.get(), '?', sizeof(g_UnalignChar.get()));
 
-	memset(g_IsWildcardChar, 0, sizeof(g_IsWildcardChar));
+	memset(g_IsWildcardChar.get(), 0, sizeof(g_IsWildcardChar.get()));
 	}
 
 static void SetGapChar(char c)
 	{
 	unsigned char u = (unsigned char) c;
 
-	g_CharToLetterEx[u] = AX_GAP;
-	g_LetterExToChar[AX_GAP] = u;
-	g_AlignChar[u] = u;
-	g_UnalignChar[u] = u;
+	g_CharToLetterEx.get()[u] = AX_GAP;
+	g_LetterExToChar.get()[AX_GAP] = u;
+	g_AlignChar.get()[u] = u;
+	g_UnalignChar.get()[u] = u;
 	}
 
 static void SetAlphaDNA()
@@ -212,16 +211,16 @@ void SetAlpha(ALPHA Alpha)
 		Quit("Invalid Alpha=%d", Alpha);
 		}
 
-	g_AlphaSize = GetAlphaSize(Alpha);
-	g_Alpha = Alpha;
+	g_AlphaSize.get() = GetAlphaSize(Alpha);
+	g_Alpha.get() = Alpha;
 
-	if (g_bVerbose)
-		Log("Alphabet %s\n", ALPHAToStr(g_Alpha));
+	if (g_bVerbose.get())
+		Log("Alphabet %s\n", ALPHAToStr(g_Alpha.get()));
 	}
 
 char GetWildcardChar()
 	{
-	switch (g_Alpha)
+	switch (g_Alpha.get())
 		{
 	case ALPHA_Amino:
 		return 'X';
@@ -231,7 +230,7 @@ char GetWildcardChar()
 		return 'N';
 
 	default:
-		Quit("Invalid Alpha=%d", g_Alpha);
+		Quit("Invalid Alpha=%d", g_Alpha.get());
 		}
 	return '?';
 	}
@@ -280,5 +279,5 @@ void ReportInvalidLetters()
 			Str[n++] = (char) i;
 		}
 	Warning("Assuming %s (see -seqtype option), invalid letters found: %s",
-	  ALPHAToStr(g_Alpha), Str);
+	  ALPHAToStr(g_Alpha.get()), Str);
 	}

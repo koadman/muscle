@@ -34,9 +34,9 @@ static SCORE GapPenalty(unsigned uLength, bool Term, SCORE g, SCORE e)
 
 static SCORE GapPenalty(unsigned uLength, bool Term)
 	{
-	SCORE s1 = GapPenalty(uLength, Term, g_scoreGapOpen, g_scoreGapExtend);
+	SCORE s1 = GapPenalty(uLength, Term, g_scoreGapOpen.get(), g_scoreGapExtend.get());
 #if	DOUBLE_AFFINE
-	SCORE s2 = GapPenalty(uLength, Term, g_scoreGapOpen2, g_scoreGapExtend2);
+	SCORE s2 = GapPenalty(uLength, Term, g_scoreGapOpen2.get(), g_scoreGapExtend2.get());
 	if (s1 > s2)
 		return s1;
 	return s2;
@@ -137,7 +137,7 @@ static SCORE ScoreSeqPair(const MSA &msa1, unsigned uSeqIndex1,
 		unsigned uLetter1 = msa1.GetLetter(uSeqIndex1, uColIndex);
 		unsigned uLetter2 = msa2.GetLetter(uSeqIndex2, uColIndex);
 
-		SCORE scoreMatch = (*g_ptrScoreMatrix)[uLetter1][uLetter2];
+		SCORE scoreMatch = (*g_ptrScoreMatrix.get())[uLetter1][uLetter2];
 		scoreTotal += scoreMatch;
 #if	TRACE
 		Log("%c <-> %c = %7.1f  %10.1f\n",

@@ -10,13 +10,13 @@
 #define	TRACE	0
 
 #if	TRACE
-extern bool g_bKeepSimpleDP;
-extern SCORE *g_DPM;
-extern SCORE *g_DPD;
-extern SCORE *g_DPI;
-extern char *g_TBM;
-extern char *g_TBD;
-extern char *g_TBI;
+extern bool g_bKeepSimpleDP.get();
+extern SCORE *g_DPM.get();
+extern SCORE *g_DPD.get();
+extern SCORE *g_DPI.get();
+extern char *g_TBM.get();
+extern char *g_TBD.get();
+extern char *g_TBI.get();
 #endif
 
 #if	TRACE
@@ -194,7 +194,7 @@ static bool DPEq(char c, SCORE *g_DP, SCORE *DPD_,
 static bool CompareTB(char **TB, char *TBM_, char *TBD_, char *TBI_, 
   unsigned uPrefixCountA, unsigned uPrefixCountB)
 	{
-	SCORE *DPM_ = g_DPM;
+	SCORE *DPM_ = g_DPM.get();
 	bool Eq = true;
 	for (unsigned i = 0; i < uPrefixCountA; ++i)
 		for (unsigned j = 0; j < uPrefixCountB; ++j)
@@ -210,7 +210,7 @@ static bool CompareTB(char **TB, char *TBM_, char *TBD_, char *TBI_,
 			}
 
 D:
-	SCORE *DPD_ = g_DPD;
+	SCORE *DPD_ = g_DPD.get();
 	for (unsigned i = 0; i < uPrefixCountA; ++i)
 		for (unsigned j = 0; j < uPrefixCountB; ++j)
 			{
@@ -224,7 +224,7 @@ D:
 				}
 			}
 I:
-	SCORE *DPI_ = g_DPI;
+	SCORE *DPI_ = g_DPI.get();
 	for (unsigned i = 0; i < uPrefixCountA; ++i)
 		for (unsigned j = 0; j < uPrefixCountB; ++j)
 			{
@@ -444,16 +444,16 @@ static inline void SetBitTBI(char **TB, unsigned i, unsigned j, char c)
 	Log("Bit TB:\n");											\
 	LogBitTB(TB, PA, PB, uPrefixCountA, uPrefixCountB);			\
 	bool Same;													\
-	Same = DPEq('M', g_DPM, DPM_, uPrefixCountA, uPrefixCountB);\
+	Same = DPEq('M', g_DPM.get(), DPM_, uPrefixCountA, uPrefixCountB);\
 	if (Same)													\
 		Log("DPM success\n");									\
-	Same = DPEq('D', g_DPD, DPD_, uPrefixCountA, uPrefixCountB);\
+	Same = DPEq('D', g_DPD.get(), DPD_, uPrefixCountA, uPrefixCountB);\
 	if (Same)													\
 		Log("DPD success\n");									\
-	Same = DPEq('I', g_DPI, DPI_, uPrefixCountA, uPrefixCountB);\
+	Same = DPEq('I', g_DPI.get(), DPI_, uPrefixCountA, uPrefixCountB);\
 	if (Same)													\
 		Log("DPI success\n");									\
-	CompareTB(TB, g_TBM, g_TBD, g_TBI, uPrefixCountA, uPrefixCountB);\
+	CompareTB(TB, g_TBM.get(), g_TBD.get(), g_TBI.get(), uPrefixCountA, uPrefixCountB);\
 	}
 #else
 #define LogMatrices()	/* empty */
@@ -504,7 +504,7 @@ SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	const unsigned uPrefixCountA = uLengthA + 1;
 	const unsigned uPrefixCountB = uLengthB + 1;
-	const SCORE e = g_scoreGapExtend;
+	const SCORE e = g_scoreGapExtend.get();
 
 	ALLOC_TRACE()
 

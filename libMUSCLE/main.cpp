@@ -7,8 +7,8 @@
 #include <unistd.h>		// for isatty()
 #endif
 
-int g_argc;
-char **g_argv;
+TLS<int> g_argc;
+TLS<char **> g_argv;
 
 int main(int argc, char **argv)
 	{
@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 // to run responsively in parallel.
 	SetPriorityClass(GetCurrentProcess(), BELOW_NORMAL_PRIORITY_CLASS);
 #endif
-	g_argc = argc;
-	g_argv = argv;
+	g_argc.get() = argc;
+	g_argv.get() = argv;
 
 	SetNewHandler();
 	SetStartTime();
@@ -29,16 +29,16 @@ int main(int argc, char **argv)
 	SetLogFile();
 
 	//extern void TestSubFams(const char *);
-	//TestSubFams(g_pstrInFileName);
+	//TestSubFams(g_pstrInFileName.get());
 	//return 0;
 
-	if (g_bVersion)
+	if (g_bVersion.get())
 		{
 		printf(MUSCLE_LONG_VERSION "\n");
 		exit(EXIT_SUCCESS);
 		}
 
-	if (!g_bQuiet)
+	if (!g_bQuiet.get())
 		Credits();
 
 	if (MissingCommand() && isatty(0))
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 		exit(EXIT_SUCCESS);
 		}
 
-	if (g_bCatchExceptions)
+	if (g_bCatchExceptions.get())
 		{
 		try
 			{

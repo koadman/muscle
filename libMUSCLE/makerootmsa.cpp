@@ -125,14 +125,14 @@ static short *MakeRootSeqE(const Seq &s, const Tree &GuideTree, unsigned uLeafNo
 
 static unsigned GetFirstNodeIndex(const Tree &tree)
 	{
-	if (g_bStable)
+	if (g_bStable.get())
 		return 0;
 	return tree.FirstDepthFirstNode();
 	}
 
 static unsigned GetNextNodeIndex(const Tree &tree, unsigned uPrevNodeIndex)
 	{
-	if (g_bStable)
+	if (g_bStable.get())
 		{
 		const unsigned uNodeCount = tree.GetNodeCount();
 		unsigned uNodeIndex = uPrevNodeIndex;

@@ -7,30 +7,6 @@ void ClearInvalidLetterWarning();
 void InvalidLetterWarning(char c, char w);
 void ReportInvalidLetters();
 
-extern unsigned g_CharToLetter[];
-extern unsigned g_CharToLetterEx[];
-
-extern char g_LetterToChar[];
-extern char g_LetterExToChar[];
-
-extern char g_UnalignChar[];
-extern char g_AlignChar[];
-
-extern bool g_IsWildcardChar[];
-extern bool g_IsResidueChar[];
-
-#define CharToLetter(c)		(g_CharToLetter[(unsigned char) (c)])
-#define CharToLetterEx(c)	(g_CharToLetterEx[(unsigned char) (c)])
-
-#define LetterToChar(u)		(g_LetterToChar[u])
-#define LetterExToChar(u)	(g_LetterExToChar[u])
-
-#define IsResidueChar(c)	(g_IsResidueChar[(unsigned char) (c)])
-#define IsGapChar(c)		('-' == (c) || '.' == (c))
-#define IsWildcardChar(c)	(g_IsWildcardChar[(unsigned char) (c)])
-
-#define AlignChar(c)		(g_AlignChar[(unsigned char) (c)])
-#define UnalignChar(c)		(g_UnalignChar[(unsigned char) (c)])
 
 // AX=Amino alphabet with eXtensions (B, Z and X)
 enum AX
@@ -94,13 +70,38 @@ const unsigned MAX_ALPHA = 20;
 const unsigned MAX_ALPHA_EX = AX_COUNT;
 const unsigned MAX_CHAR = 256;
 
-extern ALPHA g_Alpha;
-extern unsigned g_AlphaSize;
+extern TLS<ALPHA> g_Alpha;
+extern TLS<unsigned> g_AlphaSize;
 
 void SetAlpha(ALPHA Alpha);
 char GetWildcardChar();
 bool IsNucleo(char c);
 bool IsDNA(char c);
 bool IsRNA(char c);
+
+extern TLS<unsigned[MAX_CHAR]> g_CharToLetter;
+extern TLS<unsigned[MAX_CHAR]> g_CharToLetterEx;
+
+extern TLS<char[MAX_ALPHA]> g_LetterToChar;
+extern TLS<char[MAX_ALPHA_EX]> g_LetterExToChar;
+
+extern TLS<char[MAX_CHAR]> g_UnalignChar;
+extern TLS<char[MAX_CHAR]> g_AlignChar;
+
+extern TLS<bool[MAX_CHAR]> g_IsWildcardChar;
+extern TLS<bool[MAX_CHAR]> g_IsResidueChar;
+
+#define CharToLetter(c)		(g_CharToLetter.get()[(unsigned char) (c)])
+#define CharToLetterEx(c)	(g_CharToLetterEx.get()[(unsigned char) (c)])
+
+#define LetterToChar(u)		(g_LetterToChar.get()[u])
+#define LetterExToChar(u)	(g_LetterExToChar.get()[u])
+
+#define IsResidueChar(c)	(g_IsResidueChar.get()[(unsigned char) (c)])
+#define IsGapChar(c)		('-' == (c) || '.' == (c))
+#define IsWildcardChar(c)	(g_IsWildcardChar.get()[(unsigned char) (c)])
+
+#define AlignChar(c)		(g_AlignChar.get()[(unsigned char) (c)])
+#define UnalignChar(c)		(g_UnalignChar.get()[(unsigned char) (c)])
 
 #endif	// alpha_h
