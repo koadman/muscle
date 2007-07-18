@@ -9,10 +9,9 @@
 //
 
 #ifdef _OPENMP
-#define MAX_THREAD_COUNT	256
+#define MAX_THREAD_COUNT	16
 #define OMP_GET_THREAD_NUM	omp_get_thread_num()
 #include <omp.h>
-
 #else
 #define MAX_THREAD_COUNT	1
 #define OMP_GET_THREAD_NUM	0
