@@ -1,15 +1,12 @@
 #if	WIN32
-
+#include <intrin.h>
 typedef unsigned __int64 TICKS;
 
 #pragma warning(disable:4035)
 inline TICKS GetClockTicks()
 	{
-	_asm
-		{
-		_emit	0x0f
-		_emit	0x31
-		}
+		// aed 16/7/7: get ticks in a way that's portable to x64
+		return __rdtsc();
 	}
 
 #define	StartTimer()	__int64 t1__ = GetClockTicks()
