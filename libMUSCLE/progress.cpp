@@ -5,7 +5,9 @@
 // Functions that provide visible feedback to the user
 // that progress is being made.
 #ifdef _OPENMP
+#ifdef __GNUG__
 #warning "progress indicators have not been made parallel-safe yet"
+#endif
 #endif
 
 static unsigned g_uIter = 0;		// Main MUSCLE iteration 1, 2..

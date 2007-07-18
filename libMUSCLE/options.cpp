@@ -13,7 +13,9 @@ struct FLAG_OPT
 	bool m_bSet;
 	};
 #ifdef _OPENMP
+#ifdef __GNUG__
 #warning "Command-line option value storage is not OpenMP safe yet"
+#endif
 #endif
 
 static VALUE_OPT ValueOpts[] =
