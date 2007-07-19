@@ -319,9 +319,9 @@ SCORE LetterObjScoreXP(const MSA &msa1, const MSA &msa2, SCORE MatchScore[])
 #endif
 //	return scoreTotal / uPairCount;
 	if(	mmScore != NULL )
-		delete mmScore;
+		delete[] mmScore;
 	if( ggScore != NULL )
-		delete ggScore;
+		delete[] ggScore;
 
 	return scoreTotal;
 	}

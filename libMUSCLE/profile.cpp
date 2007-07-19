@@ -69,9 +69,9 @@ void ProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut)
 	AlignTwoProfs(Prof1, uLength1, 1.0, Prof2, uLength2, 1.0, Path, &ProfOut, &uLengthOut);
 
 	AlignTwoMSAsGivenPath(Path, msa1, msa2, msaOut);
-	delete Prof1;
-	delete Prof2;
-	delete ProfOut;
+	delete[] Prof1;
+	delete[] Prof2;
+	delete[] ProfOut;
 	}
 
 // Do profile-profile alignment
