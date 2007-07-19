@@ -656,6 +656,7 @@ void AlignTwoProfsGivenPath(const PWPath &Path,
 	unsigned uColIndexOut = 0;
 	const unsigned uEdgeCount = Path.GetEdgeCount();
 	ProfPos *POut = new ProfPos[uEdgeCount];
+	memset(POut, 0, sizeof(ProfPos)*uEdgeCount);
 	char cPrevType = 'M';
 	for (unsigned uEdgeIndex = 0; uEdgeIndex < uEdgeCount; ++uEdgeIndex)
 		{
