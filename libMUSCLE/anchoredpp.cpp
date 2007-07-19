@@ -318,6 +318,11 @@ SCORE LetterObjScoreXP(const MSA &msa1, const MSA &msa2, SCORE MatchScore[])
 	Log("XP=%g\n", scoreTotal);
 #endif
 //	return scoreTotal / uPairCount;
+	if(	mmScore != NULL )
+		delete mmScore;
+	if( ggScore != NULL )
+		delete ggScore;
+
 	return scoreTotal;
 	}
 
