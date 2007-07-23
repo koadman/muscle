@@ -1,4 +1,4 @@
-AM_CXXFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1
+AM_CXXFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1 @OPENMP_CXXFLAGS@
 
 LIBMUSCLE_H = \
 alpha.h cluster.h clust.h clustsetdf.h clustset.h clustsetmsa.h diaglist.h distcalc.h distfunc.h dpregionlist.h dpreglist.h edgelist.h enumopts.h enums.h estring.h gapscoredimer.h gonnet.h intmath.h msadist.h msa.h muscle.h objscore.h params.h profile.h pwpath.h refine.h scorehistory.h seq.h seqvect.h textfile.h timing.h tree.h types.h unixio.h threadstorage.h 
@@ -25,7 +25,7 @@ library_include_HEADERS = $(LIBMUSCLE_H)
 lib_LTLIBRARIES = libMUSCLE-3.6.la
 libMUSCLE_3_6_la_SOURCES = $(LIBMUSCLE_SRC)
 libMUSCLE_3_6_la_LDFLAGS= -version-info $(GENERIC_LIBRARY_VERSION) -release $(GENERIC_RELEASE)
-libMUSCLE_3_6_la_CXXFLAGS= -D_LIB
+libMUSCLE_3_6_la_CXXFLAGS= -D_LIB $(AM_CXXFLAGS)
 
 bin_PROGRAMS = muscle 
 
