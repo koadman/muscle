@@ -152,7 +152,7 @@ private:
 	char **m_szSeqs;
 	char **m_szNames;
 
-	static unsigned m_uIdCount;
+	static TLS<unsigned> m_uIdCount;
 
 	unsigned *m_IdToSeqIndex;
 	unsigned *m_SeqIndexToId;

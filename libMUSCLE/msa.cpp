@@ -7,7 +7,7 @@
 
 const unsigned DEFAULT_SEQ_LENGTH = 500;
 
-unsigned MSA::m_uIdCount = 0;
+TLS<unsigned> MSA::m_uIdCount(0);
 
 MSA::MSA()
 	{
@@ -81,12 +81,12 @@ void MSA::SetSize(unsigned uSeqCount, unsigned uColCount)
 		m_szSeqs[uSeqIndex][uColCount] = 0;
 		}
 
-	if (m_uIdCount > 0)
+	if (m_uIdCount.get() > 0)
 		{
-		m_IdToSeqIndex = new unsigned[m_uIdCount];
+		m_IdToSeqIndex = new unsigned[m_uIdCount.get()];
 		m_SeqIndexToId = new unsigned[m_uSeqCount];
 #if	DEBUG
-		memset(m_IdToSeqIndex, 0xff, m_uIdCount*sizeof(unsigned));
+		memset(m_IdToSeqIndex, 0xff, m_uIdCount.get()*sizeof(unsigned));
 		memset(m_SeqIndexToId, 0xff, m_uSeqCount*sizeof(unsigned));
 #endif
 		}
@@ -648,30 +648,31 @@ bool MSA::ColumnHasGap(unsigned uColIndex) const
 
 void MSA::SetIdCount(unsigned uIdCount)
 	{
-	//if (m_uIdCount != 0)
+	//if (m_uIdCount.get() != 0)
 	//	Quit("MSA::SetIdCount: may only be called once");
 
-	if (m_uIdCount > 0)
+/*	if (m_uIdCount.get() > 0)
 		{
 		if (uIdCount > m_uIdCount)
 			Quit("MSA::SetIdCount: cannot increase count");
 		return;
 		}
-	m_uIdCount = uIdCount;
+*/
+	m_uIdCount.get() = uIdCount;
 	}
 
 void MSA::SetSeqId(unsigned uSeqIndex, unsigned uId)
 	{
 	assert(uSeqIndex < m_uSeqCount);
-	assert(uId < m_uIdCount);
+	assert(uId < m_uIdCount.get());
 	if (0 == m_SeqIndexToId)
 		{
-		if (0 == m_uIdCount)
+		if (0 == m_uIdCount.get())
 			Quit("MSA::SetSeqId, SetIdCount has not been called");
-		m_IdToSeqIndex = new unsigned[m_uIdCount];
+		m_IdToSeqIndex = new unsigned[m_uIdCount.get()];
 		m_SeqIndexToId = new unsigned[m_uSeqCount];
 
-		memset(m_IdToSeqIndex, 0xff, m_uIdCount*sizeof(unsigned));
+		memset(m_IdToSeqIndex, 0xff, m_uIdCount.get()*sizeof(unsigned));
 		memset(m_SeqIndexToId, 0xff, m_uSeqCount*sizeof(unsigned));
 		}
 	m_SeqIndexToId[uSeqIndex] = uId;
@@ -680,7 +681,7 @@ void MSA::SetSeqId(unsigned uSeqIndex, unsigned uId)
 
 unsigned MSA::GetSeqIndex(unsigned uId) const
 	{
-	assert(uId < m_uIdCount);
+	assert(uId < m_uIdCount.get());
 	assert(0 != m_IdToSeqIndex);
 	unsigned uSeqIndex = m_IdToSeqIndex[uId];
 	assert(uSeqIndex < m_uSeqCount);
@@ -704,7 +705,7 @@ unsigned MSA::GetSeqId(unsigned uSeqIndex) const
 	{
 	assert(uSeqIndex < m_uSeqCount);
 	unsigned uId = m_SeqIndexToId[uSeqIndex];
-	assert(uId < m_uIdCount);
+	assert(uId < m_uIdCount.get());
 	return uId;
 	}
 
