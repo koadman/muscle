@@ -250,6 +250,7 @@ ProfPos *ProfileFromMSA(const MSA &a)
 	SetMSAWeightsMuscle((MSA &) a);
 
 	ProfPos *Pos = new ProfPos[uColCount];
+	memset(Pos, 0, sizeof(ProfPos)*uColCount);
 
 	unsigned uHydrophobicRunLength = 0;
 	for (unsigned uColIndex = 0; uColIndex < uColCount; ++uColIndex)
