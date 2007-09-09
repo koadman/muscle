@@ -105,6 +105,8 @@ SCORE ObjScoreIds(const MSA &msa, const unsigned Ids1[],
 #else
 	SCORE dObjScore = ObjScore(msa, SeqIndexes1, uCount1, SeqIndexes2, uCount2);
 #endif
+	delete[] SeqIndexes1;
+	delete[] SeqIndexes2;
 #if	TIMING
 	TICKS t2 = GetClockTicks();
 	g_ticksObjScore += (t2 - t1);

@@ -54,7 +54,11 @@ static bool TryRealign(MSA &msaIn, const Tree &tree, const unsigned Leaves1[],
 	DeleteGappedCols(msa2);
 
 	if (0 == msa1.GetColCount() || 0 == msa2.GetColCount())
+	{
+		delete[] Ids1;
+		delete[] Ids2;
 		return false;
+	}
 
 	MSA msaRealigned;
 	PWPath pathAfter;
@@ -99,6 +103,8 @@ static bool TryRealign(MSA &msaIn, const Tree &tree, const unsigned Leaves1[],
 		{
 		*ptrscoreBefore = 0;
 		*ptrscoreAfter = 0;
+		delete[] Ids1;
+		delete[] Ids2;
 		return false;
 		}
 
