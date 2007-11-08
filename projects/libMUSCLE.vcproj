@@ -83,7 +83,7 @@
 		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="..\lib"
-			IntermediateDirectory="Debug"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -212,7 +212,7 @@
 		<Configuration
 			Name="Release|x64"
 			OutputDirectory="..\lib"
-			IntermediateDirectory="Release"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -340,7 +340,7 @@
 		<Configuration
 			Name="FastDebug|x64"
 			OutputDirectory="..\lib"
-			IntermediateDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -399,7 +399,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release OpenMP|Win32"
-			OutputDirectory="$(ConfigurationName)"
+			OutputDirectory="..\lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			>
@@ -446,7 +446,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/MUSCLE.lib"
+				OutputFile="$(OutDir)/MUSCLEomp.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -466,7 +466,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release OpenMP|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\lib"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			>
@@ -514,7 +514,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/MUSCLE64.lib"
+				OutputFile="$(OutDir)/MUSCLE64omp.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -534,7 +534,7 @@
 		</Configuration>
 		<Configuration
 			Name="FastDebug OpenMP|Win32"
-			OutputDirectory="$(ConfigurationName)"
+			OutputDirectory="..\lib"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			>
@@ -575,7 +575,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/MUSCLEfd.lib"
+				OutputFile="$(OutDir)/MUSCLEfdomp.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -595,7 +595,7 @@
 		</Configuration>
 		<Configuration
 			Name="FastDebug OpenMP|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			OutputDirectory="..\lib"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			>
@@ -637,7 +637,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/MUSCLE64fd.lib"
+				OutputFile="$(OutDir)/MUSCLE64fdomp.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
