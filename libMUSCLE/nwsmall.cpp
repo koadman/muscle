@@ -480,8 +480,10 @@ static void AllocCache(unsigned uPrefixCountA, unsigned uPrefixCountB)
 		delete[] CacheTB.get()[i];
 	delete[] CacheTB.get();
 
-	uCachePrefixCountA.get() = uPrefixCountA + 1024;
-	uCachePrefixCountB.get() = uPrefixCountB + 1024;
+	unsigned MaxA = uPrefixCountA > uCachePrefixCountA.get() ? uPrefixCountA : uCachePrefixCountA.get();
+	unsigned MaxB = uPrefixCountB > uCachePrefixCountB.get() ? uPrefixCountB : uCachePrefixCountB.get();
+	uCachePrefixCountA.get() = MaxA + 1024;
+	uCachePrefixCountB.get() = MaxB + 1024;
 
 	CacheMCurr.get() = new SCORE[uCachePrefixCountB.get()];
 	CacheMNext.get() = new SCORE[uCachePrefixCountB.get()];
