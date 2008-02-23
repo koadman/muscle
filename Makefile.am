@@ -1,5 +1,4 @@
 EXTRA_DIST = \
-projects/libMUSCLE.sln \
 projects/libMUSCLE.vcproj \
 projects/muscle.vcproj
 
