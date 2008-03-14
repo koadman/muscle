@@ -1,6 +1,7 @@
 EXTRA_DIST = \
 projects/libMUSCLE.vcproj \
-projects/muscle.vcproj
+projects/muscle.vcproj \
+projects/libmuscle.doxygen
 
 
 pkgconfigdir = $(libdir)/pkgconfig
