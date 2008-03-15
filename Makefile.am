@@ -1,3 +1,7 @@
+ACLOCAL_AMFLAGS = -I m4
+include doxygen.am
+MOSTLYCLEANFILES = $(DX_CLEANFILES)
+
 EXTRA_DIST = \
 projects/libMUSCLE.vcproj \
 projects/muscle.vcproj \
