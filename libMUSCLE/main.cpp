@@ -1,3 +1,5 @@
+//@@TODO reconcile /muscle with /muscle3.6
+
 #include "muscle.h"
 #include <stdio.h>
 #ifdef	WIN32

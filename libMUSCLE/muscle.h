@@ -16,12 +16,13 @@
 
 #ifdef	_MSC_VER	// Miscrosoft compiler
 #pragma warning(disable : 4800)	// disable int-bool conversion warning
+#pragma warning(disable : 4996)       // deprecated names like strdup, isatty.
 #define _WIN32_WINNT 0x0400 // AED 9/27/5: fix for missing IsDebuggerPresent() in VS 2005
 #endif
 
-#define MUSCLE_LONG_VERSION		"MUSCLE v3.6 by Robert C. Edgar"
+#define MUSCLE_LONG_VERSION           "MUSCLE v3.7 by Robert C. Edgar"
 #define MUSCLE_MAJOR_VERSION	"3"
-#define MUSCLE_MINOR_VERSION	"6"
+#define MUSCLE_MINOR_VERSION	"7"
 
 #include <stdlib.h>
 #include <string.h>
@@ -32,7 +33,6 @@
 #define DOUBLE_AFFINE	0
 #define SINGLE_AFFINE	1
 #define PAF				0
-#define HYDRO			1
 
 #include "types.h"
 #include "intmath.h"
@@ -118,9 +118,9 @@ bool isident(char c);
 bool isidentf(char c);
 
 void TreeFromSeqVect(const SeqVect &c, Tree &tree, CLUSTER Cluster,
-  DISTANCE Distance, ROOT Root);
+  DISTANCE Distance, ROOT Root, const char *SaveFileName = 0);
 void TreeFromMSA(const MSA &msa, Tree &tree, CLUSTER Cluster,
-  DISTANCE Distance, ROOT Root);
+  DISTANCE Distance, ROOT Root, const char *SaveFileName = 0);
 
 void StripGaps(char szStr[]);
 void StripWhitespace(char szStr[]);
@@ -135,6 +135,7 @@ void VectorSet(double dValues[], unsigned n, double d);
 bool VectorIsZero(const float dValues[], unsigned n);
 void VectorSet(float dValues[], unsigned n, float d);
 
+// @@TODO should be "not linux"
 #if	_WIN32
 double log2(double x);	// Defined in <math.h> on Linux
 #endif
@@ -327,3 +328,6 @@ char ConsensusChar(const ProfPos &PP);
 void Stabilize(const MSA &msa, MSA &msaStable);
 void MuscleOutput(MSA &msa);
 DYN_PTR_SCOREMATRIX ReadMx(TextFile &File);
+void MemPlus(size_t Bytes, char *Where);
+void MemMinus(size_t Bytes, char *Where);
+

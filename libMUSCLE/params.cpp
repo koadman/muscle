@@ -31,6 +31,8 @@ TLS<const char *> g_pstrClwStrictOutFileName(0);
 TLS<const char *> g_pstrHTMLOutFileName(0);
 TLS<const char *> g_pstrPHYIOutFileName(0);
 TLS<const char *> g_pstrPHYSOutFileName(0);
+TLS<const char *> g_pstrDistMxFileName1(0);
+TLS<const char *> g_pstrDistMxFileName2(0);
 
 TLS<const char *> g_pstrFileName1(0);
 TLS<const char *> g_pstrFileName2(0);
@@ -80,7 +82,7 @@ TLS<bool> g_bRefineW(false);
 TLS<bool> g_bProfDB(false);
 TLS<bool> g_bLow(false);
 TLS<bool> g_bSW(false);
-TLS<bool> g_bCluster(false);
+TLS<bool> g_bClusterOnly(false);
 TLS<bool> g_bProfile(false);
 TLS<bool> g_bProfileOnStdIn(false);
 TLS<bool> g_bAnchoredPP(false);
@@ -91,6 +93,8 @@ TLS<bool> g_bVersion(false);
 TLS<bool> g_bStable(false);
 TLS<bool> g_bFASTA(false);
 TLS<bool> g_bPAS(false);
+TLS<bool> g_bTomHydro(false);
+TLS<bool> g_bMakeTree(false);
 
 #if	DEBUG
 TLS<bool> g_bCatchExceptions(false);
@@ -416,6 +420,9 @@ static void SetPPCommandLineParams()
 	FloatParam("MinBestColScore", &g_dMinBestColScore.get());
 	FloatParam("MinSmoothScore", &g_dMinSmoothScore.get());
 
+	EnumParam("Distance", DISTANCE_Opts, (int *) &g_Distance1.get());
+	EnumParam("Distance", DISTANCE_Opts, (int *) &g_Distance2.get());
+
 	EnumParam("Distance1", DISTANCE_Opts, (int *) &g_Distance1.get());
 	EnumParam("Distance2", DISTANCE_Opts, (int *) &g_Distance2.get());
 	}
@@ -551,6 +558,8 @@ void SetParams()
 	StrParam("UseTree", &g_pstrUseTreeFileName.get());
 	StrParam("ComputeWeights", &g_pstrComputeWeightsFileName.get());
 	StrParam("ScoreFile", &g_pstrScoreFileName.get());
+	StrParam("DistMx1", &g_pstrDistMxFileName1.get());
+	StrParam("DistMx2", &g_pstrDistMxFileName2.get());
 
 	FlagParam("Core", &g_bCatchExceptions.get(), false);
 	FlagParam("NoCore", &g_bCatchExceptions.get(), true);
@@ -578,7 +587,7 @@ void SetParams()
 	FlagParam("RefineW", &g_bRefineW.get(), true);
 	FlagParam("ProfDB", &g_bProfDB.get(), true);
 	FlagParam("SW", &g_bSW.get(), true);
-	FlagParam("Cluster", &g_bCluster.get(), true);
+	FlagParam("ClusterOnly", &g_bClusterOnly.get(), true);
 	FlagParam("Profile", &g_bProfile.get(), true);
 	FlagParam("ProfileOnStdIn", &g_bProfileOnStdIn.get(), true);
 	FlagParam("AnchoredPP", &g_bAnchoredPP.get(), true);
@@ -593,6 +602,7 @@ void SetParams()
 	FlagParam("HTML", &g_bHTML.get(), true);
 	FlagParam("FASTA", &g_bFASTA.get(), true);
 	FlagParam("PAS", &g_bPAS.get(), true);
+	FlagParam("MakeTree", &g_bMakeTree.get(), true);
 
 	bool b = false;
 	FlagParam("clwstrict", &b, true);
@@ -614,8 +624,12 @@ void SetParams()
 	UintParam("DiagLength", &g_uMinDiagLength.get());
 	UintParam("DiagMargin", &g_uDiagMargin.get());
 	UintParam("DiagBreak", &g_uMaxDiagBreak.get());
-	UintParam("Hydro", &g_uHydrophobicRunLength.get());
 	UintParam("MaxSubFam", &g_uMaxSubFamCount.get());
+
+	UintParam("Hydro", &g_uHydrophobicRunLength.get());
+	FlagParam("TomHydro", &g_bTomHydro.get(), true);
+	if (g_bTomHydro.get())
+		g_uHydrophobicRunLength.get() = 0;	
 
 	FloatParam("SUEFF", &g_dSUEFF.get());
 	FloatParam("HydroFactor", &g_dHydroFactor.get());
@@ -623,8 +637,14 @@ void SetParams()
 	EnumParam("ObjScore", OBJSCORE_Opts, (int *) &g_ObjScore.get());
 	EnumParam("TermGaps", TERMGAPS_Opts, (int *) &g_TermGaps.get());
 
+	EnumParam("Weight", SEQWEIGHT_Opts, (int *) &g_SeqWeight1.get());
+	EnumParam("Weight", SEQWEIGHT_Opts, (int *) &g_SeqWeight2.get());
+	
 	EnumParam("Weight1", SEQWEIGHT_Opts, (int *) &g_SeqWeight1.get());
 	EnumParam("Weight2", SEQWEIGHT_Opts, (int *) &g_SeqWeight2.get());
+
+	EnumParam("Cluster", CLUSTER_Opts, (int *) &g_Cluster1.get());
+	EnumParam("Cluster", CLUSTER_Opts, (int *) &g_Cluster2.get());
 
 	EnumParam("Cluster1", CLUSTER_Opts, (int *) &g_Cluster1.get());
 	EnumParam("Cluster2", CLUSTER_Opts, (int *) &g_Cluster2.get());

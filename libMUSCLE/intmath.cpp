@@ -21,7 +21,7 @@ double log2(double x)
 	if (0 == x)
 		return MINUS_INFINITY;
 
-	static const double dInvLn2 = 1.0/log((double)2);
+	static const double dInvLn2 = 1.0/log(2.0);
 // Multiply by inverse of log(2) just in case multiplication
 // is faster than division.
 	return log(x)*dInvLn2;
@@ -70,7 +70,7 @@ bool BTEq(double b1, double b2)
 	return BTEq2((BASETYPE) b1, (BASETYPE) b2);
 	}
 
-const double dLn2 = log((double)2);
+const double dLn2 = log(2.0);
 
 // pow2(x)=2^x
 double pow2(double x)

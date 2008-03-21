@@ -126,25 +126,20 @@ void DoMuscle()
 			bool SeqFound = v.FindName(LeafName, &uSeqIndex);
 			if (!SeqFound)
 				Quit("Label %s in tree does not match sequences", LeafName);
-			}
-
-	// Set ids
-		for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
-			{
-			const char *SeqName = v.GetSeqName(uSeqIndex);
-			unsigned uLeafIndex = GuideTree.GetLeafNodeIndex(SeqName);
-			GuideTree.SetLeafId(uLeafIndex, uSeqIndex);
+			unsigned uId = v.GetSeqIdFromName(LeafName);
+			GuideTree.SetLeafId(uNodeIndex, uId);
 			}
 		}
 	else
-		TreeFromSeqVect(v, GuideTree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get());
+		TreeFromSeqVect(v, GuideTree, g_Cluster1.get(), g_Distance1.get(), g_Root1.get(),
+		  g_pstrDistMxFileName1.get());
 
 	const char *Tree1 = ValueOpt("Tree1");
 	if (0 != Tree1)
 		{
 		TextFile f(Tree1, true);
 		GuideTree.ToFile(f);
-		if (g_bCluster.get())
+		if (g_bClusterOnly.get())
 			return;
 		}
 
@@ -253,6 +248,11 @@ void Run()
 		PPScore();
 	else if (g_bPAS.get())
 		ProgAlignSubFams();
+	else if (g_bMakeTree.get())
+		{
+		extern void DoMakeTree();
+		DoMakeTree();
+		}
 	else
 		DoMuscle();
 

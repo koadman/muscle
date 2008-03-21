@@ -4,7 +4,7 @@
 #include <time.h>
 #include "threadstorage.h"
 
-static TLS<MSA *> ptrBestMSA;
+TLS<MSA *> ptrBestMSA;
 static TLS<const char *> pstrOutputFileName;
 
 void SetOutputFileName(const char *out)

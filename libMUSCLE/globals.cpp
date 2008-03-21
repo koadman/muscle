@@ -1,3 +1,8 @@
+#if	WIN32
+#include <windows.h>
+#include <share.h>
+#endif
+
 #include "muscle.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,11 +13,6 @@
 #include <time.h>
 #include <errno.h>
 #include "threadstorage.h"
-
-#if	WIN32
-#include <windows.h>
-#include <share.h>
-#endif
 
 #ifndef	MAX_PATH
 #define	MAX_PATH	260
@@ -267,4 +267,26 @@ void Call_MY_ASSERT(const char *file, int line, bool b, const char *msg)
 	if (b)
 		return;
 	Quit("%s(%d): MY_ASSERT(%s)", file, line, msg);
+	}
+
+static size_t g_MemTotal;
+
+void MemPlus(size_t Bytes, char *Where)
+	{
+	g_MemTotal += Bytes;
+	Log("+%10u  %6u  %6u  %s\n",
+	  (unsigned) Bytes,
+	  (unsigned) GetMemUseMB(),
+	  (unsigned) (g_MemTotal/1000000),
+	  Where);
+	}
+
+void MemMinus(size_t Bytes, char *Where)
+	{
+	g_MemTotal -= Bytes;
+	Log("-%10u  %6u  %6u  %s\n",
+	  (unsigned) Bytes,
+	  (unsigned) GetMemUseMB(),
+	  (unsigned) (g_MemTotal/1000000),
+	  Where);
 	}

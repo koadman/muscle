@@ -23,7 +23,7 @@ void RefineTree(MSA &msa, Tree &tree)
 	Tree Tree2;
 	for (unsigned uIter = 0; uIter < g_uMaxTreeRefineIters.get(); ++uIter)
 		{
-		TreeFromMSA(msa, Tree2, g_Cluster2.get(), g_Distance2.get(), g_Root2.get());
+		TreeFromMSA(msa, Tree2, g_Cluster2.get(), g_Distance2.get(), g_Root2.get(), g_pstrDistMxFileName2.get());
 
 #if	DEBUG
 		ValidateMuscleIds(Tree2);

@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include <errno.h>
 
-const int BUFFER_BYTES = 16*1024;
+//const int BUFFER_BYTES = 16*1024;
+const int BUFFER_BYTES = 128;
 const int CR = '\r';
 const int NL = '\n';
 
@@ -54,12 +55,8 @@ char *GetFastaSeq(FILE *f, unsigned *ptrSeqLength, char **ptrLabel, bool DeleteG
 		if (EOF == c)
 			Quit("End-of-file or input error in FASTA label");
 
-	// Ignore CR (discard, do not include in label)
-		if (CR == c)
-			continue;
-
-	// NL terminates label
-		if (NL == c)
+	// NL or CR terminates label
+		if (NL == c || CR == c)
 			break;
 
 	// All other characters added to label
@@ -96,7 +93,7 @@ char *GetFastaSeq(FILE *f, unsigned *ptrSeqLength, char **ptrLabel, bool DeleteG
 
 		if ('>' == c)
 			{
-			if (NL == PreviousChar)
+			if (NL == PreviousChar || CR == PreviousChar)
 				{
 				ungetc(c, f);
 				break;

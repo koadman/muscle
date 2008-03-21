@@ -91,7 +91,6 @@ DYN_PTR_SCOREMATRIX ReadMx(TextFile &File)
 		bool EndOfFile = File.GetTrimLine(Line, sizeof(Line));
 		if (EndOfFile)
 			Quit("Premature EOF in matrix file");
-
 #if	TRACE
 		Log("Line=%s\n", Line);
 #endif
@@ -104,8 +103,9 @@ DYN_PTR_SCOREMATRIX ReadMx(TextFile &File)
 #endif
 		if (!IsResidueChar(c))
 			continue;
-
 		unsigned RowLetter = CharToLetter(c);
+		if (RowLetter >= 20)
+			continue;
 #if	TRACE
 		Log("Row letter = %u\n", RowLetter);
 #endif
@@ -126,6 +126,8 @@ DYN_PTR_SCOREMATRIX ReadMx(TextFile &File)
 			if (IsResidueChar(HeaderChar))
 				{
 				unsigned ColLetter = CharToLetter(HeaderChar);
+				if (ColLetter >= 20)
+					continue;
 				Mx.get()[RowLetter][ColLetter] = v;
 				}
 			p += 1;

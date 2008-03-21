@@ -12,6 +12,8 @@ extern TLS<const char *> g_pstrClwStrictOutFileName;
 extern TLS<const char *> g_pstrHTMLOutFileName;
 extern TLS<const char *> g_pstrPHYIOutFileName;
 extern TLS<const char *> g_pstrPHYSOutFileName;
+extern TLS<const char *> g_pstrDistMxFileName1;
+extern TLS<const char *> g_pstrDistMxFileName2;
 
 extern TLS<const char *> g_pstrFileName1;
 extern TLS<const char *> g_pstrFileName2;
@@ -81,7 +83,7 @@ extern TLS<bool> g_bRefineW;
 extern TLS<bool> g_bRefineX;
 extern TLS<bool> g_bLow;
 extern TLS<bool> g_bSW;
-extern TLS<bool> g_bCluster;
+extern TLS<bool> g_bClusterOnly;
 extern TLS<bool> g_bProfile;
 extern TLS<bool> g_bProfileOnStdIn;
 extern TLS<bool> g_bAnchoredPP;
@@ -93,6 +95,8 @@ extern TLS<bool> g_bVersion;
 extern TLS<bool> g_bStable;
 extern TLS<bool> g_bFASTA;
 extern TLS<bool> g_bPAS;
+extern TLS<bool> g_bTomHydro;
+extern TLS<bool> g_bMakeTree;
 
 extern TLS<PPSCORE> g_PPScore;
 extern TLS<OBJSCORE> g_ObjScore;

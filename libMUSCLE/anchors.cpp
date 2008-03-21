@@ -10,7 +10,7 @@ void WindowSmooth(const SCORE Score[], unsigned uCount, unsigned uWindowLength,
 #define	Ceil(x)	((SCORE) ((x) > dCeil ? dCeil : (x)))
 
 	if (1 != uWindowLength%2)
-		Quit("WindowSmooth, length=%u", uWindowLength);
+		Quit("WindowSmooth=%u must be odd", uWindowLength);
 
 	if (uCount <= uWindowLength)
 		{

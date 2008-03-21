@@ -614,18 +614,12 @@ SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 // Special case for i=uLengthA
 	char *TBRow = TB[uLengthA];
 	MCurr[0] = MINUS_INFINITY;
-	if( uLengthA > 1 )
-		{
-		MCurr[1] = ScoreProfPos2(PA[uLengthA-1], PB[0]) + (uLengthA - 2)*e +
-		  PA[0].m_scoreGapOpen + PA[uLengthA-2].m_scoreGapClose;
-		}
-		else
-		{
-		// AED 7/1/2006: handle the case when an input seq has a single nt without
-		// crashing.  unsure whether this modified score calculation is "correct"
-		MCurr[1] = ScoreProfPos2(PA[uLengthA-1], PB[0]) + (0)*e +
-		  PA[0].m_scoreGapOpen + PA[0].m_scoreGapClose;
-		}
+	if(uLengthA > 1)
+	MCurr[1] = ScoreProfPos2(PA[uLengthA-1], PB[0]) + (uLengthA - 2)*e +
+	  PA[0].m_scoreGapOpen + PA[uLengthA-2].m_scoreGapClose;
+	else
+		MCurr[1] = ScoreProfPos2(PA[uLengthA-1], PB[0]) + PA[0].m_scoreGapOpen +
+		  PA[0].m_scoreGapClose;
 	SetBitTBM(TB, uLengthA, 1, 'D');
 	SetTBM(uLengthA, 1, 'D');
 	SetDPM(uLengthA, 0, MCurr[0]);

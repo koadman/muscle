@@ -231,6 +231,29 @@ void ProgAlignSubFams()
 	SetAlpha(Alpha);
 	v.FixAlpha();
 
+	PTR_SCOREMATRIX UserMatrix = 0;
+	if (0 != g_pstrMatrixFileName.get())
+		{
+		const char *FileName = g_pstrMatrixFileName.get();
+		const char *Path = getenv("MUSCLE_MXPATH");
+		if (Path != 0)
+			{
+			size_t n = strlen(Path) + 1 + strlen(FileName) + 1;
+			char *NewFileName = new char[n];
+			sprintf(NewFileName, "%s/%s", Path, FileName);
+			FileName = NewFileName;
+			}
+		TextFile File(FileName);
+		UserMatrix = ReadMx(File);
+		g_Alpha = ALPHA_Amino;
+		g_PPScore = PPSCORE_SP;
+		}
+
+	SetPPScore();
+
+	if (0 != UserMatrix)
+		g_ptrScoreMatrix = UserMatrix;
+
 	if (ALPHA_DNA == Alpha || ALPHA_RNA == Alpha)
 		{
 		SetPPScore(PPSCORE_SPN);
@@ -250,6 +273,8 @@ void ProgAlignSubFams()
 	SetIter(1);
 	g_bDiags.get() = g_bDiags1.get();
 	SetSeqStats(uSeqCount, uMaxL, uTotL/uSeqCount);
+
+	SetMuscleSeqVect(v);
 
 	MSA::SetIdCount(uSeqCount);
 

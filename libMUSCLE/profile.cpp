@@ -5,14 +5,28 @@
 #include "profile.h"
 #include "objscore.h"
 
+bool TreeNeededForWeighting(SEQWEIGHT s)
+	{
+	switch (s)
+		{
+	case SEQWEIGHT_ClustalW:
+	case SEQWEIGHT_ThreeWay:
+		return true;
+	default:
+		return false;
+		}
+	}
+
 static ProfPos *ProfileFromMSALocal(MSA &msa, Tree &tree)
 	{
 	const unsigned uSeqCount = msa.GetSeqCount();
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		msa.SetSeqId(uSeqIndex, uSeqIndex);
-
-	TreeFromMSA(msa, tree, g_Cluster2.get(), g_Distance2.get(), g_Root1.get());
-	SetMuscleTree(tree);
+	if (TreeNeededForWeighting(g_SeqWeight2.get()))
+		{
+		TreeFromMSA(msa, tree, g_Cluster2.get(), g_Distance2.get(), g_Root1.get());
+		SetMuscleTree(tree);
+		}
 	return ProfileFromMSA(msa);
 	}
 
@@ -66,8 +80,10 @@ void ProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut)
 	PWPath Path;
 	ProfPos *ProfOut;
 	unsigned uLengthOut;
+	Progress("Aligning profiles");
 	AlignTwoProfs(Prof1, uLength1, 1.0, Prof2, uLength2, 1.0, Path, &ProfOut, &uLengthOut);
 
+	Progress("Building output");
 	AlignTwoMSAsGivenPath(Path, msa1, msa2, msaOut);
 	delete[] Prof1;
 	delete[] Prof2;
@@ -133,58 +149,6 @@ void Profile()
 	const unsigned uSumSeqCount = uSeqCount1 + uSeqCount2;
 	MSA::SetIdCount(uSumSeqCount);
 
-	//msa1.FromFile(file1);
-	//msa2.FromFile(file2);
-
-	//ALPHA Alpha = ALPHA_Undefined;
-	//switch (g_SeqType.get())
-	//	{
-	//case SEQTYPE_Auto:
-	//	Alpha = msa1.GuessAlpha();
-	//	break;
-
-	//case SEQTYPE_Protein:
-	//	Alpha = ALPHA_Amino;
-	//	break;
-
-	//case SEQTYPE_Nucleo:
-	//	Alpha = ALPHA_Nucleo;
-	//	break;
-
-	//default:
-	//	Quit("Invalid SeqType");
-	//	}
-	//SetAlpha(Alpha);
-
-	//msa1.FixAlpha();
-	//msa2.FixAlpha();
-
-	//if (ALPHA_Nucleo == Alpha)
-	//	SetPPScore(PPSCORE_SPN);
-
-	//unsigned uLength1;
-	//unsigned uLength2;
-
-	//uLength1 = msa1.GetColCount();
-	//uLength2 = msa2.GetColCount();
-
-	//const unsigned uSeqCount1 = msa1.GetSeqCount();
-	//const unsigned uSeqCount2 = msa2.GetSeqCount();
-	//const unsigned uMaxSeqCount = (uSeqCount1 > uSeqCount2 ? uSeqCount1 : uSeqCount2);
-	//MSA::SetIdCount(uMaxSeqCount);
-
-	//Tree tree1;
-	//Tree tree2;
-	//ProfPos *Prof1 = ProfileFromMSALocal(msa1, tree1);
-	//ProfPos *Prof2 = ProfileFromMSALocal(msa2, tree2);
-
-	//PWPath Path;
-	//ProfPos *ProfOut;
-	//unsigned uLengthOut;
-	//AlignTwoProfs(Prof1, uLength1, 1.0, Prof2, uLength2, 1.0, Path, &ProfOut, &uLengthOut);
-
-	//MSA msaOut;
-	//AlignTwoMSAsGivenPath(Path, msa1, msa2, msaOut);
 
 	SetProfileProfileAlphabet(msa1, msa2);
 	if( g_bAnchoredPP.get() )
@@ -192,7 +156,5 @@ void Profile()
 	else
 		ProfileProfile(msa1, msa2, msaOut);
 
-//	TextFile fileOut(g_pstrOutFileName.get(), true);
-//	msaOut.ToFile(fileOut);
 	MuscleOutput(msaOut);
 	}

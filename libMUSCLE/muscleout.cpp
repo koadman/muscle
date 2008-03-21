@@ -7,6 +7,58 @@ static void DoOutput(MSA &msa)
 	{
 	bool AnyOutput = false;
 
+
+// Value options
+	if (g_pstrFASTAOutFileName.get())
+		{
+		TextFile File(g_pstrFASTAOutFileName.get(), true);
+		msa.ToFASTAFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrMSFOutFileName.get())
+		{
+		TextFile File(g_pstrMSFOutFileName.get(), true);
+		msa.ToMSFFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrClwOutFileName.get())
+		{
+		TextFile File(g_pstrClwOutFileName.get(), true);
+		msa.ToAlnFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrClwStrictOutFileName.get())
+		{
+		g_bClwStrict.get() = true;
+		TextFile File(g_pstrClwStrictOutFileName.get(), true);
+		msa.ToAlnFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrHTMLOutFileName.get())
+		{
+		TextFile File(g_pstrHTMLOutFileName.get(), true);
+		msa.ToHTMLFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrPHYIOutFileName.get())
+		{
+		TextFile File(g_pstrPHYIOutFileName.get(), true);
+		msa.ToPhyInterleavedFile(File);
+		AnyOutput = true;
+		}
+
+	if (g_pstrPHYSOutFileName.get())
+		{
+		TextFile File(g_pstrPHYSOutFileName.get(), true);
+		msa.ToPhySequentialFile(File);
+		AnyOutput = true;
+		}
+
 // Flag options, at most one used (because only one -out filename)
 	TextFile fileOut(g_pstrOutFileName.get(), true);
 	if (g_bFASTA.get())
@@ -46,49 +98,6 @@ static void DoOutput(MSA &msa)
 	
 	fileOut.Close();
 
-// Value options
-	if (g_pstrFASTAOutFileName.get())
-		{
-		TextFile File(g_pstrFASTAOutFileName.get(), true);
-		msa.ToFASTAFile(File);
-		}
-
-	if (g_pstrMSFOutFileName.get())
-		{
-		TextFile File(g_pstrMSFOutFileName.get(), true);
-		msa.ToMSFFile(File);
-		}
-
-	if (g_pstrClwOutFileName.get())
-		{
-		TextFile File(g_pstrClwOutFileName.get(), true);
-		msa.ToAlnFile(File);
-		}
-
-	if (g_pstrClwStrictOutFileName.get())
-		{
-		g_bClwStrict.get() = true;
-		TextFile File(g_pstrClwStrictOutFileName.get(), true);
-		msa.ToAlnFile(File);
-		}
-
-	if (g_pstrHTMLOutFileName.get())
-		{
-		TextFile File(g_pstrHTMLOutFileName.get(), true);
-		msa.ToHTMLFile(File);
-		}
-
-	if (g_pstrPHYIOutFileName.get())
-		{
-		TextFile File(g_pstrPHYIOutFileName.get(), true);
-		msa.ToPhySequentialFile(File);
-		}
-
-	if (g_pstrPHYSOutFileName.get())
-		{
-		TextFile File(g_pstrPHYSOutFileName.get(), true);
-		msa.ToPhySequentialFile(File);
-		}
 
 	if (0 != g_pstrScoreFileName.get())
 		WriteScoreFile(msa);
@@ -109,3 +118,4 @@ void MuscleOutput(MSA &msa)
 	else
 		DoOutput(msa);
 	}
+

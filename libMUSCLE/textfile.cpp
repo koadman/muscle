@@ -330,16 +330,24 @@ void TextFile::SkipLine()
 
 void TextFile::SkipWhite()
 	{
+	bool bEof = SkipWhiteX();
+	if (bEof)
+		Quit("End-of-file skipping white space");
+	}
+
+bool TextFile::SkipWhiteX()
+	{
 	for (;;)
 		{
 		char c;
 		bool bEof = GetChar(c);
 		if (bEof)
-			Quit("End-of-file in SkipWhite");
+			return true;
 		if (!isspace(c))
 			{
 			PushBack(c);
 			break;
 			}
 		}
+	return false;
 	}

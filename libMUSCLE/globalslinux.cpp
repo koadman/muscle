@@ -1,7 +1,7 @@
 #include "muscle.h"
 #include "threadstorage.h"
 
-#ifndef	WIN32
+#if		defined(__linux__)
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <unistd.h>
