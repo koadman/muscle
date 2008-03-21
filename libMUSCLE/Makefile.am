@@ -23,17 +23,17 @@ blosum62.cpp globalsother.cpp maketree.cpp scoredist.cpp tomhydro.cpp
 library_includedir=$(includedir)/$(GENERIC_LIBRARY_NAME)-$(GENERIC_API_VERSION)/$(GENERIC_LIBRARY_NAME)
 library_include_HEADERS = $(LIBMUSCLE_H)
 
-lib_LTLIBRARIES = libMUSCLE-3.6.la
-libMUSCLE_3_6_la_SOURCES = $(LIBMUSCLE_SRC)
-libMUSCLE_3_6_la_LDFLAGS= -version-info $(GENERIC_LIBRARY_VERSION) 
-libMUSCLE_3_6_la_CXXFLAGS= -D_LIB $(AM_CXXFLAGS)
+lib_LTLIBRARIES = libMUSCLE-3.7.la
+libMUSCLE_3_7_la_SOURCES = $(LIBMUSCLE_SRC)
+libMUSCLE_3_7_la_LDFLAGS= -version-info $(GENERIC_LIBRARY_VERSION) 
+libMUSCLE_3_7_la_CXXFLAGS= -D_LIB $(AM_CXXFLAGS)
 
 bin_PROGRAMS = muscle 
 
 
 muscle_SOURCES = main.cpp
 muscle_LDFLAGS = @STATIC_FLAG@ 
-muscle_LDADD = $(top_builddir)/libMUSCLE/libMUSCLE-3.6.la
+muscle_LDADD = $(top_builddir)/libMUSCLE/libMUSCLE-3.7.la
 
 all-local:
 	strip muscle
