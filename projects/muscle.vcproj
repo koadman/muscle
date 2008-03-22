@@ -102,90 +102,6 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="1"
-				WholeProgramOptimization="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="0"
-				BufferSecurityCheck="false"
-				EnableEnhancedInstructionSet="0"
-				FloatingPointModel="2"
-				UsePrecompiledHeader="0"
-				WarningLevel="2"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="false"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				LinkTimeCodeGeneration="1"
-				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
 			Name="FastDebug|Win32"
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
@@ -242,89 +158,6 @@
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="0"
 				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="FastDebug|x64"
-			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
-			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				TargetEnvironment="3"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				FavorSizeOrSpeed="0"
-				WholeProgramOptimization="false"
-				PreprocessorDefinitions="WIN32;NDEBUG;FASTDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableEnhancedInstructionSet="0"
-				FloatingPointModel="0"
-				UsePrecompiledHeader="0"
-				WarningLevel="2"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				LinkTimeCodeGeneration="0"
-				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -436,6 +269,256 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="FastDebug OpenMP|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				FavorSizeOrSpeed="0"
+				WholeProgramOptimization="false"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="true"
+				EnableEnhancedInstructionSet="0"
+				FloatingPointModel="0"
+				OpenMP="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				WholeProgramOptimization="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
+				EnableEnhancedInstructionSet="0"
+				FloatingPointModel="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
+				LinkIncremental="2"
+				GenerateDebugInformation="false"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="FastDebug|x64"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
+			ConfigurationType="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				TargetEnvironment="3"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				FavorSizeOrSpeed="0"
+				WholeProgramOptimization="false"
+				PreprocessorDefinitions="WIN32;NDEBUG;FASTDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="true"
+				EnableEnhancedInstructionSet="0"
+				FloatingPointModel="0"
+				UsePrecompiledHeader="0"
+				WarningLevel="2"
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
+				LinkIncremental="2"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="0"
+				TargetMachine="17"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release OpenMP|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
@@ -494,89 +577,6 @@
 				EnableCOMDATFolding="2"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="17"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="FastDebug OpenMP|Win32"
-			OutputDirectory="$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="0"
-				FavorSizeOrSpeed="0"
-				WholeProgramOptimization="false"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE"
-				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableEnhancedInstructionSet="0"
-				FloatingPointModel="0"
-				OpenMP="true"
-				UsePrecompiledHeader="0"
-				WarningLevel="2"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib psapi.lib"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="1"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				LinkTimeCodeGeneration="0"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -877,6 +877,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\libMUSCLE\blosum62.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\libMUSCLE\blosumla.cpp"
 				>
 			</File>
@@ -1057,6 +1061,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\libMUSCLE\globalsother.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\libMUSCLE\globalswin32.cpp"
 				>
 			</File>
@@ -1102,6 +1110,10 @@
 			</File>
 			<File
 				RelativePath="..\libMUSCLE\makerootmsab.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\libMUSCLE\maketree.cpp"
 				>
 			</File>
 			<File
@@ -1305,6 +1317,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\libMUSCLE\scoredist.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\libMUSCLE\scoregaps.cpp"
 				>
 			</File>
@@ -1370,6 +1386,10 @@
 			</File>
 			<File
 				RelativePath="..\libMUSCLE\threewaywt.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\libMUSCLE\tomhydro.cpp"
 				>
 			</File>
 			<File
