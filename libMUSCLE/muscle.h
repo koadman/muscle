@@ -1,4 +1,3 @@
-#include "threadstorage.h"
 
 #if	DEBUG && !_DEBUG
 #define _DEBUG	1
@@ -29,6 +28,7 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include "threadstorage.h"
 
 #define DOUBLE_AFFINE	0
 #define SINGLE_AFFINE	1
