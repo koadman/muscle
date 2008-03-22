@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "threadstorage.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

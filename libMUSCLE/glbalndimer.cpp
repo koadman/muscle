@@ -1,10 +1,10 @@
-#include "muscle.h"
+#include "libMUSCLE/muscle.h"
 #include <math.h>
 #include <stdio.h>	// for sprintf
-#include "pwpath.h"
-#include "profile.h"
-#include "gapscoredimer.h"
-#include "threadstorage.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/gapscoredimer.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

@@ -1,8 +1,8 @@
-#include "muscle.h"
-#include "textfile.h"
-#include "objscore.h"
-#include "profile.h"
-#include "enumopts.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/textfile.h"
+#include "libMUSCLE/objscore.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/enumopts.h"
 
 namespace muscle {
 

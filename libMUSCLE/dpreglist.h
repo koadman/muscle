@@ -1,7 +1,7 @@
 #ifndef dpreglist_h
 #define dpreglist_h
 
-#include "diaglist.h"
+#include "libMUSCLE/diaglist.h"
 
 namespace muscle {
 

@@ -39,10 +39,10 @@ determine  relative weights. The BLOSUM NIC is then distributed over the
 GSC tree according to those relative weights.
 ***/
 
-#include "muscle.h"
-#include "msa.h"
-#include "cluster.h"
-#include "distfunc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/cluster.h"
+#include "libMUSCLE/distfunc.h"
 
 namespace muscle {
 

@@ -1,7 +1,7 @@
-#include "muscle.h"
-#include "msa.h"
-#include "tree.h"
-#include "profile.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/profile.h"
 #include <stdio.h>
 
 namespace muscle {

@@ -1,10 +1,10 @@
-#include "muscle.h"
-#include "dpreglist.h"
-#include "diaglist.h"
-#include "pwpath.h"
-#include "profile.h"
-#include "timing.h"
-#include "threadstorage.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/dpreglist.h"
+#include "libMUSCLE/diaglist.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/timing.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

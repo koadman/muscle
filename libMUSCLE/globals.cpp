@@ -1,4 +1,4 @@
-#include "muscle.h"
+#include "libMUSCLE/muscle.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -7,7 +7,7 @@
 #include <assert.h>
 #include <time.h>
 #include <errno.h>
-#include "threadstorage.h"
+#include "libMUSCLE/threadstorage.h"
 
 #if	WIN32
 #include <windows.h>

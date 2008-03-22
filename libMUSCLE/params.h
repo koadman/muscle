@@ -1,6 +1,6 @@
 #ifndef params_h
 #define params_h
-#include "threadstorage.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

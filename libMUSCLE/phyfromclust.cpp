@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "tree.h"
-#include "clust.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/clust.h"
 
 namespace muscle {
 

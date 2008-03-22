@@ -1,12 +1,12 @@
-#include "muscle.h"
-#include "tree.h"
-#include "seqvect.h"
-#include "profile.h"
-#include "msa.h"
-#include "pwpath.h"
-#include "distfunc.h"
-#include "textfile.h"
-#include "estring.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/textfile.h"
+#include "libMUSCLE/estring.h"
 
 namespace muscle {
 

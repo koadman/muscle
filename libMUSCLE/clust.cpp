@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "clust.h"
-#include "clustset.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/clust.h"
+#include "libMUSCLE/clustset.h"
 #include <stdio.h>
 
 namespace muscle {

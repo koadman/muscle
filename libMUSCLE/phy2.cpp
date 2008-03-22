@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "tree.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
 
 namespace muscle {
 

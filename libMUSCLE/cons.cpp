@@ -4,8 +4,8 @@ of times the most common letter appears divided by the number of
 sequences.
 ***/
 
-#include "muscle.h"
-#include "msa.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
 #include <math.h>
 
 namespace muscle {

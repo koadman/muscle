@@ -1,11 +1,11 @@
-#include "muscle.h"
-#include "seqvect.h"
-#include "distfunc.h"
-#include "clust.h"
-#include "clustsetdf.h"
-#include "tree.h"
-#include "clust.h"
-#include "distcalc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/clust.h"
+#include "libMUSCLE/clustsetdf.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/clust.h"
+#include "libMUSCLE/distcalc.h"
 #include <math.h>
 
 namespace muscle {

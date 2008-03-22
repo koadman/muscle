@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "scorehistory.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/scorehistory.h"
 #include <stdio.h>
 
 namespace muscle {

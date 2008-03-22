@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "dpreglist.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/dpreglist.h"
 
 namespace muscle {
 

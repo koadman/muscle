@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "cluster.h"
-#include "distfunc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/cluster.h"
+#include "libMUSCLE/distfunc.h"
 
 namespace muscle {
 

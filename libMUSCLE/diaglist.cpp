@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "diaglist.h"
-#include "pwpath.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/diaglist.h"
+#include "libMUSCLE/pwpath.h"
 
 namespace muscle {
 

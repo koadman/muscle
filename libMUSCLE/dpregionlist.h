@@ -1,7 +1,7 @@
 #ifndef DPRegionList_h
 #define DPRegionList_h
 
-#include "diaglist.h"
+#include "libMUSCLE/diaglist.h"
 
 namespace muscle {
 

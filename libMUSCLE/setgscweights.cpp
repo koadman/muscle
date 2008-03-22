@@ -101,10 +101,10 @@ tree, the Weight field stores the original (BLOSUM) weights used
 as input to this algorithm.
 ***/
 
-#include "muscle.h"
-#include "msa.h"
-#include "cluster.h"
-#include "distfunc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/cluster.h"
+#include "libMUSCLE/distfunc.h"
 
 namespace muscle {
 

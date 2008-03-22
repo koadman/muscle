@@ -1,9 +1,9 @@
-#include "muscle.h"
+#include "libMUSCLE/muscle.h"
 #include <stdio.h>
 #include <ctype.h>
-#include "msa.h"
-#include "textfile.h"
-#include "threadstorage.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/textfile.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

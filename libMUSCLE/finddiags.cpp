@@ -1,7 +1,7 @@
-#include "muscle.h"
-#include "profile.h"
-#include "diaglist.h"
-#include "threadstorage.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/diaglist.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

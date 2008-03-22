@@ -1,8 +1,8 @@
-#include "muscle.h"
-#include "distfunc.h"
-#include "msa.h"
-#include "seqvect.h"
-#include "pwpath.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/pwpath.h"
 
 namespace muscle {
 

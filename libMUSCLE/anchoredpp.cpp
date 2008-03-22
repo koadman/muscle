@@ -1,9 +1,9 @@
-#include "muscle.h"
-#include "msa.h"
-#include "profile.h"
-#include "objscore.h"
-#include "refine.h"
-#include "tree.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/objscore.h"
+#include "libMUSCLE/refine.h"
+#include "libMUSCLE/tree.h"
 #include <vector>
 #include <iostream>
 

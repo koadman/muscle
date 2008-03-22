@@ -12,7 +12,7 @@ struct EnumOpt
 #define	s(t)		extern EnumOpt t##_Opts[];
 #define c(t, x)		/* empty */
 #define e(t)		/* empty */
-#include "enums.h"	
+#include "libMUSCLE/enums.h"	
 
 } // namespace muscle
 

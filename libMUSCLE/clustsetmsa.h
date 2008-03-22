@@ -1,8 +1,8 @@
 #ifndef ClustSetMSA_h
 #define ClustSetMSA_h
 
-#include "clustset.h"
-#include "msadist.h"
+#include "libMUSCLE/clustset.h"
+#include "libMUSCLE/msadist.h"
 
 namespace muscle {
 

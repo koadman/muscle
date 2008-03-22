@@ -1,7 +1,7 @@
-#include "muscle.h"
-#include "msa.h"
-#include "seqvect.h"
-#include "textfile.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/textfile.h"
 #include <algorithm>
 
 namespace muscle {

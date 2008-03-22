@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "distfunc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/distfunc.h"
 #include <assert.h>
 
 namespace muscle {

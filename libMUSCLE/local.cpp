@@ -1,9 +1,9 @@
-#include "muscle.h"
-#include "textfile.h"
-#include "msa.h"
-#include "profile.h"
-#include "pwpath.h"
-#include "tree.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/textfile.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/tree.h"
 
 namespace muscle {
 

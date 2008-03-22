@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "tree.h"
-#include "distcalc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/distcalc.h"
 
 namespace muscle {
 

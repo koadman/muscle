@@ -1,9 +1,9 @@
 #ifndef ClustSetDF_h
 #define ClustSetDF_h
 
-#include "clustset.h"
-#include "distfunc.h"
-#include "msa.h"
+#include "libMUSCLE/clustset.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/msa.h"
 
 namespace muscle {
 

@@ -1,6 +1,6 @@
-#include "muscle.h"
-#include "msa.h"
-#include "objscore.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/objscore.h"
 
 namespace muscle {
 

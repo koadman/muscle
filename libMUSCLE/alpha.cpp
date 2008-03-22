@@ -1,6 +1,6 @@
-#include "muscle.h"
+#include "libMUSCLE/muscle.h"
 #include <ctype.h>
-#include "threadstorage.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

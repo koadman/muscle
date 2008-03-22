@@ -1,4 +1,4 @@
-// enums.h
+// libMUSCLE/enums.h
 // Define enum types.
 // Exploit macro hacks to avoid lots of repetetive typing.
 // Generally I am opposed to macro hacks because of the
@@ -6,7 +6,7 @@
 // makes maintenance much easier and less error-prone.
 // The idea is that this file can be included in different
 // places with different definitions of s (Start), c (Case)
-// and e (End). See types.h.
+// and e (End). See libMUSCLE/types.h.
 
 s(ALPHA)
 c(ALPHA, Amino)

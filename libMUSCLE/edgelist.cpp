@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "edgelist.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/edgelist.h"
 
 namespace muscle {
 

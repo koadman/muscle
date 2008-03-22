@@ -1,10 +1,10 @@
-#include "muscle.h"
-#include "tree.h"
-#include "msa.h"
-#include "pwpath.h"
-#include "profile.h"
-#include "scorehistory.h"
-#include "objscore.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/profile.h"
+#include "libMUSCLE/scorehistory.h"
+#include "libMUSCLE/objscore.h"
 
 namespace muscle {
 

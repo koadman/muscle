@@ -1,7 +1,7 @@
-#include "muscle.h"
-#include "distfunc.h"
-#include "distcalc.h"
-#include "msa.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/distcalc.h"
+#include "libMUSCLE/msa.h"
 
 namespace muscle {
 

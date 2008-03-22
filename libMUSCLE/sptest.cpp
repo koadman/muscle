@@ -1,8 +1,8 @@
-#include "muscle.h"
-#include "objscore.h"
-#include "msa.h"
-#include "textfile.h"
-#include "pwpath.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/objscore.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/textfile.h"
+#include "libMUSCLE/pwpath.h"
 
 namespace muscle {
 

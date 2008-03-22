@@ -1,8 +1,8 @@
-#include "muscle.h"
-#include "distfunc.h"
-#include "seqvect.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/distfunc.h"
+#include "libMUSCLE/seqvect.h"
 #include <math.h>
-#include "threadstorage.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

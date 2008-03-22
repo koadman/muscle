@@ -1,9 +1,9 @@
-#include "muscle.h"
-#include "tree.h"
-#include "textfile.h"	// for test only
-#include "msa.h"
-#include "seqvect.h"
-#include "profile.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/textfile.h"	// for test only
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/profile.h"
 #ifndef _MSC_VER
 #include <unistd.h>	//	for unlink
 #endif

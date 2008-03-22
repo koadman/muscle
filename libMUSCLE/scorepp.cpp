@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "profile.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/profile.h"
 
 namespace muscle {
 

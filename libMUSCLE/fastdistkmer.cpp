@@ -1,10 +1,10 @@
-#include "muscle.h"
-#include "msa.h"
-#include "seqvect.h"
-#include "seq.h"
-#include "distfunc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/seqvect.h"
+#include "libMUSCLE/seq.h"
+#include "libMUSCLE/distfunc.h"
 #include <math.h>
-#include "threadstorage.h"
+#include "libMUSCLE/threadstorage.h"
 
 namespace muscle {
 

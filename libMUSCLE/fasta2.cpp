@@ -1,4 +1,4 @@
-#include "muscle.h"
+#include "libMUSCLE/muscle.h"
 #include <stdio.h>
 #include <errno.h>
 

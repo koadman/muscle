@@ -1,9 +1,9 @@
-#include "muscle.h"
-#include "msa.h"
-#include "tree.h"
-#include "clust.h"
-#include "clustsetmsa.h"
-#include "distcalc.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/tree.h"
+#include "libMUSCLE/clust.h"
+#include "libMUSCLE/clustsetmsa.h"
+#include "libMUSCLE/distcalc.h"
 
 namespace muscle {
 

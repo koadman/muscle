@@ -1,5 +1,5 @@
-#include "muscle.h"
-#include "pwpath.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/pwpath.h"
 
 namespace muscle {
 

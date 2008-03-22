@@ -1,7 +1,7 @@
-#include "muscle.h"
-#include "msa.h"
-#include "pwpath.h"
-#include "profile.h"
+#include "libMUSCLE/muscle.h"
+#include "libMUSCLE/msa.h"
+#include "libMUSCLE/pwpath.h"
+#include "libMUSCLE/profile.h"
 
 namespace muscle {
 
