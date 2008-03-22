@@ -1,8 +1,3 @@
-#if	WIN32
-#include <windows.h>
-#include <share.h>
-#endif
-
 #include "muscle.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,6 +8,11 @@
 #include <time.h>
 #include <errno.h>
 #include "threadstorage.h"
+
+#if	WIN32
+#include <windows.h>
+#include <share.h>
+#endif
 
 #ifndef	MAX_PATH
 #define	MAX_PATH	260
