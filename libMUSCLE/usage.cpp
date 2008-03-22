@@ -3,7 +3,7 @@
 
 namespace muscle {
 
-void muscle::Credits()
+void Credits()
 	{
 #pragma omp critical
 {

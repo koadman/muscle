@@ -21,7 +21,7 @@ const char *BoolToStr(bool b)
 	return b ? "True" : "False";
 	}
 
-const char *muscle::ScoreToStr(SCORE Score)
+const char *ScoreToStr(SCORE Score)
 	{
 	if (MINUS_INFINITY >= Score)
 		return "       *";

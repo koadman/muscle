@@ -10,9 +10,11 @@
 #endif
 
 namespace muscle {
-
 TLS<int> g_argc;
 TLS<char **> g_argv;
+}
+
+using namespace muscle;
 
 int main(int argc, char **argv)
 	{
@@ -68,4 +70,4 @@ int main(int argc, char **argv)
 
 	exit(EXIT_Success);
 	}
-} 
+
