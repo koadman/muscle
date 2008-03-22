@@ -5,6 +5,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 const unsigned DEFAULT_SEQ_LENGTH = 500;
 
 TLS<unsigned> MSA::m_uIdCount(0);
@@ -851,3 +853,4 @@ ALPHA MSA::GuessAlpha() const
 		return ALPHA_DNA;
 	return ALPHA_Amino;
 	}
+} 

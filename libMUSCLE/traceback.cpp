@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include <math.h>
 
+namespace muscle {
+
 #define TRACE	0
 
 #define EQ(a, b)	(fabs(a-b) < 0.1)
@@ -206,3 +208,4 @@ SCORE TraceBack(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	return scoreMax;
 	}
+} 

@@ -4,6 +4,8 @@
 #include "seq.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 extern SCOREMATRIX VTML_SP;
 
 // #define SUBST(i, j)	Subst(seqA, seqB, i, j)
@@ -317,3 +319,4 @@ SCORE GlobalAlignSS(const Seq &seqA, const Seq &seqB, PWPath &Path)
 
 	return scoreMax;
 	}
+} 

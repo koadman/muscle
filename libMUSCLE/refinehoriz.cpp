@@ -6,6 +6,8 @@
 #include "scorehistory.h"
 #include "objscore.h"
 
+namespace muscle {
+
 TLS<unsigned> g_uRefineHeightSubtree;
 TLS<unsigned> g_uRefineHeightSubtreeTotal;
 
@@ -310,3 +312,4 @@ Osc:
 
 	return bAnyChangesAnyIter;
 	}
+} 

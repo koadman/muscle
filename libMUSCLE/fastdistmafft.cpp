@@ -4,6 +4,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 #define MIN(x, y)	(((x) < (y)) ? (x) : (y))
@@ -289,3 +291,4 @@ double PctIdToHeightMAFFT(double dPctId)
 	{
 	return PctIdToMAFFTDist(dPctId);
 	}
+} 

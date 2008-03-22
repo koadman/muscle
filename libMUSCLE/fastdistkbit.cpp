@@ -3,6 +3,8 @@
 #include "seqvect.h"
 #include <math.h>
 
+namespace muscle {
+
 #define	MIN(x, y)	((x) < (y) ? (x) : (y))
 
 static void SetKmerBitVector(const Seq &s, byte Bits[])
@@ -107,3 +109,4 @@ void DistKbit20_3(const SeqVect &v, DistFunc &DF)
 
 	delete[] BitVector;
 	}
+} 

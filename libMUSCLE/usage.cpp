@@ -1,7 +1,9 @@
 #include "muscle.h"
 #include <stdio.h>
 
-void Credits()
+namespace muscle {
+
+void muscle::Credits()
 	{
 #pragma omp critical
 {
@@ -48,3 +50,4 @@ void Usage()
 "Fastest possible (amino acids): -maxiters 1 -diags -sv -distance1 kbit20_3\n"
 "Fastest possible (nucleotides): -maxiters 1 -diags\n");
 	}
+} 

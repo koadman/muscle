@@ -2,6 +2,8 @@
 #include "msa.h"
 #include <errno.h>
 
+namespace muscle {
+
 extern SCOREMATRIX VTML_SP;
 extern SCOREMATRIX NUC_SP;
 
@@ -67,3 +69,4 @@ void WriteScoreFile(const MSA &msa)
 		}
 	fclose(f);
 	}
+} 

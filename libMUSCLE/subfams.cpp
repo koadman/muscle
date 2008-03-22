@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "distfunc.h"
 
+namespace muscle {
+
 const float INFINITY = float(1e29);
 const unsigned NILL = uInsane;
 
@@ -63,3 +65,4 @@ static void Relax(DistFunc &DF, unsigned u, unsigned v)
 void ShortestPath(DistFunc &DF, unsigned uIndex)
 	{
 	}
+} 

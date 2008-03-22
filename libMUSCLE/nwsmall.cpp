@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 // NW small memory
 
 #define	TRACE	0
@@ -666,3 +668,4 @@ SCORE NWSmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	return 0;
 	}
+} 

@@ -4,6 +4,8 @@
 #include "textfile.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 const unsigned INDELS = 1;
 
 static void GetPos(const char Str[], unsigned L, int *pi1, int *pi2)
@@ -174,3 +176,4 @@ void SPTest()
 	Log("SPA=%.4g SPB=%.4g Diff=%.4g\n", SPA, SPB, SPA - SPB);
 	Log("XPA=%.4g XPB=%.4g Diff=%.4g\n", XPA, XPB, XPA - XPB);
 	}
+} 

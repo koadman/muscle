@@ -1,5 +1,7 @@
 #include "muscle.h"
 
+namespace muscle {
+
 // Note: We use 32x32 arrays rather than 20x20 as this may give the compiler
 // optimizer an opportunity to make subscript arithmetic more efficient
 // (multiplying by 32 is same as shifting left by 5 bits).
@@ -143,3 +145,4 @@ RNC( -74, -93,-105,-108,  63, -80, -13, -27, -71, -11, -46, -79, -76, -92, -58, 
 RNC( -45,  -6, -73, -51, 104, -79,  48, -24, -49,  -4, -20, -29, -83, -48, -39, -31, -40, -32,  81, 162, 0) // Y
 RNC(   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 0) // X
 	};
+} 

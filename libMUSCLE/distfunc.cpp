@@ -2,6 +2,8 @@
 #include "distfunc.h"
 #include <assert.h>
 
+namespace muscle {
+
 DistFunc::DistFunc()
 	{
 	m_Dists = 0;
@@ -111,3 +113,4 @@ void DistFunc::LogMe() const
 		Log("\n");
 		}
 	}
+} 

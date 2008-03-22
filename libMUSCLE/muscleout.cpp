@@ -3,6 +3,8 @@
 #include "params.h"
 #include "textfile.h"
 
+namespace muscle {
+
 static void DoOutput(MSA &msa)
 	{
 	bool AnyOutput = false;
@@ -119,3 +121,4 @@ void MuscleOutput(MSA &msa)
 		DoOutput(msa);
 	}
 
+} 

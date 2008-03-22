@@ -3,6 +3,8 @@
 #include "profile.h"
 #include "objscore.h"
 
+namespace muscle {
+
 #define TRACE			0
 #define TRACE_SEQPAIR	0
 #define TEST_SPFAST		0
@@ -520,3 +522,4 @@ SCORE ObjScoreXP(const MSA &msa1, const MSA &msa2)
 //	return scoreTotal / uPairCount;
 	return scoreTotal;
 	}
+} 

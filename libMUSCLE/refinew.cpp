@@ -4,6 +4,8 @@
 #include "textfile.h"
 #include <algorithm>
 
+namespace muscle {
+
 #define MEMDEBUG	0
 
 #if	MEMDEBUG
@@ -291,3 +293,4 @@ void DoRefineW()
 //	msaOut.ToFile(fileOut);
 	MuscleOutput(msaOut);
 	}
+} 

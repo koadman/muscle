@@ -2,6 +2,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 PROB ScoreToProb(SCORE Score)
 	{
 	if (MINUS_INFINITY >= Score)
@@ -351,3 +353,4 @@ FCOUNT SumCounts(const FCOUNT Counts[])
 		Sum += Counts[i];
 	return Sum;
 	}
+} 

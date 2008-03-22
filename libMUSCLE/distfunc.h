@@ -1,6 +1,8 @@
 #ifndef DistFunc_h
 #define DistFunc_h
 
+namespace muscle {
+
 class DistFunc
 	{
 public:
@@ -32,5 +34,7 @@ private:
 	char **m_Names;
 	unsigned *m_Ids;
 	};
+
+} // namespace muscle
 
 #endif	// DistFunc_h

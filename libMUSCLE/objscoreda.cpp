@@ -4,6 +4,8 @@
 #include "objscore.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #if	DOUBLE_AFFINE
 
 #define TRACE			0
@@ -288,3 +290,4 @@ SCORE ObjScoreDA(const MSA &msa, SCORE *ptrLetters, SCORE *ptrGaps)
 	}
 
 #endif	// DOUBLE_AFFINE
+} 

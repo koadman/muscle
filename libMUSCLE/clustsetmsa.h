@@ -1,11 +1,13 @@
 #ifndef ClustSetMSA_h
 #define ClustSetMSA_h
 
-class MSA;
-class Clust;
-
 #include "clustset.h"
 #include "msadist.h"
+
+namespace muscle {
+
+class MSA;
+class Clust;
 
 // Distance matrix based set.
 // Computes distances between leaves, never between
@@ -51,5 +53,7 @@ private:
 	const MSA *m_ptrMSA;
 	MSADist *m_ptrMSADist;
 	};
+
+} // namespace muscle
 
 #endif	// ClustSetMSA_h

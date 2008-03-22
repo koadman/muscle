@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "profile.h"
 
+namespace muscle {
+
 // Original:
 //HYDROPHILIC_CONTEXT 0 6 -0.3969495574
 //HYDROPHILIC_CONTEXT 1 6 -0.9407126603
@@ -107,3 +109,4 @@ void TomHydro(ProfPos *Prof, unsigned uLength)
 		PP.m_scoreGapClose += dFactor;
 		}
 	}
+} 

@@ -3,6 +3,8 @@
 #include "textfile.h"
 #include "msa.h"
 
+namespace muscle {
+
 const size_t MAX_FASTA_LINE = 16000;
 
 SeqVect::~SeqVect()
@@ -288,3 +290,4 @@ void SeqVect::FixAlpha()
 		}
 	ReportInvalidLetters();
 	}
+} 

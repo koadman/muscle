@@ -5,6 +5,8 @@
 #include "profile.h"
 #include "objscore.h"
 
+namespace muscle {
+
 bool TreeNeededForWeighting(SEQWEIGHT s)
 	{
 	switch (s)
@@ -158,3 +160,4 @@ void Profile()
 
 	MuscleOutput(msaOut);
 	}
+} 

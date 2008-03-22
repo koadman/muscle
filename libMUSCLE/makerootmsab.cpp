@@ -5,6 +5,8 @@
 #include "seqvect.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 static void DoSeq(Seq &s, unsigned uSeqIndex, const ProfPos *RootProf,
   unsigned uRootProfLength, MSA &msaOut)
 	{
@@ -60,3 +62,4 @@ void MakeRootMSABrenner(SeqVect &v, const Tree &GuideTree, ProgNode Nodes[],
 	for (unsigned uSeqIndex = 0; uSeqIndex < uSeqCount; ++uSeqIndex)
 		DoSeq(*v[uSeqIndex], uSeqIndex, RootProfile, uRootColCount, a);
 	}
+} 

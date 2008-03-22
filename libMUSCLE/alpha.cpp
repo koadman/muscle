@@ -2,6 +2,8 @@
 #include <ctype.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 /***
 From Bioperl docs:
 Extended DNA / RNA alphabet
@@ -281,3 +283,4 @@ void ReportInvalidLetters()
 	Warning("Assuming %s (see -seqtype option), invalid letters found: %s",
 	  ALPHAToStr(g_Alpha.get()), Str);
 	}
+} 

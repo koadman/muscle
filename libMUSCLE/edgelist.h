@@ -1,6 +1,8 @@
 #ifndef EdgeList_h
 #define EdgeList_h
 
+namespace muscle {
+
 class EdgeList
 	{
 public:
@@ -24,5 +26,7 @@ private:
 	unsigned *m_uNode1;
 	unsigned *m_uNode2;
 	};
+
+} // namespace muscle
 
 #endif	// EdgeList_h

@@ -8,6 +8,8 @@ sequences.
 #include "msa.h"
 #include <math.h>
 
+namespace muscle {
+
 double MSA::GetAvgCons() const
 	{
 	assert(GetSeqCount() > 0);
@@ -83,12 +85,13 @@ double MSA::GetPctIdentityPair(unsigned uSeqIndex1, unsigned uSeqIndex2) const
 	return (double) uSameCount / (double) uPosCount;
 	}
 
+extern unsigned ResidueGroup[];
+
 // Perecent group identity of a pair of sequences.
 // Positions with one or both gapped are ignored.
 double MSA::GetPctGroupIdentityPair(unsigned uSeqIndex1,
   unsigned uSeqIndex2) const
 	{
-	extern unsigned ResidueGroup[];
 
 	const unsigned uColCount = GetColCount();
 	unsigned uPosCount = 0;
@@ -116,3 +119,4 @@ double MSA::GetPctGroupIdentityPair(unsigned uSeqIndex1,
 		return 0;
 	return (double) uSameCount / (double) uPosCount;
 	}
+} 

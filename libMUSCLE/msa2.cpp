@@ -5,6 +5,8 @@
 #include "tree.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 // These global variables are a hack to allow the tree
 // dependent iteration code to communicate the edge
 // used to divide the tree. The three-way weighting
@@ -530,3 +532,4 @@ void MSACat(const MSA &msa1, const MSA &msa2, MSA &msaCat)
 			}
 		}
 	}
+} 

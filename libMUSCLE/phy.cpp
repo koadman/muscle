@@ -2,6 +2,8 @@
 #include "tree.h"
 #include <math.h>
 
+namespace muscle {
+
 #define TRACE 0
 
 /***
@@ -1128,3 +1130,4 @@ void Tree::Create(unsigned uLeafCount, unsigned uRoot, const unsigned Left[],
 
 	Validate();
 	}
+} 

@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "profile.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 enum
@@ -267,3 +269,4 @@ SCORE ObjScoreSPDimer(const MSA &msa)
 #endif
 	return Total/2;
 	}
+} 

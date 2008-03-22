@@ -4,6 +4,8 @@
 #include <vector>
 #include "seq.h"
 
+namespace muscle {
+
 typedef std::vector<Seq *> SeqVectBase;
 
 class SeqVect : public SeqVectBase
@@ -59,5 +61,7 @@ public:
 	const_reference at(size_type i) const { return operator[](i); }
 #endif
 	};
+
+} // namespace muscle
 
 #endif	// SeqVect_h

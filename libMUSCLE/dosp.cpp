@@ -5,6 +5,8 @@
 #include "tree.h"
 #include "profile.h"
 
+namespace muscle {
+
 void DoSP()
 	{
 	TextFile f(g_pstrSPFileName.get());
@@ -58,3 +60,4 @@ void DoSP()
 	Log("File=%s;SP=%.4g\n", g_pstrSPFileName.get(), SP);
 	fprintf(stderr, "File=%s;SP=%.4g\n", g_pstrSPFileName.get(), SP);
 	}
+} 

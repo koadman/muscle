@@ -3,6 +3,8 @@
 #include "tree.h"
 #include "seqvect.h"
 
+namespace muscle {
+
 #if	DEBUG
 static TLS<SeqVect *> g_ptrMuscleSeqVect(0);
 static TLS<MSA> MuscleInputMSA;
@@ -110,3 +112,4 @@ void ValidateMuscleIds(const Tree &tree)
 		Quit("ValidateMuscleIds, ptrMuscleSeqVect=0 && 0 == MuscleInputMSA.get().SeqCount");
 	}
 #endif
+} 

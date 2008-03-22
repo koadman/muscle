@@ -3,6 +3,8 @@
 #include "objscore.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 struct GAPINFO
@@ -200,3 +202,4 @@ SCORE ScoreGaps(const MSA &msa, const unsigned DiffCols[], unsigned DiffColCount
 
 	return Score;
 	}
+} 

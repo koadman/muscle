@@ -7,6 +7,8 @@
 #include "profile.h"
 #include "timing.h"
 
+namespace muscle {
+
 static const char g_strUseTreeWarning[] =
 "\n******** WARNING ****************\n"
 "\nYou specified the -usetree option.\n"
@@ -280,3 +282,4 @@ void Run()
 	ListDiagSavings();
 	Log("Finished %s\n", GetTimeAsStr());
 	}
+} 

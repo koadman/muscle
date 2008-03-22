@@ -3,6 +3,8 @@
 
 #include <limits.h>
 
+namespace muscle {
+
 class Clust;
 
 const unsigned NULL_NEIGHBOR = UINT_MAX;
@@ -335,5 +337,7 @@ void FindRoot(const Tree &tree, unsigned *ptruNode1, unsigned *ptruNode2,
   double *ptrdLength1, double *ptrdLength2,
   ROOT RootMethod);
 void FixRoot(Tree &tree, ROOT RootMethod);
+
+} // namespace muscle
 
 #endif // tree_h

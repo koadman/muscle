@@ -4,6 +4,8 @@
 #include "msa.h"
 #include "textfile.h"
 
+namespace muscle {
+
 const unsigned uCharsPerLine = 60;
 const int MIN_NAME = 10;
 const int MAX_NAME = 32;
@@ -168,3 +170,4 @@ static char GetAlnConsensusChar(const MSA &a, unsigned uColIndex)
 
 	return ' ';
 	}
+} 

@@ -3,6 +3,8 @@
 #include "diaglist.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 #define pow4(i)	(1 << (2*i))	// 4^i = 2^(2*i)
@@ -151,3 +153,4 @@ void FindDiagsNuc(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 			}
 		}
 	}
+} 

@@ -9,6 +9,8 @@
 #include <unistd.h>		// for isatty()
 #endif
 
+namespace muscle {
+
 TLS<int> g_argc;
 TLS<char **> g_argv;
 
@@ -66,3 +68,4 @@ int main(int argc, char **argv)
 
 	exit(EXIT_Success);
 	}
+} 

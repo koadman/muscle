@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "textfile.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 const int MAX_LINE = 4096;
@@ -158,3 +160,4 @@ ExitLoop:;
 	SCOREMATRIX& sm = Mx.get();
 	return &sm;
 	}
+} 

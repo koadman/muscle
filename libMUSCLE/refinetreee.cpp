@@ -4,6 +4,8 @@
 #include "profile.h"
 #include <stdio.h>
 
+namespace muscle {
+
 #define TRACE	0
 
 void RefineTreeE(MSA &msa, const SeqVect &v, Tree &tree, ProgNode *ProgNodes)
@@ -49,3 +51,4 @@ void RefineTreeE(MSA &msa, const SeqVect &v, Tree &tree, ProgNode *ProgNodes)
 	SetCurrentAlignment(msa);
 	ProgressStepsDone();
 	}
+} 

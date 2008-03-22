@@ -6,6 +6,8 @@
 #include <math.h>	// for log function
 #include "threadstorage.h"
 
+namespace muscle {
+
 class DiagList;
 class WeightList;
 
@@ -127,5 +129,6 @@ SCORE ScoreProfPos2SPN(const ProfPos &PPA, const ProfPos &PPB);
 void AnchoredProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut);
 void SetProfileProfileAlphabet(MSA &msa1, MSA &msa2);
 
+} // namespace muscle
 
 #endif // FastProf_h

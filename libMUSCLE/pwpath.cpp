@@ -4,6 +4,8 @@
 #include "textfile.h"
 #include "msa.h"
 
+namespace muscle {
+
 PWPath::PWPath()
 	{
 	m_uArraySize = 0;
@@ -384,3 +386,4 @@ void PWPath::FromStr(const char Str[])
 		AppendEdge(c, uPrefixLengthA, uPrefixLengthB);
 		}
 	}
+} 

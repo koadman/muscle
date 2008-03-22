@@ -14,6 +14,8 @@
 #include <share.h>
 #endif
 
+namespace muscle {
+
 #ifndef	MAX_PATH
 #define	MAX_PATH	260
 #endif
@@ -290,3 +292,4 @@ void MemMinus(size_t Bytes, char *Where)
 	  (unsigned) (g_MemTotal/1000000),
 	  Where);
 	}
+} 

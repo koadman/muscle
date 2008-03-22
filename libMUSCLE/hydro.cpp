@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "profile.h"
 
+namespace muscle {
+
 extern void TomHydro(ProfPos *Prof, unsigned Length);
 
 // Apply hydrophobicity heuristic to a profile
@@ -40,3 +42,4 @@ void Hydro(ProfPos *Prof, unsigned uLength)
 			uRunLength = 0;
 		}
 	}
+} 

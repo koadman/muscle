@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 
+namespace muscle {
+
 // Functions that provide visible feedback to the user
 // that progress is being made.
 #ifdef _OPENMP
@@ -189,3 +191,4 @@ void ProgressStepsDone()
 	g_bWipeDesc = true;
 	g_nPrevDescLength = (int) strlen(g_strDesc);
 	}
+} 

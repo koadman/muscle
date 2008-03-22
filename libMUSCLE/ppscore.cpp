@@ -5,6 +5,8 @@
 #include "profile.h"
 #include "objscore.h"
 
+namespace muscle {
+
 TLS<bool> g_bTracePPScore(false);
 TLS<MSA *> g_ptrPPScoreMSA1(0);
 TLS<MSA *> g_ptrPPScoreMSA2(0);
@@ -91,3 +93,4 @@ void PPScore()
 	Log("Score=%.4g\n", Score);
 	printf("Score=%.4g\n", Score);
 	}
+} 

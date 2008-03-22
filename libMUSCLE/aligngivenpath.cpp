@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include "profile.h"
 
+namespace muscle {
+
 #define	TRACE	0
 
 static void LogPP(const ProfPos &PP)
@@ -801,3 +803,4 @@ void AlignTwoProfsGivenPath(const PWPath &Path,
 	ListProfile(POut, uEdgeCount, 0);
 #endif
 	}
+} 

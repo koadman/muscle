@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include <stdio.h>
 
+namespace muscle {
+
 static TLS<char[64]> szMsg;
 
 // Define XXXToStr(XXX x) functions for each enum type XXX.
@@ -14,3 +16,4 @@ static TLS<char[64]> szMsg;
 #define c(t, x)	else if (0 == stricmp(#x, Str)) return t##_##x;
 #define e(t)	Quit("Invalid value %s for type %s", Str, #t); return t##_Undefined; }
 #include "enums.h"
+} 

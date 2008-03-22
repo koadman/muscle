@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define	OCC	1
 
 struct DP_MEMORY
@@ -434,3 +436,4 @@ SCORE GlobalAlignLE(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	return scoreMax;
 	}
+} 

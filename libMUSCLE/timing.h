@@ -1,5 +1,8 @@
 #if	WIN32
 #include <intrin.h>
+
+namespace muscle {
+
 typedef unsigned __int64 TICKS;
 
 #pragma warning(disable:4035)
@@ -17,5 +20,7 @@ static double TicksToSecs(TICKS t)
 	{
 	return (__int64) t/2.5e9;
 	}
+
+} // namespace muscle
 
 #endif	// WIN32

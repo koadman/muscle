@@ -5,6 +5,8 @@
 #include "msa.h"
 #include "profile.h"
 
+namespace muscle {
+
 #if	VER_3_52
 
 #if	TIMING
@@ -53,3 +55,4 @@ SCORE GlobalAlignNoDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB
 	}
 
 #endif	// VER_3_52
+} 

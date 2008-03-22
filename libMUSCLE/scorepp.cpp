@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "profile.h"
 
+namespace muscle {
+
 char ConsensusChar(const ProfPos &PP)
 	{
 	unsigned uMostCommonLetter = 0;
@@ -102,3 +104,4 @@ SCORE ScoreProfPos2(const ProfPos &PPA, const ProfPos &PPB)
 	Quit("Invalid g_PPScore.get()");
 	return 0;
 	}
+} 

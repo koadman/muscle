@@ -2,6 +2,8 @@
 #include "profile.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 SCORE FastScorePath2(const ProfPos *PA, unsigned uLengthA,
   const ProfPos *PB, unsigned uLengthB, const PWPath &Path)
 	{
@@ -163,3 +165,4 @@ SCORE FastScorePath2(const ProfPos *PA, unsigned uLengthA,
 	Log("Total = %g\n", scoreTotal);
 	return scoreTotal;
 	}
+} 

@@ -7,6 +7,8 @@
 #include "seqvect.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 // ScoreDist
 // E. Sonnhammer & V. Hollich, Scoredist: A simple and robust protein sequence
 // distance estimator, BMC Bioinformatics 2005, 6:108.
@@ -126,3 +128,4 @@ void DistPWScoreDist(const SeqVect &v, DistFunc &DF)
 
 	SetSeqWeightMethod(SeqWeightSave);
 	}
+} 

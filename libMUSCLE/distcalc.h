@@ -1,6 +1,8 @@
 #ifndef DistCalc_h
 #define DistCalc_h
 
+namespace muscle {
+
 typedef float dist_t;
 const dist_t BIG_DIST = (dist_t) 1e29;
 
@@ -41,5 +43,7 @@ private:
 	const MSA *m_ptrMSA;
 	DISTANCE m_Distance;
 	};
+
+} // namespace muscle
 
 #endif	// DistCalc_h

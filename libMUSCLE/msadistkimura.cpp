@@ -2,6 +2,8 @@
 #include "msa.h"
 #include <math.h>
 
+namespace muscle {
+
 // "Standard" NJ distance: the Kimura measure.
 // This is defined to be:
 //
@@ -86,3 +88,4 @@ double PctIdToHeightKimura(double dPctId)
 	{
 	return KimuraDist(dPctId);
 	}
+} 

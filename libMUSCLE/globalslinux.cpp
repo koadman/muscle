@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #if		defined(__linux__)
 #include <sys/time.h>
 #include <sys/resource.h>
@@ -162,3 +164,4 @@ double GetRAMSizeMB()
 	}
 
 #endif	// !WIN32
+} 

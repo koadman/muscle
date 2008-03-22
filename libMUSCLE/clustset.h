@@ -1,6 +1,8 @@
 #ifndef ClustSet_h
 #define ClustSet_h
 
+namespace muscle {
+
 enum JOIN;
 enum LINKAGE;
 class Clust;
@@ -17,5 +19,7 @@ public:
 	virtual const char *GetLeafName(unsigned uNodeIndex) = 0;
 	virtual unsigned GetLeafId(unsigned uNodeIndex) = 0;
 	};
+
+} // namespace muscle
 
 #endif	// ClustSet_h

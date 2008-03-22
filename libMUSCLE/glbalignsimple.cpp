@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define	TRACE	0
 
 #if	1 // SINGLE_AFFINE
@@ -367,3 +369,4 @@ SCORE GlobalAlignSimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	}
 
 #endif // SINLGLE_AFFINE
+} 

@@ -1,6 +1,7 @@
 #ifndef Refine_h
 #define Refine_h
 
+namespace muscle {
 
 struct Range
 	{
@@ -14,5 +15,7 @@ void ListVertSavings(unsigned uColCount, unsigned uAnchorColCount,
 void ColsToRanges(const unsigned BestCols[], unsigned uBestColCount,
   unsigned uColCount, Range Ranges[]);
 
+
+} // namespace muscle
 
 #endif // Refine_h

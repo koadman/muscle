@@ -4,6 +4,8 @@
 #include "profile.h"
 #include <stdio.h>
 
+namespace muscle {
+
 void RefineTree(MSA &msa, Tree &tree)
 	{
 	const unsigned uSeqCount = msa.GetSeqCount();
@@ -57,3 +59,4 @@ void RefineTree(MSA &msa, Tree &tree)
 
 	delete[] IdToDiffsLeafNodeIndex;
 	}
+} 

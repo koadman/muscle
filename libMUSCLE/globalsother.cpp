@@ -1,5 +1,7 @@
 #include "muscle.h"
 
+namespace muscle {
+
 #if		!defined(__linux__) && !defined(_MSC_VER)
 
 double GetNAN()
@@ -60,3 +62,4 @@ double GetRAMSizeMB()
 
 #endif
 
+} 

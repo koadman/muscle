@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "textfile.h"
 
+namespace muscle {
+
 unsigned Tree::GetAnyNonLeafNode() const
 	{
 	for (unsigned uNodeIndex = 0; uNodeIndex < m_uNodeCount; ++uNodeIndex)
@@ -84,3 +86,4 @@ void Tree::ToFileNodeRooted(TextFile &File, unsigned uNodeIndex) const
 		}
 	File.PutString("\n");
 	}
+} 

@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 struct DP_MEMORY
 	{
 	unsigned uLength;
@@ -373,3 +375,4 @@ SCORE GlobalAlignSP(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	return scoreMax;
 	}
+} 

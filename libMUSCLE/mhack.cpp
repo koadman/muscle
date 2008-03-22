@@ -3,6 +3,8 @@
 #include "msa.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 /***
 Methionine hack.
 Most proteins start with M.
@@ -63,3 +65,4 @@ void MHackEnd(MSA &msa)
 	delete[] M.get();
 	M.get() = 0;
 	}
+} 

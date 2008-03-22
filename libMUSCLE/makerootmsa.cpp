@@ -6,6 +6,8 @@
 #include "pwpath.h"
 #include "estring.h"
 
+namespace muscle {
+
 #define TRACE		0
 #define VALIDATE	0
 
@@ -228,3 +230,4 @@ void MakeRootMSA(const SeqVect &v, const Tree &GuideTree, ProgNode Nodes[],
 	ProgressStepsDone();
 	assert(uSeqIndex == uSeqCount);
 	}
+} 

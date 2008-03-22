@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 void DiffPaths(const PWPath &p1, const PWPath &p2, unsigned Edges1[],
@@ -112,3 +114,4 @@ void TestDiffPaths()
 	unsigned uDiffCount2;
 	DiffPaths(p1, p2, Edges1, &uDiffCount1, Edges2, &uDiffCount2);
 	}
+} 

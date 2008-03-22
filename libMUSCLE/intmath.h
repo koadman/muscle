@@ -3,6 +3,8 @@
 #ifndef IntMath_h
 #define	IntMath_h
 
+namespace muscle {
+
 typedef float BASETYPE;
 //typedef double BASETYPE;
 
@@ -206,5 +208,7 @@ static inline SCORE Div2(SCORE a, int b)
 //	assert(Score > MINUS_INFINITY);
 //	return Score/INTSCALE;
 //	}
+
+} // namespace muscle
 
 #endif	// IntMath_h

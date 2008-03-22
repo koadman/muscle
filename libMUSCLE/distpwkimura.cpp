@@ -4,6 +4,8 @@
 #include "seqvect.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 void DistPWKimura(const SeqVect &v, DistFunc &DF)
 	{
 	SEQWEIGHT SeqWeightSave = GetSeqWeightMethod();
@@ -43,3 +45,4 @@ void DistPWKimura(const SeqVect &v, DistFunc &DF)
 
 	SetSeqWeightMethod(SeqWeightSave);
 	}
+} 

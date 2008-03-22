@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "msa.h"
 
+namespace muscle {
+
 void Stabilize(const MSA &msa, MSA &msaStable)
 	{
 	const unsigned uSeqCount = msa.GetSeqCount();
@@ -19,3 +21,4 @@ void Stabilize(const MSA &msa, MSA &msaStable)
 			}
 		}
 	}
+} 

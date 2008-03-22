@@ -1,3 +1,5 @@
+namespace muscle {
+
 class DistFunc;
 
 class ClusterNode
@@ -84,3 +86,5 @@ private:
 	unsigned m_uNodeCount;
 	unsigned m_uLeafCount;
 	};
+
+} // namespace muscle

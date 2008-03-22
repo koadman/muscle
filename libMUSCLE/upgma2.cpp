@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "distcalc.h"
 
+namespace muscle {
+
 // UPGMA clustering in O(N^2) time and space.
 
 #define	TRACE	0
@@ -124,7 +126,7 @@ static void ListState()
 		  g_RightLength.get()[i]);
 	}
 
-void UPGMA2(const DistCalc &DC, Tree &tree, LINKAGE Linkage)
+void muscle::UPGMA2(const DistCalc &DC, Tree &tree, LINKAGE Linkage)
 	{
 	g_uLeafCount.get() = DC.GetCount();
 
@@ -393,3 +395,4 @@ void Test()
 	Tree tree;
 	UPGMA2(DC, tree, LINKAGE_Avg);
 	}
+} 

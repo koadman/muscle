@@ -4,6 +4,8 @@
 #include "msa.h"
 #include "textfile.h"
 
+namespace muscle {
+
 const unsigned uCharsPerLine = 60;
 const int MIN_NAME = 10;
 const int MAX_NAME = 32;
@@ -134,3 +136,4 @@ void MSA::ToHTMLFile(TextFile &File) const
 	File.PutString("</BODY>\n");
 	File.PutString("</HTML>\n");
 	}
+} 

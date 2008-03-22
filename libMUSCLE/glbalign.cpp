@@ -5,6 +5,8 @@
 #include "msa.h"
 #include "profile.h"
 
+namespace muscle {
+
 #if	!VER_3_52
 
 #define COMPARE_SIMPLE	0
@@ -163,3 +165,4 @@ SCORE GlobalAlignNoDiags(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB
 #endif
 
 #endif	// !VER_3_52
+} 

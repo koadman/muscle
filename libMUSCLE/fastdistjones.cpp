@@ -4,6 +4,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 const unsigned TRIPLE_COUNT = 20*20*20;
 
 struct TripleCount
@@ -205,3 +207,4 @@ void DistKmer20_3(const SeqVect &v, DistFunc &DF)
 		}
 	ProgressStepsDone();
 	}
+} 

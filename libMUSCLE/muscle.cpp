@@ -5,6 +5,8 @@
 #include "tree.h"
 #include "profile.h"
 
+namespace muscle {
+
 void MUSCLE(SeqVect &v, MSA &msaOut)
 	{
 	const unsigned uSeqCount = v.Length();
@@ -128,3 +130,4 @@ void MUSCLE(SeqVect &v, MSA &msaOut)
 
 	MHackEnd(msaOut);
 	}
+} 

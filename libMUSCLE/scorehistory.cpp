@@ -2,6 +2,8 @@
 #include "scorehistory.h"
 #include <stdio.h>
 
+namespace muscle {
+
 #define TRACE	0
 
 ScoreHistory::ScoreHistory(unsigned uIters, unsigned uNodeCount)
@@ -99,3 +101,4 @@ SCORE ScoreHistory::GetScore(unsigned uIter, unsigned uNodeIndex,
 		Quit("ScoreHistory::GetScore");
 	return m_Score[uIter][uIndex];
 	}
+} 

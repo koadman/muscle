@@ -3,6 +3,8 @@
 #include "pwpath.h"
 #include "profile.h"
 
+namespace muscle {
+
 #define	TRACE	0
 
 static void AppendDelete(const MSA &msaA, unsigned &uColIndexA,
@@ -235,3 +237,4 @@ void AlignTwoMSAsGivenPathSW(const PWPath &Path, const MSA &msaA, const MSA &msa
 	AppendUnalignedTerminals(msaA, uColIndexA, uInsertColCountA, msaB, uColIndexB,
 	  uInsertColCountB, uSeqCountA, uSeqCountB, msaCombined, uColIndexCombined);
 	}
+} 

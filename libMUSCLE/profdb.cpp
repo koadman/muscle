@@ -8,6 +8,8 @@
 #include "profile.h"
 #include "clustsetmsa.h"
 
+namespace muscle {
+
 void ProfDB()
 	{
 	SetOutputFileName(g_pstrOutFileName.get());
@@ -53,3 +55,4 @@ void ProfDB()
 	TextFile fileOut(g_pstrOutFileName.get(), true);
 	msa1.ToFile(fileOut);
 	}
+} 

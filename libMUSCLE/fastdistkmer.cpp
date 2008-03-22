@@ -6,6 +6,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 /***
@@ -246,3 +248,4 @@ void FastDistKmer(const SeqVect &v, DistFunc &DF)
 	delete[] Seq1Letters;
 	delete[] Seq2Letters;
 	}
+} 

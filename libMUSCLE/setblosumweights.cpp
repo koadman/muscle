@@ -44,6 +44,8 @@ GSC tree according to those relative weights.
 #include "cluster.h"
 #include "distfunc.h"
 
+namespace muscle {
+
 // Set weights of all sequences in the subtree under given node.
 void MSA::SetBLOSUMSubtreeWeight(const ClusterNode *ptrNode, double dWeight) const
 	{
@@ -129,3 +131,4 @@ unsigned MSA::CalcBLOSUMWeights(ClusterTree &BlosumCluster) const
 // Return value is HMMer's "effective sequence count".
 	return SetBLOSUMNodeWeight(BlosumCluster.GetRoot(), 1.0 - BLOSUM_DIST);
 	}
+} 

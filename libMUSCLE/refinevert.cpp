@@ -7,6 +7,8 @@
 #include "tree.h"
 #include "refine.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 
@@ -153,3 +155,4 @@ bool RefineVert(MSA &msaIn, const Tree &tree, unsigned uIters)
 		msaIn.Copy(msaOut);
 	return bAnyChanges;
 	}
+} 

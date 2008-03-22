@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "profile.h"
 
+namespace muscle {
+
 void SetTermGaps(const ProfPos *Prof, unsigned uLength)
 	{
 	if (0 == uLength)
@@ -34,3 +36,4 @@ void SetTermGaps(const ProfPos *Prof, unsigned uLength)
 		Quit("Invalid g_TermGaps.get()");
 		}
 	}
+} 

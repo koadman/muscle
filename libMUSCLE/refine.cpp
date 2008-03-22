@@ -8,6 +8,8 @@
 #include "profile.h"
 #include "clustsetmsa.h"
 
+namespace muscle {
+
 void Refine()
 	{
 	SetOutputFileName(g_pstrOutFileName.get());
@@ -78,3 +80,4 @@ void Refine()
 //	msa.ToFile(fileOut);
 	MuscleOutput(msa);
 	}
+} 

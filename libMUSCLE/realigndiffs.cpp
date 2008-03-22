@@ -4,6 +4,8 @@
 #include "profile.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 // Progressive alignment according to a diffs tree.
@@ -113,3 +115,4 @@ void RealignDiffs(const MSA &msaIn, const Tree &Diffs,
 	delete[] ProgNodes;
 	ProgNodes = 0;
 	}
+} 

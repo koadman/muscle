@@ -2,6 +2,8 @@
 #include "pwpath.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 static char XlatEdgeType(char c)
@@ -205,3 +207,4 @@ void BitTraceBack(char **TraceBack, unsigned uLengthA, unsigned uLengthB,
 	Path.LogMe();
 #endif
 	}
+} 

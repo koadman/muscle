@@ -2,6 +2,8 @@
 #include "msa.h"
 #include "textfile.h"
 
+namespace muscle {
+
 const int BLOCKSIZE = 60;
 
 static char FixChar(char c)
@@ -126,3 +128,4 @@ void MSA::ToPhyInterleavedFile(TextFile &File) const
 		File.PutChar('\n');
 		}
 	}
+} 

@@ -106,6 +106,8 @@ as input to this algorithm.
 #include "cluster.h"
 #include "distfunc.h"
 
+namespace muscle {
+
 // Set weights of all sequences in the subtree under given node.
 void MSA::SetSubtreeWeight2(const ClusterNode *ptrNode) const
 	{
@@ -193,3 +195,4 @@ void MSA::ListWeights() const
 		}
 	Log("Total weights = %6.3f, should be 1.0\n", wTotal);
 	}
+} 

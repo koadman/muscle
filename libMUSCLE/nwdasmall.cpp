@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 #if	DOUBLE_AFFINE
 
 // NW double affine small memory, term gaps fully penalized
@@ -947,3 +949,4 @@ SCORE NWDASmall(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	return 0;
 	}
 #endif	// DOUBLE_AFFINE
+} 

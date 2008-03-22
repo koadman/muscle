@@ -1,6 +1,8 @@
 #ifndef Clust_h
 #define Clust_h
 
+namespace muscle {
+
 class Clust;
 class ClustNode;
 class ClustSet;
@@ -144,5 +146,7 @@ public:
 	ClustSet *m_ptrSet;
 	ClustNode *m_ptrClusterList;
 	};
+
+} // namespace muscle
 
 #endif // Clust_h

@@ -8,6 +8,8 @@
 #include "textfile.h"
 #include "estring.h"
 
+namespace muscle {
+
 #define TRACE		0
 #define VALIDATE	0
 #define TRACE_LENGTH_DELTA	0
@@ -204,3 +206,4 @@ ProgNode *ProgressiveAlignE(const SeqVect &v, const Tree &GuideTree, MSA &a)
 	delete[] Weights;
 	return ProgNodes;
 	}
+} 

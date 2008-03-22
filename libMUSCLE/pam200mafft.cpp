@@ -1,5 +1,7 @@
 #include "muscle.h"
 
+namespace muscle {
+
 // Adjusted PAM200 scoring matrix as used by default in MAFFT.
 //	Katoh, Misawa, Kuma and Miyata (2002), NAR 30(14), 3059-3066.
 
@@ -30,3 +32,4 @@ static const float PAM200[23][23] =
      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0, // Z
      0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0, // X
 	};
+} 

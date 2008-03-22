@@ -4,6 +4,8 @@
 #include <math.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 #define MIN(x, y)	(((x) < (y)) ? (x) : (y))
@@ -264,3 +266,4 @@ void DistKmer4_6(const SeqVect &v, DistFunc &DF)
 	delete[] uCommonTupleCount;
 	delete[] Letters;
 	}
+} 

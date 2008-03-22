@@ -1,6 +1,8 @@
 #ifndef	alpha_h
 #define	alpha_h
 
+namespace muscle {
+
 bool StrHasAmino(const char *Str);
 bool StrHasGap(const char *Str);
 void ClearInvalidLetterWarning();
@@ -103,5 +105,7 @@ extern TLS<bool[MAX_CHAR]> g_IsResidueChar;
 
 #define AlignChar(c)		(g_AlignChar.get()[(unsigned char) (c)])
 #define UnalignChar(c)		(g_UnalignChar.get()[(unsigned char) (c)])
+
+} // namespace muscle
 
 #endif	// alpha_h

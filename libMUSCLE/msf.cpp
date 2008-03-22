@@ -5,6 +5,8 @@
 #include "textfile.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 const int MAX_NAME = 63;
 
 const unsigned uCharsPerLine = 50;
@@ -120,3 +122,4 @@ void MSA::ToMSFFile(TextFile &File, const char *ptrComment) const
 			}
 		}
 	}
+} 

@@ -4,6 +4,8 @@
 #include <time.h>
 #include "threadstorage.h"
 
+namespace muscle {
+
 TLS<MSA *> ptrBestMSA;
 static TLS<const char *> pstrOutputFileName;
 
@@ -65,3 +67,4 @@ void CheckMaxTime()
 	SaveCurrentAlignment();
 	exit(EXIT_Success);
 	}
+} 

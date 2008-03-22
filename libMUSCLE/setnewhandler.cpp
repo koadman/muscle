@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <new>
 
+namespace muscle {
+
 const int ONE_MB = 1024*1024;
 const size_t RESERVE_BYTES = 8*ONE_MB;
 static void *EmergencyReserve = 0;
@@ -33,3 +35,4 @@ void SetNewHandler()
 	}
 }
 	}
+} 

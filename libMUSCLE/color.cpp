@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "msa.h"
 
+namespace muscle {
+
 static const int Blosum62[23][23] =
 	{
 //   A   B   C   D   E    F   G   H   I   K    L   M   N   P   Q    R   S   T   V   W    X   Y   Z 
@@ -187,3 +189,4 @@ void AssignColors(const MSA &a, int **Colors)
 	for (unsigned uColIndex = 0; uColIndex < uColCount; ++uColIndex)
 		AssignColorsCol(a, uColIndex, Colors);
 	}
+} 

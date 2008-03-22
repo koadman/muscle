@@ -3,6 +3,8 @@
 #include "profile.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 static void LogF(FCOUNT f)
@@ -318,3 +320,4 @@ ProfPos *ProfileFromMSA(const MSA &a)
 #endif
 	return Pos;
 	}
+} 

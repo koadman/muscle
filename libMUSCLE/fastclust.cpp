@@ -8,6 +8,8 @@
 #include "distcalc.h"
 #include <math.h>
 
+namespace muscle {
+
 static void TreeFromSeqVect_NJ(const DistFunc &DF, CLUSTER Cluster, Tree &tree)
 	{
     ClustSetDF CSD(DF);
@@ -75,3 +77,4 @@ void TreeFromSeqVect(const SeqVect &v, Tree &tree, CLUSTER Cluster,
 		TreeFromSeqVect_UPGMA(DF, Cluster, tree);
 	FixRoot(tree, Root);
 	}
+} 

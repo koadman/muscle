@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "edgelist.h"
 
+namespace muscle {
+
 EdgeList::EdgeList()
 	{
 	m_uNode1 = 0;
@@ -86,3 +88,4 @@ void EdgeList::LogMe() const
 		}
 	Log("\n");
 	}
+} 

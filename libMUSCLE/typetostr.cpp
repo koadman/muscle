@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include <stdio.h>
 
+namespace muscle {
+
 const char *SecsToStr(unsigned long Secs)
 	{
 	static TLS<char[16]> Str;
@@ -19,7 +21,7 @@ const char *BoolToStr(bool b)
 	return b ? "True" : "False";
 	}
 
-const char *ScoreToStr(SCORE Score)
+const char *muscle::ScoreToStr(SCORE Score)
 	{
 	if (MINUS_INFINITY >= Score)
 		return "       *";
@@ -56,3 +58,4 @@ const char *WeightToStr(WEIGHT w)
 	{
 	return ScoreToStr(w);
 	}
+} 

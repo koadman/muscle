@@ -1,12 +1,14 @@
 #ifndef ClustSetDF_h
 #define ClustSetDF_h
 
-class MSA;
-class Clust;
-
 #include "clustset.h"
 #include "distfunc.h"
 #include "msa.h"
+
+namespace muscle {
+
+class MSA;
+class Clust;
 
 class ClustSetDF : public ClustSet
 	{
@@ -44,5 +46,7 @@ public:
 private:
 	const DistFunc *m_ptrDF;
 	};
+
+} // namespace muscle
 
 #endif	// ClustSetDF_h

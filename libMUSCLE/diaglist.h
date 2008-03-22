@@ -1,6 +1,8 @@
 #ifndef diaglist_h
 #define diaglist_h
 
+namespace muscle {
+
 const unsigned EMPTY = (unsigned) ~0;
 const unsigned MAX_DIAGS = 1024;
 
@@ -85,5 +87,7 @@ void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 void FindDiagsNuc(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
   unsigned uLengthY, DiagList &DL);
 void MergeDiags(DiagList &DL);
+
+} // namespace muscle
 
 #endif // diaglist_h

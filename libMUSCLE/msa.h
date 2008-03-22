@@ -1,6 +1,8 @@
 #ifndef	MSA_h
 #define MSA_h
 
+namespace muscle {
+
 const int MAX_SEQ_NAME = 63;
 struct PathEdge;
 class TextFile;
@@ -175,5 +177,7 @@ void MSASubsetByIds(const MSA &msaIn, const unsigned Ids[], unsigned uIdCount,
 void SetMSAWeightsMuscle(MSA &msa);
 void SetClustalWWeightsMuscle(MSA &msa);
 void SetThreeWayWeightsMuscle(MSA &msa);
+
+} // namespace muscle
 
 #endif	// MSA_h

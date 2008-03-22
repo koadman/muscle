@@ -3,6 +3,8 @@
 #include "diaglist.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 const unsigned KTUP = 5;
@@ -160,3 +162,4 @@ void FindDiags(const ProfPos *PX, unsigned uLengthX, const ProfPos *PY,
 			}
 		}
 	}
+} 

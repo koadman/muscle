@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "dpreglist.h"
 
+namespace muscle {
+
 unsigned DPRegionList::GetDPArea() const
 	{
 	unsigned uArea = 0;
@@ -106,3 +108,4 @@ void DiagListToDPRegionList(const DiagList &DL, DPRegionList &RL,
 	r.m_Rect.m_uLengthB = uLengthB - uStartPosB;
 	RL.Add(r);
 	}
+} 

@@ -4,6 +4,8 @@
 #include "seq.h"
 #include "msa.h"
 
+namespace muscle {
+
 /***
 An "estring" is an edit string that operates on a sequence.
 An estring is represented as a vector of integers.
@@ -687,3 +689,4 @@ void TestEstrings()
 	}
 	exit(0);
 	}
+} 

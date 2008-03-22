@@ -7,6 +7,8 @@
 #include "pwpath.h"
 #include "distfunc.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 void ProgressiveAlign(const SeqVect &v, const Tree &GuideTree, MSA &a)
@@ -74,3 +76,4 @@ void ProgressiveAlign(const SeqVect &v, const Tree &GuideTree, MSA &a)
 	delete[] ProgNodes;
 	ProgNodes = 0;
 	}
+} 

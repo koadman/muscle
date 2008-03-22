@@ -4,6 +4,8 @@
 #include "profile.h"
 #include "enumopts.h"
 
+namespace muscle {
+
 const double DEFAULT_MAX_MB_FRACT = 0.8;
 
 TLS<SCORE> g_scoreCenter(0);
@@ -664,3 +666,4 @@ void SetParams()
 	if (0 == ValueOpt("MaxMB"))
 		g_uMaxMB.get() = (unsigned) (GetRAMSizeMB()*DEFAULT_MAX_MB_FRACT);
 	}
+} 

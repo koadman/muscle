@@ -3,6 +3,8 @@
 #include "objscore.h"
 #include "profile.h"
 
+namespace muscle {
+
 #define TRACE				0
 #define COMPARE_3_52		0
 #define BRUTE_LETTERS		0
@@ -160,3 +162,4 @@ SCORE DiffObjScore(
 
 	return Diff;
 	}
+} 

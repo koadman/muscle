@@ -2,6 +2,8 @@
 #include "tree.h"
 #include <math.h>
 
+namespace muscle {
+
 #define TRACE	0
 
 /***
@@ -340,3 +342,4 @@ void CalcThreeWayWeights(const Tree &tree, unsigned uNode1, unsigned uNode2,
 		delete[] EdgeWeights[uNodeIndex];
 	delete[] EdgeWeights;
 	}
+} 

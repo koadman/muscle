@@ -2,6 +2,8 @@
 #include "tree.h"
 #include <stdio.h>
 
+namespace muscle {
+
 #define	TRACE	0
 
 void ClusterByHeight(const Tree &tree, double dMaxHeight, unsigned Subtrees[],
@@ -293,3 +295,4 @@ void LeafIndexesToIds(const Tree &tree, const unsigned Leaves[], unsigned uCount
 	for (unsigned n = 0; n < uCount; ++n)
 		Ids[n] = tree.GetLeafId(Leaves[n]);
 	}
+} 

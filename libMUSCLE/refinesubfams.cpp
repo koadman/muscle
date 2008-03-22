@@ -5,6 +5,8 @@
 #include "profile.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 static void ProgressiveAlignSubfams(const Tree &tree, const unsigned Subfams[],
@@ -210,3 +212,4 @@ static void ProgressiveAlignSubfams(const Tree &tree, const unsigned Subfams[],
 	msa.LogMe();
 #endif
 	}
+} 

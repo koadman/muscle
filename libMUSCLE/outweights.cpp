@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "msa.h"
 
+namespace muscle {
+
 void OutWeights(const char *FileName, const MSA &msa)
 	{
 	FILE *f = fopen(FileName, "w");
@@ -15,3 +17,4 @@ void OutWeights(const char *FileName, const MSA &msa)
 		}
 	fclose(f);
 	}
+} 

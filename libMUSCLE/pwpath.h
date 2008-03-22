@@ -34,6 +34,8 @@ column indexes because of the problem of representing the special case
 of a gap in the first position.
 ***/
 
+namespace muscle {
+
 class Seq;
 class MSA;
 class SatchmoParams;
@@ -96,5 +98,7 @@ private:
 	unsigned m_uArraySize;
 	PWEdge *m_Edges;
 	};
+
+} // namespace muscle
 
 #endif	// PWPath_h

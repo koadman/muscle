@@ -3,6 +3,8 @@
 #include "clustset.h"
 #include <stdio.h>
 
+namespace muscle {
+
 #define TRACE		0
 
 Clust::Clust()
@@ -664,3 +666,4 @@ float Clust::GetMinMetric(unsigned *ptruIndex1, unsigned *ptruIndex2) const
 	{
 	return GetMinMetricBruteForce(ptruIndex1, ptruIndex2);
 	}
+} 

@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "tree.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 // Return false when done
@@ -280,3 +282,4 @@ void ApplyMinEdgeLength(Tree &tree, double dMinEdgeLength)
 			}
 		}
 	}
+} 

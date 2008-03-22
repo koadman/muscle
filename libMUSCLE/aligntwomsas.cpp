@@ -5,6 +5,8 @@
 #include "textfile.h"
 #include "timing.h"
 
+namespace muscle {
+
 SCORE AlignTwoMSAs(const MSA &msa1, const MSA &msa2, MSA &msaOut, PWPath &Path,
   bool bLockLeft, bool bLockRight)
 	{
@@ -39,3 +41,4 @@ SCORE AlignTwoMSAs(const MSA &msa1, const MSA &msa2, MSA &msaOut, PWPath &Path,
 
 	return Score;
 	}
+} 

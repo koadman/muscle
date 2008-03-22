@@ -5,6 +5,8 @@
 #include "pwpath.h"
 #include "tree.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 static void MSAFromFileName(const char *FileName, MSA &a)
@@ -98,3 +100,4 @@ void Local()
 	TextFile fileOut(g_pstrOutFileName.get(), true);
 	msaOut.ToFile(fileOut);
 	}
+} 

@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 void TraceBackToPath(int **TraceBack, unsigned uLengthA,
   unsigned uLengthB, PWPath &Path)
 	{
@@ -71,3 +73,4 @@ void TraceBackToPath(int **TraceBack, unsigned uLengthA,
 	Path.LogMe();
 #endif
 	}
+} 

@@ -1,5 +1,7 @@
 #include "muscle.h"
 
+namespace muscle {
+
 // Pascaralle and Argos gap factors
 // after Table 1 in Thompson et. al. ClustalW NAR paper.
 // static const double PAFFacs[20] =
@@ -139,3 +141,4 @@ bool IsHydrophobic(const FCOUNT fcCounts[])
 			return false;
 	return true;
 	}
+} 

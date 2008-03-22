@@ -6,6 +6,8 @@
 #include "timing.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define TRACE		0
 #define TRACE_PATH	0
 #define LIST_DIAGS	0
@@ -171,3 +173,4 @@ void ListDiagSavings()
 	double dPct = dAreaSaved*100.0/g_dDPAreaWithoutDiags.get();
 	Log("DP area saved by diagonals %-4.1f%%\n", dPct);
 	}
+} 

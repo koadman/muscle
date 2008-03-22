@@ -2,6 +2,8 @@
 #include "diaglist.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 #define MAX(x, y)	((x) > (y) ? (x) : (y))
 #define MIN(x, y)	((x) < (y) ? (x) : (y))
 
@@ -376,3 +378,4 @@ void DiagList::Sort()
 //	DiagListToDPRegionList(DL, RL, 200, 200);
 //	RL.LogMe();
 //	}
+} 

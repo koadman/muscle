@@ -4,6 +4,8 @@
 #include "profile.h"
 #include "timing.h"
 
+namespace muscle {
+
 #if	TIMING
 TICKS g_ticksObjScore = 0;
 #endif
@@ -113,3 +115,4 @@ SCORE ObjScoreIds(const MSA &msa, const unsigned Ids1[],
 #endif
 	return dObjScore;
 	}
+} 

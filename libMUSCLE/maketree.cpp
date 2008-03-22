@@ -3,6 +3,8 @@
 #include "textfile.h"
 #include "tree.h"
 
+namespace muscle {
+
 void DoMakeTree()
 	{
 	if (g_pstrInFileName.get() == 0 || g_pstrOutFileName.get() == 0)
@@ -36,3 +38,4 @@ void DoMakeTree()
 
 	Progress("Tree created");
 	}
+} 

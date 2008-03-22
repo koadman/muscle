@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <errno.h>
 
+namespace muscle {
+
 //const int BUFFER_BYTES = 16*1024;
 const int BUFFER_BYTES = 128;
 const int CR = '\r';
@@ -132,3 +134,4 @@ char *GetFastaSeq(FILE *f, unsigned *ptrSeqLength, char **ptrLabel, bool DeleteG
 	*ptrSeqLength = Pos;
 	return Buffer;
 	}
+} 

@@ -1,6 +1,8 @@
 #ifndef ObjScore_h
 #define ObjScore_h
 
+namespace muscle {
+
 SCORE TermGapScore(bool Gap);
 
 SCORE ScoreSeqPairGaps(const MSA &msa1, unsigned uSeqIndex1,
@@ -28,5 +30,7 @@ SCORE ObjScoreDP_Profs(const ProfPos *PA, const ProfPos *PB, unsigned uColCount,
 SCORE DiffObjScore(
   const MSA &msa1, const PWPath &Path1, const unsigned Edges1[], unsigned uEdgeCount1, 
   const MSA &msa2, const PWPath &Path2, const unsigned Edges2[], unsigned uEdgeCount2);
+
+} // namespace muscle
 
 #endif // ObjScore_h

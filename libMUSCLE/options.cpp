@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include <stdio.h>
 
+namespace muscle {
+
 struct VALUE_OPT
 	{
 	const char *m_pstrName;
@@ -246,3 +248,4 @@ void ListFlagOpts()
 	for (int i = 0; i < FlagOptCount; ++i)
 		Log("%s %d\n", FlagOpts[i].m_pstrName, FlagOpts[i].m_bSet);
 	}
+} 

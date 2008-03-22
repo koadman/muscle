@@ -3,6 +3,8 @@
 
 #include "diaglist.h"
 
+namespace muscle {
+
 enum DPREGIONTYPE
 	{
 	DPREGIONTYPE_Unknown,
@@ -69,5 +71,7 @@ private:
 
 void DiagListToDPRegionList(const DiagList &DL, DPRegionList &RL,
   unsigned uLengthA, unsigned uLengthB);
+
+} // namespace muscle
 
 #endif	// DPRegionList_h

@@ -5,6 +5,8 @@
 #include "clustsetmsa.h"
 #include "distcalc.h"
 
+namespace muscle {
+
 static void SaveMSADist(const MSA &msa, MSADist &d, const char *FileName)
 	{
 	FILE *f = fopen(FileName, "w");
@@ -95,3 +97,4 @@ void TreeFromMSA(const MSA &msa, Tree &tree, CLUSTER Cluster,
 		TreeFromMSA_UPGMA(msa, tree, Cluster, Distance, SaveFileName);
 	FixRoot(tree, Root);
 	}
+} 

@@ -7,6 +7,8 @@
 #include <vector>
 #include <iostream>
 
+namespace muscle {
+
 void MergeBestCols(const SCORE Scores[], const unsigned BestCols[],
   unsigned uBestColCount, unsigned uWindowLength, unsigned AnchorCols[],
   unsigned *ptruAnchorColCount);
@@ -549,3 +551,4 @@ void AnchoredProfileProfile(MSA &msa1, MSA &msa2, MSA &msaOut)
 	delete[] Ranges;
 	}
 
+} 

@@ -2,6 +2,8 @@
 #include "msa.h"
 #include "objscore.h"
 
+namespace muscle {
+
 #define	TRACE	0
 
 void WindowSmooth(const SCORE Score[], unsigned uCount, unsigned uWindowLength,
@@ -216,3 +218,4 @@ void FindAnchorCols(const MSA &msa, unsigned AnchorCols[],
 	delete[] SmoothScore;
 	delete[] BestCols;
 	}
+} 

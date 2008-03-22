@@ -8,6 +8,8 @@
 #include <float.h>
 #include <stdio.h>
 
+namespace muscle {
+
 void DebugPrintf(const char *szFormat, ...)
 	{
 	va_list ArgList;
@@ -98,4 +100,7 @@ double GetCPUGHz()
 		Quit("Invalid value '%s' for environment variable CPUGHZ", e);
 	return dGHz;
 	}
+
+} 
+
 #endif	// WIN32

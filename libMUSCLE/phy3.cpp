@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "edgelist.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 struct EdgeInfo
@@ -467,3 +469,4 @@ void FixRoot(Tree &tree, ROOT Method)
 	tree.UnrootByDeletingRoot();
 	tree.RootUnrootedTree(Method);
 	}
+} 

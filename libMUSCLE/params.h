@@ -2,6 +2,8 @@
 #define params_h
 #include "threadstorage.h"
 
+namespace muscle {
+
 extern TLS<const char *> g_pstrInFileName;
 extern TLS<const char *> g_pstrOutFileName;
 
@@ -117,5 +119,7 @@ extern TLS<unsigned> g_uMaxMB;
 
 extern TLS<SEQTYPE> g_SeqType;
 extern TLS<TERMGAPS> g_TermGaps;
+
+} // namespace muscle
 
 #endif // params_h

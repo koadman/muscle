@@ -6,6 +6,8 @@
 #include "seqvect.h"
 #include "estring.h"
 
+namespace muscle {
+
 #define TRACE		0
 
 void DeleteProgNode(ProgNode &Node)
@@ -140,3 +142,4 @@ void RealignDiffsE(const MSA &msaIn, const SeqVect &v,
 
 	delete[] NewProgNodes;
 	}
+} 

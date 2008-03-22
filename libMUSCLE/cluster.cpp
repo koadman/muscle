@@ -2,6 +2,8 @@
 #include "cluster.h"
 #include "distfunc.h"
 
+namespace muscle {
+
 static inline float Min(float d1, float d2)
 	{
 	return d1 < d2 ? d1 : d2;
@@ -337,3 +339,4 @@ void ClusterTree::Create(const DistFunc &Dist)
 	GetRoot()->GetClusterWeight();
 //	LogMe();
 	}
+} 

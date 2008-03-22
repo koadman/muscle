@@ -3,6 +3,10 @@
 #include "distcalc.h"
 #include "msa.h"
 
+namespace muscle {
+
+extern double GetScoreDist(const MSA &msa, unsigned SeqIndex1, unsigned SeqIndex2);
+
 void DistCalcDF::Init(const DistFunc &DF)
 	{
 	m_ptrDF = &DF;
@@ -55,7 +59,6 @@ void DistCalcMSA::CalcDistRange(unsigned i, dist_t Dist[]) const
 			}
 		case DISTANCE_ScoreDist:
 			{
-			double GetScoreDist(const MSA &msa, unsigned SeqIndex1, unsigned SeqIndex2);
 			Dist[j] = (float) GetScoreDist(*m_ptrMSA, i, j);
 			continue;
 			}
@@ -87,3 +90,4 @@ const char *DistCalcMSA::GetName(unsigned i) const
 	{
 	return m_ptrMSA->GetSeqName(i);
 	}
+} 

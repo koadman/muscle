@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "tree.h"
 
+namespace muscle {
+
 #define TRACE	0
 
 /***
@@ -233,3 +235,4 @@ void DiffTreesE(const Tree &NewTree, const Tree &OldTree,
 	}
 #endif
 	}
+} 

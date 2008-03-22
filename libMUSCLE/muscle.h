@@ -54,6 +54,8 @@ void Call_MY_ASSERT(const char *file, int line, bool b, const char *msg);
 #define assert(exp)     ((void)0)
 #endif
 
+namespace muscle {
+
 extern TLS<int> g_argc;
 extern TLS<char **> g_argv;
 
@@ -331,3 +333,4 @@ DYN_PTR_SCOREMATRIX ReadMx(TextFile &File);
 void MemPlus(size_t Bytes, char *Where);
 void MemMinus(size_t Bytes, char *Where);
 
+} // namespace muscle

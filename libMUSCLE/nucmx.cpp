@@ -1,5 +1,7 @@
 #include "muscle.h"
 
+namespace muscle {
+
 // BLASTZ default parameters
 // open 400, extend 30, matrix as below
 
@@ -21,3 +23,4 @@ ROW(     -31,    -125,     100,    -114) // G
 
 ROW(    -123,     -31,    -114,      91) // T
 	};
+} 

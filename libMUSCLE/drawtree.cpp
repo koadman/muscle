@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "tree.h"
 
+namespace muscle {
+
 /***
 Simple tree drawing algorithm.
 
@@ -39,3 +41,4 @@ void DrawTree(const Tree &tree)
 	unsigned uRoot = tree.GetRootNodeIndex();
 	DrawNode(tree, uRoot);
 	}
+} 

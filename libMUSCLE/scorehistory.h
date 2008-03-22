@@ -1,6 +1,8 @@
 #ifndef ScoreHistory_h
 #define ScoreHistory_h
 
+namespace muscle {
+
 class ScoreHistory
 	{
 public:
@@ -17,5 +19,7 @@ private:
 	unsigned m_uIters;
 	unsigned m_uNodeCount;
 	};
+
+} // namespace muscle
 
 #endif	// ScoreHistory_h

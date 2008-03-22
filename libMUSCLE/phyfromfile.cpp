@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "textfile.h"
 
+namespace muscle {
+
 #define TRACE 0
 
 // Tokens in Newick files are:
@@ -270,3 +272,4 @@ bool Tree::GetGroupFromFile(TextFile &File, unsigned uNodeIndex,
 	File.PushBack(c);
 	return false;
 	}
+} 

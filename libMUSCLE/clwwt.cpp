@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "msa.h"
 
+namespace muscle {
+
 /***
 Compute weights by the CLUSTALW method.
 Thompson, Higgins and Gibson (1994), CABIOS (10) 19-29;
@@ -188,3 +190,4 @@ void MSA::SetClustalWWeights(const Tree &tree)
 
 	delete[] Weights;
 	}
+} 

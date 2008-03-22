@@ -3,6 +3,8 @@
 #include "profile.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #if	DOUBLE_AFFINE
 
 #define	TRACE	0
@@ -548,3 +550,4 @@ SCORE NWDASimple2(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	}
 
 #endif	// DOUBLE_AFFINE
+} 

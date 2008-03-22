@@ -8,6 +8,8 @@
 #include <unistd.h>	//	for unlink
 #endif
 
+namespace muscle {
+
 #define TRACE	0
 
 /***
@@ -407,3 +409,4 @@ void ProgAlignSubFams()
 	NodeIsSubFam = 0;
 	SubFams = 0;
 	}
+} 

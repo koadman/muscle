@@ -1,6 +1,8 @@
 #ifndef types_h
 #define types_h
 
+namespace muscle {
+
 typedef unsigned char byte;
 typedef unsigned short ushort;
 
@@ -114,5 +116,7 @@ enum NODECMP
 
 const char *BoolToStr(bool b);
 const char *SecsToStr(unsigned long Secs);
+
+} // namespace muscle
 
 #endif // types_h

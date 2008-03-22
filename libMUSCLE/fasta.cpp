@@ -4,6 +4,8 @@
 #include "msa.h"
 #include "textfile.h"
 
+namespace muscle {
+
 const unsigned FASTA_BLOCK = 60;
 
 void MSA::FromFASTAFile(TextFile &File)
@@ -54,3 +56,4 @@ void MSA::ToFASTAFile(TextFile &File) const
 			}
 		}
 	}
+} 

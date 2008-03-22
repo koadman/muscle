@@ -2,6 +2,8 @@
 #include "tree.h"
 #include "clust.h"
 
+namespace muscle {
+
 void Tree::InitCache(unsigned uCacheCount)
 	{
 	m_uCacheCount = uCacheCount;
@@ -93,3 +95,4 @@ void Tree::FromClust(Clust &C)
 		}
 	Validate();
 	}
+} 

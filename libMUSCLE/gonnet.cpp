@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "gonnet.h"
 
+namespace muscle {
+
 #define ROW(A, C, D, E, F, G, H, I, K, L, M, N, P, Q, R, S, T, V, W, Y) \
 	{ A/4.0, C/4.0, D/4.0, E/4.0, F/4.0, G/4.0, H/4.0, I/4.0, K/4.0, L/4.0, M/4.0, N/4.0, P/4.0, Q/4.0, R/4.0, S/4.0, T/4.0, V/4.0, W/4.0, Y/4.0 },
 
@@ -497,3 +499,4 @@ SCORE GetGonnetGapExtend(unsigned N)
 //	}
 //
 //static bool bGonnetLookupInitialized = InitGonnetLookup();
+} 

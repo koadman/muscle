@@ -4,6 +4,8 @@
 #include "profile.h"
 #include <stdio.h>
 
+namespace muscle {
+
 // Textbook Smith-Waterman affine gap implementation.
 
 #define	TRACE	0
@@ -204,3 +206,4 @@ SCORE SW(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 
 	return scoreMax;
 	}
+} 

@@ -3,6 +3,8 @@
 #include "profile.h"
 #include "pwpath.h"
 
+namespace muscle {
+
 SCORE GlobalAlign4(ProfPos *PA, unsigned uLengthA, ProfPos *PB,
   unsigned uLengthB, PWPath &Path);
 
@@ -29,3 +31,4 @@ SCORE AlignTwoProfs(
 #endif
 	return Score;
 	}
+} 

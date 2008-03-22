@@ -3,6 +3,8 @@
 
 #include <vector>
 
+namespace muscle {
+
 class TextFile;
 class MSA;
 
@@ -81,5 +83,7 @@ private:
 	char *m_ptrName;
 	unsigned m_uId;
 	};
+
+} // namespace muscle
 
 #endif	// Seq.h

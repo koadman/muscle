@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "threadstorage.h"
 
+namespace muscle {
 
 #define	TRACE	0
 
@@ -494,3 +495,4 @@ SCORE NWDASimple(const ProfPos *PA, unsigned uLengthA, const ProfPos *PB,
 	}
 
 #endif // DOUBLE_AFFINE
+} 

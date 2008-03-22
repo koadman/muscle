@@ -3,6 +3,10 @@
 
 #include <math.h>
 
+namespace muscle {
+
+class MSA;
+
 double GetScoreDist(const MSA &msa, unsigned SeqIndex1, unsigned SeqIndex2);
 
 class MSADist
@@ -35,5 +39,7 @@ public:
 private:
 	DISTANCE m_Distance;
 	};
+
+} // namespace muscle
 
 #endif	// MSADist_h

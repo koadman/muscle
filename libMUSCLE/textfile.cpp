@@ -2,6 +2,8 @@
 #include "textfile.h"
 #include <errno.h>
 
+namespace muscle {
+
 TextFile::TextFile(const char szFileName[], bool bWrite)
 	{
 	FILE *ptrFile = 0;
@@ -351,3 +353,4 @@ bool TextFile::SkipWhiteX()
 		}
 	return false;
 	}
+} 

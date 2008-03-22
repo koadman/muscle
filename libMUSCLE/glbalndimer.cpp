@@ -6,6 +6,8 @@
 #include "gapscoredimer.h"
 #include "threadstorage.h"
 
+namespace muscle {
+
 #define	TRACE	0
 
 static SCORE TraceBackDimer(  const SCORE *DPM_, const SCORE *DPD_, const SCORE *DPI_,
@@ -389,3 +391,4 @@ static SCORE TraceBackDimer(  const SCORE *DPM_, const SCORE *DPD_, const SCORE 
 #endif
 	return scoreMax;
 	}
+} 

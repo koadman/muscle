@@ -2,6 +2,8 @@
 #include "distfunc.h"
 #include "seqvect.h"
 
+namespace muscle {
+
 void DistPWScoreDist(const SeqVect &v, DistFunc &DF);
 
 void DistUnaligned(const SeqVect &v, DISTANCE DistMethod, DistFunc &DF)
@@ -54,3 +56,4 @@ void DistUnaligned(const SeqVect &v, DISTANCE DistMethod, DistFunc &DF)
 		DF.SetId(uSeqIndex, uId);
 		}
 	}
+} 

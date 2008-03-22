@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 
+namespace muscle {
+
 struct TEXTFILEPOS
 	{
 	unsigned uOffset;
@@ -66,5 +68,7 @@ private:
 	bool m_bLastCharWasEOL;
 	int m_cPushedBack;
 	};
+
+} // namespace muscle
 
 #endif // TextFile_h

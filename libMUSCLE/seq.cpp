@@ -4,6 +4,8 @@
 #include "msa.h"
 //#include <ctype.h>
 
+namespace muscle {
+
 const size_t MAX_FASTA_LINE = 16000;
 
 void Seq::SetName(const char *ptrName)
@@ -340,3 +342,4 @@ void Seq::FixAlpha()
 			}
 		}
 	}
+} 

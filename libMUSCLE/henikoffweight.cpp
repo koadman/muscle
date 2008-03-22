@@ -1,6 +1,8 @@
 #include "muscle.h"
 #include "msa.h"
 
+namespace muscle {
+
 /***
 Compute Henikoff weights.
 Steven Henikoff and Jorja G. Henikoff (1994), Position-based sequence weights.
@@ -82,3 +84,4 @@ void MSA::SetHenikoffWeights() const
 
 	Normalize(m_Weights, uSeqCount);
 	}
+} 
