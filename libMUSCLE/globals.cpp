@@ -23,6 +23,11 @@ namespace muscle {
 static TLS<char[MAX_PATH]> g_strListFileName;
 static TLS<bool> g_bListFileAppend(false);
 
+//tjt: put these here for now..
+TLS<int> g_argc;
+TLS<char **> g_argv;
+MSA *ptrBestMSA;
+
 static TLS<SEQWEIGHT> g_SeqWeight(SEQWEIGHT_Undefined);
 
 void SetSeqWeightMethod(SEQWEIGHT Method)
