@@ -6,7 +6,7 @@
 
 namespace muscle {
 
-TLS<MSA *> ptrBestMSA;
+
 static TLS<const char *> pstrOutputFileName;
 
 void SetOutputFileName(const char *out)
@@ -16,11 +16,13 @@ void SetOutputFileName(const char *out)
 
 void SetCurrentAlignment(MSA &msa)
 	{
+    extern TLS<MSA *>ptrBestMSA;
 	ptrBestMSA.get() = &msa;
 	}
 
 void SaveCurrentAlignment()
 	{
+    extern TLS<MSA *>ptrBestMSA;
 	static TLS<bool> bCalled(false);
 	if (bCalled.get())
 		{

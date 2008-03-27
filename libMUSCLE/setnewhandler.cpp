@@ -15,8 +15,8 @@ void OnOutOfMemory()
 	free(EmergencyReserve);
 	fprintf(stderr, "\n*** OUT OF MEMORY ***\n");
 	fprintf(stderr, "Memory allocated so far %g MB\n", GetMemUseMB());
-	extern MSA *ptrBestMSA;
-	if (ptrBestMSA == 0)
+    extern TLS<MSA *>ptrBestMSA;
+	if (ptrBestMSA.get() == 0)
 		fprintf(stderr, "No alignment generated\n");
 	else
 	SaveCurrentAlignment();

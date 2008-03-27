@@ -26,7 +26,7 @@ static TLS<bool> g_bListFileAppend(false);
 //tjt: put these here for now..
 TLS<int> g_argc;
 TLS<char **> g_argv;
-MSA *ptrBestMSA;
+TLS<MSA*> ptrBestMSA;
 
 static TLS<SEQWEIGHT> g_SeqWeight(SEQWEIGHT_Undefined);
 
