@@ -49,8 +49,8 @@ void SaveCurrentAlignment()
 	TextFile fileOut(pstrOutputFileName.get(), true);
 	ptrBestMSA.get()->ToFASTAFile(fileOut);
 
-	fprintf(stderr, "Current alignment saved to \"%s\".\n", pstrOutputFileName);
-	Log("Current alignment saved to \"%s\".\n", pstrOutputFileName);
+	fprintf(stderr, "Current alignment saved to \"%s\".\n", pstrOutputFileName.get());
+	Log("Current alignment saved to \"%s\".\n", pstrOutputFileName.get());
 	}
 
 void CheckMaxTime()

@@ -53,7 +53,7 @@ void Log(const char szFormat[], ...)
 		return;
 
 	static TLS<FILE *> f(NULL);
-	char *mode;
+	const char *mode;
 	if (g_bListFileAppend.get())
 		mode = "a";
 	else
