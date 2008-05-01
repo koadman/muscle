@@ -9,7 +9,7 @@ double GetNAN()
 	return 0.0;
 	}
 
-double g_dNAN = GetNAN();
+TLS< double >  g_dNAN(GetNAN());
 
 void chkmem(const char szMsg[])
 	{
