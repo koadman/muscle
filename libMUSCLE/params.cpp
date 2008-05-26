@@ -110,7 +110,8 @@ TLS<bool> g_bClwStrict(false);
 TLS<bool> g_bHTML(false);
 TLS<bool> g_bPHYI(false);
 TLS<bool> g_bPHYS(false);
-
+//TLS<int> g_scoreGapOpen(1);
+//TLS<int> g_scoreGapExtend(0);
 TLS<unsigned> g_uMaxIters(8);
 TLS<unsigned long> g_ulMaxSecs(0);
 TLS<unsigned> g_uMaxMB(500);
@@ -296,9 +297,11 @@ static void SetDefaultsSPN_DNA()
 	{
 	g_ptrScoreMatrix.get() = &NUC_SP;
 
-	g_scoreGapOpen.get() = -400;
+	if ( g_scoreGapOpen.get() == fInsane )
+		g_scoreGapOpen.get() = -400;
 	g_scoreCenter.get() = 0.0;	// center pre-added into score mx
-	g_scoreGapExtend.get() = 0.0;
+	if ( g_scoreGapExtend.get() == 0 )
+		g_scoreGapExtend.get() = 0.0;
 
 	g_bNormalizeCounts.get() = false;
 
