@@ -34,9 +34,6 @@ bin_PROGRAMS = muscle
 
 
 muscle_SOURCES = main.cpp
-muscle_LDFLAGS = @STATIC_FLAG@ 
 muscle_LDADD = $(top_builddir)/libMUSCLE/libMUSCLE-3.7.la
 
-all-local:
-	strip muscle
 
