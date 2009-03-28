@@ -1,4 +1,6 @@
-AM_CXXFLAGS = -O3 -funroll-loops -Winline -DNDEBUG=1 @OPENMP_CXXFLAGS@
+OPTIMIZATION = -O3 -Wall -mfpmath=sse -msse -msse2 -funroll-loops -fomit-frame-pointer -ftree-vectorize -funsafe-math-optimizations
+AM_CXXFLAGS = $(OPTIMIZATION) -DNDEBUG=1 @OPENMP_CXXFLAGS@
+AM_LDFLAGS = $(OPTIMIZATION)
 
 LIBMUSCLE_H = \
 alpha.h cluster.h clust.h clustsetdf.h clustset.h clustsetmsa.h diaglist.h distcalc.h distfunc.h dpregionlist.h dpreglist.h edgelist.h enumopts.h enums.h estring.h gapscoredimer.h gonnet.h intmath.h msadist.h msa.h muscle.h objscore.h params.h profile.h pwpath.h refine.h scorehistory.h seq.h seqvect.h textfile.h timing.h tree.h types.h unixio.h threadstorage.h 

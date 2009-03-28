@@ -1,5 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
+AC_PREREQ([2.59])
 AC_INIT(libMUSCLE/muscle.h)
+AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl -----------------------------------------------
 dnl Package name and version number (user defined)
@@ -48,7 +51,9 @@ VERSION=$GENERIC_VERSION
 
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
-
+dnl Override default O2
+CFLAGS=${CFLAGS-""}
+CXXFLAGS=${CXXFLAGS-""}
 
 AC_PREFIX_DEFAULT(/usr/local)
 
