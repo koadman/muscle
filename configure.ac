@@ -87,7 +87,7 @@ fi
 AC_SUBST(STATIC_FLAG)
 
 dnl Check for OpenMP
-AX_OPENMP()
+#AX_OPENMP()
 AC_SUBST(OPENMP_CFLAGS)
 dnl OpenMP checker only defines for C when compiling both C and C++
 OPENMP_CXXFLAGS=$OPENMP_CFLAGS
