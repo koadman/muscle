@@ -1,4 +1,4 @@
-OPTIMIZATION = -O3 -Wall -funroll-loops -fomit-frame-pointer -ftree-vectorize -funsafe-math-optimizations
+OPTIMIZATION = -O2 -Wall -funroll-loops -fomit-frame-pointer -ftree-vectorize -funsafe-math-optimizations
 AM_CXXFLAGS = $(OPTIMIZATION) -DNDEBUG=1 @OPENMP_CXXFLAGS@
 AM_LDFLAGS = $(OPTIMIZATION)
 
