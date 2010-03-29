@@ -48,7 +48,7 @@ const char *MemToStr(double MB)
 	if (MB < 0)
 		return "";
 
-	static char Str[9];
+	static char Str[11];
 	static double MaxMB = 0;
 	static double RAMMB = 0;
 
