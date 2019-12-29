@@ -1,5 +1,5 @@
 OPTIMIZATION = -Ofast 
-AM_CXXFLAGS = $(OPTIMIZATION) -DNDEBUG=1 @OPENMP_CXXFLAGS@
+AM_CXXFLAGS = $(OPTIMIZATION) -DNDEBUG=1 @OPENMP_CXXFLAGS@ -I$(top_srcdir)
 AM_LDFLAGS = $(OPTIMIZATION)
 
 LIBMUSCLE_H = \
@@ -24,8 +24,6 @@ blosum62.cpp globalsother.cpp maketree.cpp scoredist.cpp tomhydro.cpp
 
 library_includedir=$(includedir)/$(GENERIC_LIBRARY_NAME)-$(GENERIC_API_VERSION)/$(GENERIC_LIBRARY_NAME)
 library_include_HEADERS = $(LIBMUSCLE_H)
-
-INCLUDES = -I$(top_srcdir)
 
 lib_LTLIBRARIES = libMUSCLE-3.7.la
 libMUSCLE_3_7_la_SOURCES = $(LIBMUSCLE_SRC)

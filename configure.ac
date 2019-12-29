@@ -1,6 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.59])
-AC_INIT(libMUSCLE/muscle.h)
+AC_INIT([libMUSCLE], [1.0.0])
+AC_CONFIG_SRCDIR([libMUSCLE/muscle.h])
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -49,7 +50,7 @@ AC_SUBST(GENERIC_VERSION)
 
 VERSION=$GENERIC_VERSION
 
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
+AM_INIT_AUTOMAKE(no-define)
 
 dnl Override default O2
 CFLAGS=${CFLAGS-""}
